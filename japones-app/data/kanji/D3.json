@@ -1,0 +1,72 @@
+[
+  {
+    "jp": "特",
+    "read": "トク／トッ",
+    "mean": "especial",
+    "type": "kanji",
+    "extra": "特べつ(とくべつ) — especial · 特に(とくに) — especialmente · 特上(とくじょう) — buena calidad"
+  },
+  {
+    "jp": "別",
+    "read": "ベツ／わか（れる）",
+    "mean": "separar",
+    "type": "kanji",
+    "extra": "別れます(わかれます) — separarse · 特別(とくべつ) — especial · 別々に(べつべつに) — por separado"
+  },
+  {
+    "jp": "有",
+    "read": "ユウ／あ（る）",
+    "mean": "tener, haber",
+    "type": "kanji",
+    "extra": "有名(ゆうめい) — famoso · 有りょう(ゆうりょう) — de pago"
+  },
+  {
+    "jp": "便",
+    "read": "ビン／ベン／たよ（り）",
+    "mean": "conveniencia, servicio postal",
+    "type": "kanji",
+    "extra": "便り(たより) — notificación · ふな便(ふなびん) — envío por barco · ゆう便きょく(ゆうびんきょく) — oficina de correos · 便めい(びんめい) — número de vuelo"
+  },
+  {
+    "jp": "利",
+    "read": "リ",
+    "mean": "beneficioso, ventaja",
+    "type": "kanji",
+    "extra": "便利(べんり) — útil · 利子(りし) — interés · 有利(ゆうり) — ventajoso · 利ようする(りようする) — utilizar"
+  },
+  {
+    "jp": "不",
+    "read": "フ／ブ",
+    "mean": "prefijo negativo",
+    "type": "kanji",
+    "extra": "不便(ふべん) — inconveniente · 不足します(ふそくします) — faltar · 不安(ふあん) — inseguro"
+  },
+  {
+    "jp": "切",
+    "read": "セツ／き（る）／きっ",
+    "mean": "cortar",
+    "type": "kanji",
+    "extra": "切ます(きります) — cortar · 切手(きって) — sello · 大切(たいせつ) — importante · しん切(しんせつ) — amable"
+  },
+  {
+    "jp": "元",
+    "read": "ゲン／ガン／もと",
+    "mean": "origen",
+    "type": "kanji",
+    "extra": "元のばしょ(もとのばしょ) — sitio donde estaba · 元気(げんき) — bien · 元日(がんじつ) — Año Nuevo · 元かれ(もとかれ) — ex novio"
+  },
+  {
+    "jp": "好",
+    "read": "コウ／す（き）",
+    "mean": "gustar",
+    "type": "kanji",
+    "extra": "好きです(すきです) — gustar · 好ぶつ(こうぶつ) — comida favorita"
+  },
+  {
+    "jp": "急",
+    "read": "キュウ／いそ（ぐ）",
+    "mean": "darse prisa",
+    "type": "kanji",
+    "extra": "急ぎます(いそぎます) — darse prisa · 急に(きゅうに) — de repente · 特急(とっきゅう) — expreso"
+  }
+]

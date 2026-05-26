@@ -1,0 +1,72 @@
+[
+  {
+    "jp": "明",
+    "read": "メイ／あか（るい）",
+    "mean": "luminoso, claro",
+    "type": "kanji",
+    "extra": "明るい人(あかるいひと) — persona alegre · せつ明(せつめい) — explicar · 明日(あした) — mañana"
+  },
+  {
+    "jp": "暗",
+    "read": "アン／くら（い）",
+    "mean": "oscuro",
+    "type": "kanji",
+    "extra": "暗い人(くらいひと) — persona triste · 暗しょうばんごう(あんしょうばんごう) — PIN · 暗さつ(あんさつ) — asesinato"
+  },
+  {
+    "jp": "遠",
+    "read": "エン／とお（い）",
+    "mean": "lejos",
+    "type": "kanji",
+    "extra": "遠い町(とおいまち) — pueblo lejano · 遠足(えんそく) — excursión"
+  },
+  {
+    "jp": "近",
+    "read": "キン／ちか（い）",
+    "mean": "cerca",
+    "type": "kanji",
+    "extra": "近い町(ちかいまち) — pueblo cercano · 近所(きんじょ) — vecino · さい近(さいきん) — últimamente"
+  },
+  {
+    "jp": "強",
+    "read": "キョウ／つよ（い）",
+    "mean": "fuerte",
+    "type": "kanji",
+    "extra": "強い人(つよいひと) — persona fuerte · 強ふう(きょうふう) — viento fuerte · べん強します(べんきょうします) — estudiar"
+  },
+  {
+    "jp": "弱",
+    "read": "ジャク／よわ（い）",
+    "mean": "débil",
+    "type": "kanji",
+    "extra": "弱い人(よわいひと) — persona débil · 弱てん(じゃくてん) — punto débil · 弱にく強食(じゃくにくきょうしょく) — el fuerte se come al débil"
+  },
+  {
+    "jp": "重",
+    "read": "ジュウ／おも（い）",
+    "mean": "pesado, importante",
+    "type": "kanji",
+    "extra": "重い(おもい) — pesado · じゅう大(じゅうだい) — importante · たい重(たいじゅう) — peso corporal · 重大(じゅうだい) — grave"
+  },
+  {
+    "jp": "軽",
+    "read": "ケイ／かる（い）",
+    "mean": "ligero",
+    "type": "kanji",
+    "extra": "軽い(かるい) — ligero · 軽じどう車(けいじどうしゃ) — coche pequeño · 軽しょく(けいしょく) — comida ligera"
+  },
+  {
+    "jp": "太",
+    "read": "タイ／ふと（い）",
+    "mean": "gordo, grueso",
+    "type": "kanji",
+    "extra": "太い(ふとい) — gordo · 太よう(たいよう) — sol · 太ります(ふとります) — engordar"
+  },
+  {
+    "jp": "細",
+    "read": "サイ／ほそ（い）／こま（かい）",
+    "mean": "fino, delgado, detallado",
+    "type": "kanji",
+    "extra": "細い(ほそい) — fino · 細かい人(こまかいひと) — persona detallista · しょう細(しょうさい) — detalle"
+  }
+]

@@ -1,0 +1,23 @@
+[
+  { "jp": "(事故に)遭います", "read": "あいます", "mean": "encontrarse con (accidente)", "type": "verbo" },
+  { "jp": "貯金します", "read": "ちょきんします", "mean": "ahorrar dinero", "type": "verbo" },
+  { "jp": "(7時を)過ぎます", "read": "すぎます", "mean": "pasar (las siete)", "type": "verbo" },
+  { "jp": "(仕事に)慣れます", "read": "なれます", "mean": "acostumbrarse (al trabajo)", "type": "verbo" },
+  { "jp": "(食べ物が)腐ります", "read": "くさります", "mean": "pudrirse (comida)", "type": "verbo" },
+  { "jp": "剣道", "read": "けんどう", "mean": "kendo (esgrima japonesa)", "type": "sustantivo" },
+  { "jp": "柔道", "read": "じゅうどう", "mean": "judo", "type": "sustantivo" },
+  { "jp": "ラッシュ", "read": "ラッシュ", "mean": "hora punta", "type": "sustantivo" },
+  { "jp": "宇宙", "read": "うちゅう", "mean": "universo, espacio", "type": "sustantivo" },
+  { "jp": "曲", "read": "きょく", "mean": "pieza musical, canción", "type": "sustantivo" },
+  { "jp": "毎週", "read": "まいしゅう", "mean": "todas las semanas, semanalmente", "type": "adverbio" },
+  { "jp": "毎月", "read": "まいつき", "mean": "todos los meses, mensualmente", "type": "adverbio" },
+  { "jp": "毎年", "read": "まいとし", "mean": "todos los años, anualmente", "type": "adverbio" },
+  { "jp": "このごろ", "read": "このごろ", "mean": "últimamente", "type": "adverbio" },
+  { "jp": "やっと", "read": "やっと", "mean": "por fin, finalmente", "type": "adverbio" },
+  { "jp": "かなり", "read": "かなり", "mean": "bastante", "type": "adverbio" },
+  { "jp": "必ず", "read": "かならず", "mean": "sin falta", "type": "adverbio" },
+  { "jp": "絶対に", "read": "ぜったいに", "mean": "de ninguna manera, en absoluto", "type": "adverbio" },
+  { "jp": "上手に", "read": "じょうずに", "mean": "bien, hábilmente", "type": "adverbio" },
+  { "jp": "できるだけ", "read": "できるだけ", "mean": "en la medida de lo posible", "type": "adverbio" },
+  { "jp": "ほとんど", "read": "ほとんど", "mean": "casi, apenas", "type": "adverbio" }
+]

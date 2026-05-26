@@ -1,0 +1,72 @@
+[
+  {
+    "jp": "体",
+    "read": "タイ／からだ",
+    "mean": "cuerpo",
+    "type": "kanji",
+    "extra": "体に悪い(からだにわるい) — malo para el cuerpo · 体力(たいりょく) — resistencia · 体重(たいじゅう) — peso corporal"
+  },
+  {
+    "jp": "頭",
+    "read": "ズ／あたま",
+    "mean": "cabeza",
+    "type": "kanji",
+    "extra": "頭がいい(あたまがいい) — listo · 頭つう(ずつう) — dolor de cabeza"
+  },
+  {
+    "jp": "顔",
+    "read": "かお",
+    "mean": "cara",
+    "type": "kanji",
+    "extra": "顔が赤い(かおがあかい) — cara roja · 顔いろが悪い(かおいろがわるい) — estar pálido · え顔(えがお) — sonrisa"
+  },
+  {
+    "jp": "首",
+    "read": "シュ／くび",
+    "mean": "cuello",
+    "type": "kanji",
+    "extra": "手首(てくび) — muñeca · 足首(あしくび) — tobillo · 首都(しゅと) — capital"
+  },
+  {
+    "jp": "心",
+    "read": "シン／こころ",
+    "mean": "corazón",
+    "type": "kanji",
+    "extra": "心が広い(こころがひろい) — tener buen corazón · 心ぱいします(しんぱいします) — preocuparse · 安心(あんしん) — tranquilidad · 心ぞう(しんぞう) — corazón (órgano)"
+  },
+  {
+    "jp": "声",
+    "read": "セイ／こえ",
+    "mean": "voz",
+    "type": "kanji",
+    "extra": "声が大きい(こえがおおきい) — voz alta · 声ゆう(せいゆう) — actor de doblaje"
+  },
+  {
+    "jp": "病",
+    "read": "ビョウ／やまい",
+    "mean": "enfermedad",
+    "type": "kanji",
+    "extra": "病気(びょうき) — enfermedad · 病いん(びょういん) — hospital · 急病(きゅうびょう) — enfermedad repentina"
+  },
+  {
+    "jp": "薬",
+    "read": "ヤク／ヤッ／くすり",
+    "mean": "medicina",
+    "type": "kanji",
+    "extra": "薬を飲む(くすりをのむ) — tomar medicina · 目薬(めぐすり) — colirio · 薬きょく(やっきょく) — farmacia"
+  },
+  {
+    "jp": "科",
+    "read": "カ",
+    "mean": "categoría",
+    "type": "kanji",
+    "extra": "科学(かがく) — ciencia · きょう科書(きょうかしょ) — libro de texto · 外科(げか) — cirugía"
+  },
+  {
+    "jp": "内",
+    "read": "ナイ／うち",
+    "mean": "dentro",
+    "type": "kanji",
+    "extra": "内がわ(うちがわ) — interior · 車内(しゃない) — dentro del vehículo · 社内(しゃない) — dentro de la empresa · 内科(ないか) — medicina interna · あん内します(あんないします) — guiar"
+  }
+]

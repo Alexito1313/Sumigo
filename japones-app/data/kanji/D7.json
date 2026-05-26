@@ -1,0 +1,72 @@
+[
+  {
+    "jp": "林",
+    "read": "リン／はやし",
+    "mean": "grupo de árboles",
+    "type": "kanji",
+    "extra": "小林(こばやし) — Kobayashi · 林業(りんぎょう) — industria maderera"
+  },
+  {
+    "jp": "森",
+    "read": "シン／もり",
+    "mean": "bosque",
+    "type": "kanji",
+    "extra": "どうぶつの森(どうぶつのもり) — Animal Crossing · 森林(しんりん) — forestal"
+  },
+  {
+    "jp": "地",
+    "read": "ジ／チ",
+    "mean": "tierra",
+    "type": "kanji",
+    "extra": "地しん(じしん) — terremoto · 地ず(ちず) — mapa · 土地(とち) — terreno · 地下てつ(ちかてつ) — metro · 地きゅう(ちきゅう) — Tierra"
+  },
+  {
+    "jp": "池",
+    "read": "チ／いけ",
+    "mean": "estanque",
+    "type": "kanji",
+    "extra": "池田さん(いけださん) — Ikeda · 電池(でんち) — pila"
+  },
+  {
+    "jp": "海",
+    "read": "カイ／うみ",
+    "mean": "mar",
+    "type": "kanji",
+    "extra": "北海道(ほっかいどう) — Hokkaido · 海外旅行(かいがいりょこう) — viaje al extranjero"
+  },
+  {
+    "jp": "洋",
+    "read": "ヨウ",
+    "mean": "océano, occidental",
+    "type": "kanji",
+    "extra": "大西洋(たいせいよう) — Atlántico · 洋ふく(ようふく) — ropa · 洋画(ようが) — película occidental · 洋食(ようしょく) — comida europea"
+  },
+  {
+    "jp": "雪",
+    "read": "セツ／ゆき",
+    "mean": "nieve",
+    "type": "kanji",
+    "extra": "雪だるま(ゆきだるま) — muñeco de nieve · 大雪です(おおゆきです) — nieva mucho · 新雪(しんせつ) — nieve nueva"
+  },
+  {
+    "jp": "光",
+    "read": "コウ／ひかり／ひか（る）",
+    "mean": "luz",
+    "type": "kanji",
+    "extra": "光ます(ひかります) — iluminar · 日光(にっこう) — luz del sol · かん光(かんこう) — turismo"
+  },
+  {
+    "jp": "台",
+    "read": "ダイ／タイ",
+    "mean": "contador (vehículos)",
+    "type": "kanji",
+    "extra": "台わん(たいわん) — Taiwán · 1台、2台(いちだい、にだい) — 1, 2 · 台所(だいどころ) — cocina"
+  },
+  {
+    "jp": "風",
+    "read": "フウ／かぜ",
+    "mean": "viento",
+    "type": "kanji",
+    "extra": "風が強い(かぜがつよい) — viento fuerte · 台風(たいふう) — tifón"
+  }
+]

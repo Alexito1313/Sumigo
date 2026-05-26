@@ -1,0 +1,72 @@
+[
+  {
+    "jp": "映",
+    "read": "エイ／うつ（す）",
+    "mean": "proyectar, reflejar",
+    "type": "kanji",
+    "extra": "テレビに映します(テレビにうつします) — proyectar a la tele · 上映します(じょうえいします) — echar película"
+  },
+  {
+    "jp": "画",
+    "read": "ガ／カク",
+    "mean": "pintura, dibujos",
+    "type": "kanji",
+    "extra": "映画(えいが) — película · 画家(がか) — pintor · まん画(まんが) — manga · けい画(けいかく) — planificar"
+  },
+  {
+    "jp": "音",
+    "read": "オン／おと",
+    "mean": "sonido",
+    "type": "kanji",
+    "extra": "へんな音(へんなおと) — sonido extraño · 音よみ(おんよみ) — lectura on · はつ音(はつおん) — pronunciación"
+  },
+  {
+    "jp": "楽",
+    "read": "ガク／ラク／たの（しい）",
+    "mean": "alegre, fácil, música",
+    "type": "kanji",
+    "extra": "日本語は楽しいです(にほんごはたのしいです) — el japonés es divertido · 音楽(おんがく) — música · 楽き(がっき) — instrumento · 楽な(らくな) — cómodo"
+  },
+  {
+    "jp": "歌",
+    "read": "カ／うた／うた（う）",
+    "mean": "canción, cantar",
+    "type": "kanji",
+    "extra": "歌を歌います(うたをうたいます) — cantar canción · 歌手(かしゅ) — cantante · 歌し(かし) — letra · 国歌(こっか) — himno"
+  },
+  {
+    "jp": "写",
+    "read": "シャ／うつ（す）",
+    "mean": "copiar",
+    "type": "kanji",
+    "extra": "ノートを写します(ノートをうつします) — copiar cuaderno · 写真(しゃしん) — fotografía"
+  },
+  {
+    "jp": "真",
+    "read": "シン／ま／まっ",
+    "mean": "sincero, verdadero",
+    "type": "kanji",
+    "extra": "真ん中(まんなか) — centro · 真っ白(まっしろ) — totalmente blanco · 写真(しゃしん) — fotografía · 真じめ(まじめ) — serio"
+  },
+  {
+    "jp": "旅",
+    "read": "リョ／たび",
+    "mean": "viaje",
+    "type": "kanji",
+    "extra": "一人旅(ひとりたび) — viajar solo · 旅かん(りょかん) — alojamiento tradicional · 旅行(りょこう) — viaje"
+  },
+  {
+    "jp": "世",
+    "read": "セ／セイ／よ",
+    "mean": "mundo",
+    "type": "kanji",
+    "extra": "21世き(にじゅういっせいき) — siglo 21 · 世の中(よのなか) — sociedad · あの世(あのよ) — más allá · 世話をします(せわをします) — cuidar"
+  },
+  {
+    "jp": "界",
+    "read": "カイ",
+    "mean": "límite, frontera",
+    "type": "kanji",
+    "extra": "世界(せかい) — mundo · げん界(げんかい) — límite personal"
+  }
+]
