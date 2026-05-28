@@ -1,0 +1,1287 @@
+/* ============================================================
+   Sistema visual compartido y variantes A / B
+   A — Washi & Bermellón (diurno)
+   B — Yoru · Aizome (nocturno)
+   ============================================================ */
+
+:root {
+  --serif: 'Shippori Mincho', 'Noto Serif JP', serif;
+  --sans:  'Inter', -apple-system, system-ui, 'Noto Sans JP', sans-serif;
+  --jp:    'Noto Sans JP', sans-serif;
+}
+
+/* ============================ Variante A ============================ */
+.va {
+  --bg:        #F6EFE0;
+  --bg-card:   #FFFCF5;
+  --bg-elev:  #EFE5CC;
+  --ink:       #1B1A17;
+  --ink-2:     #4A4842;
+  --ink-3:     #7A7568;
+  --border:    #DFD3B6;
+  --border-2:  #E9DEC2;
+  --accent:    #C8102E;
+  --accent-2:  #A50D26;
+  --gold:      #B89559;
+  --green:     #3A8A4E;
+  --red:       #B83A2A;
+  color: var(--ink);
+  font-family: var(--sans);
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 14% 18%, rgba(200,16,46,0.05) 0%, transparent 42%),
+    radial-gradient(circle at 86% 82%, rgba(184,149,89,0.06) 0%, transparent 48%);
+}
+
+/* ============================ Variante B ============================ */
+.vb {
+  --bg:        #0E1E33;
+  --bg-card:   #142944;
+  --bg-elev:   #1A3354;
+  --ink:       #F2E8D5;
+  --ink-2:     #C9BFA8;
+  --ink-3:     #8A8170;
+  --border:    #234260;
+  --border-2:  #2B527A;
+  --accent:    #E03A47;
+  --accent-2:  #F26A6A;
+  --gold:      #D4A24A;
+  --green:     #6EC78A;
+  --red:       #E85C5A;
+  color: var(--ink);
+  font-family: var(--sans);
+  background: var(--bg);
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(224,58,71,0.10) 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(212,162,74,0.08) 0%, transparent 45%);
+}
+
+/* ============================ Tipografía ============================ */
+.serif { font-family: var(--serif); }
+.jp    { font-family: var(--jp); }
+.eyebrow {
+  font-family: var(--serif);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--ink-3);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.eyebrow::before {
+  content: ''; width: 14px; height: 1.5px;
+  background: var(--accent);
+}
+
+/* ============================ Topbar ============================ */
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in oklab, var(--bg) 88%, transparent);
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-mark {
+  width: 36px; height: 36px;
+  font-family: var(--serif); font-weight: 700;
+  font-size: 22px; line-height: 1;
+  color: #fff; background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+  /* small inner notch like hanko stamp */
+  box-shadow: inset 0 0 0 2px var(--accent), inset 0 0 0 3px rgba(255,255,255,0.18);
+  letter-spacing: -0.02em;
+}
+.brand-text { display: flex; flex-direction: column; line-height: 1.05; }
+.brand-jp {
+  font-family: var(--serif); font-weight: 700; font-size: 16px;
+  color: var(--ink);
+}
+.brand-sub {
+  font-size: 9.5px; color: var(--ink-3);
+  letter-spacing: 0.28em; text-transform: lowercase;
+}
+.topbar-nav { display: flex; gap: 2px; }
+.topbar-nav button {
+  background: none; border: none; cursor: pointer;
+  padding: 6px 10px;
+  font-family: var(--sans); font-size: 12px; font-weight: 500;
+  color: var(--ink-2); border-radius: 4px;
+}
+.topbar-nav button.active {
+  color: var(--accent); background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+
+/* ============================ Home greeting ============================ */
+.greet-wrap {
+  padding: 20px 18px 0;
+  position: relative;
+}
+.greet-eyebrow {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 8px;
+}
+.greet-eyebrow .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+}
+.greet-eyebrow .meta {
+  font-family: var(--jp); font-size: 11px;
+  color: var(--ink-3); letter-spacing: 0.06em;
+}
+.greet-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 22px; line-height: 1.2;
+  margin: 0; letter-spacing: -0.01em;
+}
+.greet-title .jp-sub {
+  display: block; font-size: 12px; color: var(--ink-3);
+  font-weight: 400; letter-spacing: 0.08em; margin-top: 4px;
+}
+
+/* ============================ Streak (mini) ============================ */
+.streak-mini {
+  display: flex; align-items: center; gap: 12px;
+  margin: 14px 18px 0;
+  padding: 0;
+  font-size: 11px;
+}
+.streak-mini .pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600; color: var(--ink-2);
+}
+.streak-mini .pill .n {
+  font-family: var(--serif); font-size: 14px;
+  color: var(--ink); font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.streak-mini .pill .lbl {
+  color: var(--ink-3); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  font-weight: 600;
+}
+.streak-mini .sep {
+  width: 1px; height: 14px; background: var(--border);
+}
+.streak-mini .dots {
+  display: flex; gap: 4px; align-items: center;
+}
+.streak-mini .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--border-2);
+}
+.streak-mini .dot.done { background: var(--accent); }
+.streak-mini .dot.today {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+
+/* ============================ Daily kanji (mini) ============================ */
+.daily-mini {
+  margin: 14px 18px 0;
+  display: flex; align-items: center; gap: 14px;
+  padding: 10px 14px 10px 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: left; cursor: pointer;
+  position: relative;
+}
+.daily-mini .mini-kanji {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 36px; line-height: 1; color: var(--ink);
+  letter-spacing: -0.02em;
+  width: 44px; text-align: center;
+  flex-shrink: 0;
+}
+.daily-mini .mini-info {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.daily-mini .mini-eyebrow {
+  font-size: 9px; font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
+.daily-mini .mini-meaning {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 14px; color: var(--ink);
+  line-height: 1.2;
+}
+.daily-mini .mini-reading {
+  font-family: var(--jp); font-size: 11px;
+  color: var(--ink-3); letter-spacing: 0.06em;
+}
+.daily-mini .mini-arrow {
+  color: var(--ink-3); font-size: 14px;
+  font-family: var(--serif); font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ============================ Streak / racha ============================ */
+.streak {
+  margin: 18px 18px 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 14px 12px;
+  position: relative; overflow: hidden;
+}
+.streak-row {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 12px; margin-bottom: 12px;
+}
+.streak-num {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 32px; line-height: 1; color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.streak-num .unit {
+  font-size: 12px; color: var(--ink-3);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  margin-left: 4px; font-weight: 600; font-family: var(--sans);
+}
+.streak-label {
+  font-size: 10.5px; color: var(--ink-3);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  font-weight: 600;
+}
+.streak-week {
+  display: grid; grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+}
+.streak-day {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+}
+.streak-day .d-label {
+  font-size: 9px; color: var(--ink-3);
+  letter-spacing: 0.06em; font-family: var(--jp);
+}
+.streak-day .d-mark {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1px solid var(--border-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: var(--ink-3);
+}
+.streak-day.done .d-mark {
+  background: var(--accent); border-color: var(--accent);
+  color: #fff;
+}
+.streak-day.today .d-mark {
+  background: var(--bg-card); border: 1.5px dashed var(--accent);
+  color: var(--accent); font-weight: 700;
+}
+
+/* sakura petal absolute dec for streak (var A) */
+.va .streak::after {
+  content: ''; position: absolute;
+  width: 36px; height: 36px; right: -8px; top: -8px;
+  background:
+    radial-gradient(circle at 50% 35%, color-mix(in oklab, var(--accent) 25%, transparent) 0 38%, transparent 39%),
+    radial-gradient(circle at 30% 60%, color-mix(in oklab, var(--accent) 22%, transparent) 0 32%, transparent 33%),
+    radial-gradient(circle at 70% 60%, color-mix(in oklab, var(--accent) 22%, transparent) 0 32%, transparent 33%);
+  opacity: 0.85;
+}
+
+/* ============================ Kanji del día ============================ */
+.daily {
+  margin: 18px 18px 0;
+  border-radius: 16px;
+  padding: 16px 16px 18px;
+  position: relative;
+  overflow: hidden;
+}
+.va .daily {
+  background: linear-gradient(180deg, #FFFCF5 0%, #FBF3DD 100%);
+  border: 1px solid var(--border);
+}
+.vb .daily {
+  background: linear-gradient(180deg, #1A3354 0%, #122846 100%);
+  border: 1px solid var(--border-2);
+}
+.daily-eyebrow {
+  font-family: var(--serif); font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.24em;
+  color: var(--accent);
+  margin-bottom: 6px;
+  display: flex; align-items: center; gap: 8px;
+}
+.daily-eyebrow .stamp {
+  width: 14px; height: 14px; background: var(--accent);
+  border-radius: 2px; color: #fff;
+  font-family: var(--serif); font-size: 9px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; letter-spacing: 0;
+}
+.daily-grid {
+  display: grid; grid-template-columns: 92px 1fr;
+  gap: 14px; align-items: center;
+}
+.daily-kanji {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 84px; line-height: 0.9; color: var(--ink);
+  letter-spacing: -0.04em;
+  text-align: center;
+}
+.va .daily-kanji {
+  text-shadow: 1px 1px 0 rgba(184,149,89,0.18);
+}
+.daily-meta-jp {
+  font-family: var(--jp); font-size: 12px;
+  color: var(--ink-2); letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+.daily-meta-mean {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 16px; line-height: 1.2; color: var(--ink);
+  margin-bottom: 8px;
+}
+.daily-meta-block {
+  font-size: 10px; color: var(--ink-3);
+  letter-spacing: 0.16em; text-transform: uppercase;
+}
+
+/* ============================ Section title ============================ */
+.section-title {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 26px 18px 10px;
+}
+.section-title h3 {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 13px; margin: 0; color: var(--ink);
+  letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 8px;
+}
+.section-title h3 .stroke {
+  display: inline-block; width: 22px; height: 2px;
+  background: var(--accent); border-radius: 2px;
+}
+.section-title h3 .jp-side {
+  font-family: var(--jp); font-size: 11px;
+  color: var(--ink-3); font-weight: 400;
+  letter-spacing: 0.1em; margin-left: 2px;
+}
+.section-title .toggle {
+  font-size: 10px; color: var(--ink-3);
+  letter-spacing: 0.16em; text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ============================ Level selector (J1—J7) ============================ */
+.levels {
+  display: flex; gap: 6px;
+  padding: 0 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.levels::-webkit-scrollbar { display: none; }
+.level {
+  flex: 0 0 auto;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2px;
+  width: 52px; min-height: 56px;
+  padding: 8px 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer; position: relative;
+  font-family: var(--sans);
+}
+.level .l-id {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 16px; color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.level .l-sub {
+  font-size: 8.5px; color: var(--ink-3);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 600;
+}
+.level.active {
+  background: var(--accent); border-color: var(--accent);
+  box-shadow: 0 2px 10px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+.level.active .l-id { color: #fff; }
+.level.active .l-sub { color: rgba(255,255,255,0.85); }
+.level.locked {
+  opacity: 0.45;
+  background: transparent;
+  border-style: dashed;
+}
+.level.locked .l-id { color: var(--ink-3); }
+.level.locked::after {
+  content: ''; position: absolute;
+  top: 5px; right: 5px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ink-3);
+  opacity: 0.5;
+}
+
+/* Level selector — versión desktop */
+.dt-levels {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.dt-level {
+  width: 68px; min-height: 64px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  padding: 8px 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer; position: relative;
+}
+.dt-level .l-id {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 18px; color: var(--ink);
+}
+.dt-level .l-sub {
+  font-size: 9px; color: var(--ink-3);
+  letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 600;
+}
+.dt-level.active {
+  background: var(--accent); border-color: var(--accent);
+}
+.dt-level.active .l-id { color: #fff; }
+.dt-level.active .l-sub { color: rgba(255,255,255,0.85); }
+.dt-level.locked {
+  opacity: 0.45; background: transparent;
+  border-style: dashed;
+}
+.dt-level.locked::after {
+  content: ''; position: absolute;
+  top: 6px; right: 6px;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ink-3);
+  opacity: 0.5;
+}
+
+/* ============================ Chips ============================ */
+.chips {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding: 0 18px;
+}
+.chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--ink);
+  padding: 7px 12px; border-radius: 999px;
+  font-family: var(--sans); font-size: 12px; font-weight: 500;
+  display: inline-flex; align-items: center; gap: 6px;
+  cursor: pointer;
+}
+.chip .jp-tiny {
+  font-family: var(--jp); font-size: 10px;
+  color: var(--ink-3);
+}
+.chip.active {
+  background: var(--accent); color: #fff;
+  border-color: var(--accent);
+}
+.chip.active .jp-tiny { color: rgba(255,255,255,0.78); }
+.chip.ghost {
+  border-style: dashed; color: var(--ink-3);
+  font-style: italic; background: transparent;
+}
+.chip.icon-chip {
+  padding-left: 8px;
+}
+.chip .ico {
+  width: 14px; height: 14px;
+  border-radius: 2px; background: currentColor;
+  opacity: 0.78;
+  display: inline-block;
+}
+.chip .ico.t-flash {
+  /* small rectangle icon */
+  border-radius: 2px;
+  position: relative; opacity: 0;
+}
+.chip .ico.t-flash::before, .chip .ico.t-flash::after {
+  content: ''; position: absolute; inset: 0;
+  border: 1.4px solid currentColor; border-radius: 2px;
+  opacity: 0.8;
+}
+.chip .ico.t-flash::after {
+  transform: translate(3px, -3px) rotate(-3deg);
+  opacity: 0.5;
+}
+
+/* ============================ Bloque grid (numérico) ============================ */
+.blocks {
+  display: grid; grid-template-columns: repeat(5, 1fr);
+  gap: 6px; padding: 0 18px;
+}
+.block {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 6px 8px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  color: var(--ink); cursor: pointer; position: relative;
+  min-height: 50px;
+}
+.block .b-id {
+  font-family: var(--serif); font-size: 14px; font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.block .b-count {
+  font-size: 9px; color: var(--ink-3);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.block.done {
+  background: color-mix(in oklab, var(--green) 14%, var(--bg-card));
+  border-color: color-mix(in oklab, var(--green) 35%, var(--border));
+}
+.block.done::after {
+  content: ''; position: absolute; right: 4px; top: 4px;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--green);
+}
+.block.partial {
+  background: color-mix(in oklab, var(--accent) 7%, var(--bg-card));
+  border-color: color-mix(in oklab, var(--accent) 32%, var(--border));
+}
+.block.partial .b-id { color: var(--accent); }
+.block.active {
+  background: var(--accent); border-color: var(--accent);
+  color: #fff;
+}
+.block.active .b-count { color: rgba(255,255,255,0.78); }
+
+/* ============================ Mode tiles ============================ */
+.modes {
+  padding: 0 18px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.mode {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 12px 14px;
+  cursor: pointer; position: relative;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.mode.full { grid-column: span 2; }
+.mode .m-row {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.mode .m-kanji {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 22px; line-height: 1; color: var(--accent);
+}
+.mode .m-pill {
+  font-size: 8.5px; color: var(--ink-3);
+  letter-spacing: 0.18em; text-transform: uppercase;
+  font-weight: 700;
+}
+.mode .m-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 14px; color: var(--ink);
+  margin-top: 4px;
+}
+.mode .m-desc {
+  font-size: 11px; color: var(--ink-3); line-height: 1.45;
+}
+.mode.primary {
+  background: var(--accent); border-color: var(--accent);
+}
+.mode.primary .m-kanji,
+.mode.primary .m-title { color: #fff; }
+.mode.primary .m-desc { color: rgba(255,255,255,0.8); }
+.mode.primary .m-pill { color: rgba(255,255,255,0.7); }
+
+/* nuevo: badge "próximamente" */
+.mode .new-pill {
+  position: absolute; top: 10px; right: 10px;
+  background: var(--gold); color: #1B1A17;
+  font-size: 8.5px; font-weight: 700;
+  padding: 2px 6px; border-radius: 3px;
+  letter-spacing: 0.12em;
+}
+
+/* ============================ Start button ============================ */
+.start-wrap {
+  padding: 22px 18px 18px;
+}
+.btn-start {
+  width: 100%;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 12px;
+  padding: 16px 18px;
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  display: flex; align-items: center; justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 4px 18px color-mix(in oklab, var(--accent) 40%, transparent);
+}
+.btn-start .arrow {
+  font-family: var(--serif); font-size: 16px;
+}
+.btn-start .sub {
+  font-family: var(--jp); font-size: 10px;
+  color: rgba(255,255,255,0.78); letter-spacing: 0.16em;
+  margin-top: 2px; font-weight: 400;
+  text-transform: lowercase;
+}
+.btn-start-content { text-align: left; display: flex; flex-direction: column; }
+
+/* ============================ Footer ============================ */
+.foot {
+  text-align: center; padding: 18px 0 22px;
+  color: var(--ink-3); opacity: 0.5;
+  font-family: var(--serif);
+  letter-spacing: 0.6em; font-size: 11px;
+}
+
+/* ============================ Flashcard ============================ */
+.progress-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px 12px;
+  font-size: 11px; color: var(--ink-2);
+}
+.progress-row .label-l, .progress-row .label-r {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--sans); font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.progress-row .index {
+  font-family: var(--serif); font-size: 13px; color: var(--ink);
+}
+.progress-row .of { color: var(--ink-3); }
+.progress-petals {
+  flex: 1; display: flex; gap: 2px; height: 6px;
+  align-items: center;
+}
+.petal {
+  flex: 1; height: 6px; border-radius: 3px;
+  background: var(--border-2);
+}
+.petal.done { background: var(--accent); }
+.petal.curr { background: var(--accent); position: relative; }
+.petal.curr::after {
+  content: ''; position: absolute; right: -3px; top: -3px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--bg);
+}
+.session-tally {
+  display: flex; gap: 8px; align-items: center;
+  font-family: var(--jp); font-size: 11px;
+}
+.session-tally .good { color: var(--green); font-weight: 700; }
+.session-tally .bad { color: var(--accent); font-weight: 700; }
+
+.stage {
+  padding: 8px 18px 0;
+}
+.fcard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 8px 24px rgba(27,26,23,0.05);
+}
+.vb .fcard {
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 12px 32px rgba(0,0,0,0.35);
+}
+.fcard-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px 0;
+}
+.fcard-block-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--serif); font-size: 11px;
+  color: var(--ink-3); letter-spacing: 0.16em;
+  text-transform: uppercase; font-weight: 700;
+}
+.fcard-block-badge .seal {
+  width: 18px; height: 18px;
+  background: var(--accent); color: #fff;
+  font-family: var(--serif); font-size: 10px; font-weight: 700;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 3px;
+  letter-spacing: 0;
+}
+.fcard-type-badge {
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 4px 10px; border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent) 30%, transparent);
+}
+.fcard-body {
+  padding: 36px 20px 28px;
+  display: flex; flex-direction: column; align-items: center; gap: 0;
+  text-align: center;
+  position: relative; min-height: 280px;
+  justify-content: center;
+}
+.fcard-jp-big {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 156px; line-height: 0.9; color: var(--ink);
+  letter-spacing: -0.04em;
+  margin: 0; position: relative; z-index: 2;
+}
+.fcard-jp-medium {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 54px; line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.fcard-jp-back {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 64px; line-height: 1; color: var(--ink);
+  letter-spacing: -0.04em;
+  margin: 0 0 8px;
+}
+.fcard-reading {
+  font-family: var(--jp); font-size: 14px;
+  color: var(--ink-2); letter-spacing: 0.12em;
+  margin: 6px 0 14px;
+}
+.fcard-meaning {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 20px; line-height: 1.3; color: var(--ink);
+  margin: 0 0 14px; max-width: 280px;
+}
+.fcard-extras {
+  width: 100%; max-width: 300px;
+  border-top: 1px dashed var(--border-2);
+  padding-top: 12px; margin-top: 4px;
+  text-align: left;
+}
+.fcard-extras h5 {
+  font-family: var(--serif); font-size: 9.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.22em;
+  color: var(--ink-3); margin: 0 0 6px;
+}
+.fcard-extras .ex {
+  font-family: var(--jp); font-size: 12px;
+  color: var(--ink-2); line-height: 1.55;
+  margin-bottom: 3px;
+}
+.fcard-hint {
+  text-align: center; font-size: 10.5px;
+  color: var(--ink-3); letter-spacing: 0.16em;
+  text-transform: uppercase; font-weight: 600;
+  padding: 0 0 12px;
+}
+.fcard-hint .kbd {
+  display: inline-block;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  padding: 1px 5px; border-radius: 3px;
+  font-family: var(--sans); font-size: 9.5px;
+  color: var(--ink-2);
+  margin: 0 2px;
+}
+
+/* swipe deck */
+.swipe-hint {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 18px 18px 0;
+}
+.swipe-side {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex; flex-direction: column; gap: 4px;
+  position: relative;
+}
+.swipe-side .arrow-ico {
+  font-family: var(--serif); font-size: 18px;
+  font-weight: 700;
+  color: var(--ink-3);
+}
+.swipe-side .s-label {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 13px; color: var(--ink);
+}
+.swipe-side .s-sub {
+  font-size: 10px; color: var(--ink-3);
+  letter-spacing: 0.12em; text-transform: uppercase;
+}
+.swipe-side.miss { border-color: color-mix(in oklab, var(--accent) 40%, var(--border)); }
+.swipe-side.miss .s-label { color: var(--accent); }
+.swipe-side.miss .arrow-ico { color: var(--accent); }
+.swipe-side.know { border-color: color-mix(in oklab, var(--green) 40%, var(--border)); }
+.swipe-side.know .s-label { color: var(--green); }
+.swipe-side.know .arrow-ico { color: var(--green); }
+
+/* Action buttons row (flash back) */
+.flash-actions {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 10px; padding: 18px 18px 0;
+}
+.flash-actions button {
+  border: none; cursor: pointer;
+  padding: 14px 14px;
+  border-radius: 12px;
+  font-family: var(--sans); font-size: 14px; font-weight: 600;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 2px;
+}
+.flash-actions .know {
+  background: var(--green); color: #fff;
+}
+.flash-actions .know .ksub {
+  font-family: var(--jp); font-size: 9px;
+  letter-spacing: 0.16em; opacity: 0.82;
+  font-weight: 400;
+}
+.flash-actions .miss {
+  background: var(--bg-card); border: 1.5px solid var(--accent);
+  color: var(--accent);
+}
+.flash-actions .miss .msub {
+  font-family: var(--jp); font-size: 9px;
+  letter-spacing: 0.16em; opacity: 0.78;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.flash-exit {
+  display: flex; justify-content: center;
+  padding: 14px 18px 18px;
+}
+.btn-exit {
+  background: none; border: none; cursor: pointer;
+  color: var(--ink-3); font-size: 11px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ============================ Test ============================ */
+.test-q-label {
+  text-align: center;
+  font-family: var(--serif); font-size: 12px;
+  color: var(--ink-3); letter-spacing: 0.22em;
+  text-transform: uppercase; font-weight: 700;
+  margin: 18px 0 10px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.test-q-label::before, .test-q-label::after {
+  content: ''; flex: 0 0 18px; height: 1px;
+  background: var(--border-2);
+}
+.test-q-label .jp-tag {
+  font-family: var(--jp); font-size: 10px;
+  color: var(--ink-3); letter-spacing: 0.12em;
+}
+
+.test-options {
+  padding: 0 18px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.test-option {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  padding: 12px 14px; border-radius: 12px;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 12px;
+  text-align: left; font-family: var(--sans);
+  font-size: 14px; color: var(--ink);
+}
+.test-option .opt-letter {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg-elev);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 11px; font-weight: 700;
+  color: var(--ink-2);
+  flex-shrink: 0;
+}
+.test-option .opt-text { flex: 1; line-height: 1.35; }
+.test-option .opt-type {
+  font-family: var(--jp); font-size: 9.5px;
+  color: var(--ink-3); letter-spacing: 0.12em;
+  text-transform: uppercase; margin-left: 4px;
+  flex-shrink: 0;
+}
+.test-option.correct {
+  border-color: var(--green);
+  background: color-mix(in oklab, var(--green) 12%, var(--bg-card));
+  color: var(--ink);
+  position: relative;
+}
+.test-option.correct .opt-letter {
+  background: var(--green); color: #fff; border-color: var(--green);
+}
+.test-option.correct::after {
+  content: '正'; position: absolute; right: 12px; top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--serif); font-size: 13px;
+  color: var(--green); font-weight: 700;
+  background: color-mix(in oklab, var(--green) 18%, transparent);
+  border: 1px solid var(--green);
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 4px;
+}
+.test-option.incorrect {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 10%, var(--bg-card));
+  color: var(--accent);
+}
+.test-option.incorrect .opt-letter {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+.test-option.dim { opacity: 0.5; }
+
+.test-next {
+  padding: 16px 18px 18px;
+}
+.btn-next {
+  width: 100%;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 12px;
+  padding: 14px 18px;
+  font-family: var(--sans); font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  cursor: pointer;
+}
+.btn-next.success { background: var(--green); }
+.btn-next .jp-mini {
+  font-family: var(--jp); font-size: 10px;
+  opacity: 0.78; letter-spacing: 0.16em;
+  font-weight: 400;
+}
+
+/* feedback bar above test result */
+.feedback-bar {
+  margin: 16px 18px 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px;
+}
+.feedback-bar.good {
+  background: color-mix(in oklab, var(--green) 14%, var(--bg-card));
+  border: 1px solid color-mix(in oklab, var(--green) 35%, var(--border));
+  color: var(--green);
+}
+.feedback-bar.bad {
+  background: color-mix(in oklab, var(--accent) 10%, var(--bg-card));
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, var(--border));
+  color: var(--accent);
+}
+.feedback-bar .fb-l {
+  display: flex; align-items: center; gap: 10px;
+}
+.feedback-bar .fb-glyph {
+  width: 32px; height: 32px;
+  background: currentColor; color: var(--bg-card);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 16px; font-weight: 700;
+}
+.feedback-bar .fb-text {
+  display: flex; flex-direction: column; line-height: 1.15;
+}
+.feedback-bar .fb-title {
+  font-family: var(--serif); font-weight: 700; font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.feedback-bar .fb-sub {
+  font-family: var(--jp); font-size: 10px;
+  color: var(--ink-3); margin-top: 2px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  font-weight: 600;
+}
+.feedback-bar.bad .fb-sub { color: var(--accent); opacity: 0.7; }
+.feedback-bar.good .fb-sub { color: var(--green); opacity: 0.7; }
+.feedback-bar .fb-streak {
+  display: flex; align-items: center; gap: 6px;
+  font-family: var(--serif); font-size: 16px; font-weight: 700;
+}
+.feedback-bar .fb-streak .num { font-size: 22px; line-height: 1; }
+.feedback-bar .fb-streak .lbl {
+  font-family: var(--sans); font-size: 8.5px;
+  color: var(--ink-3); letter-spacing: 0.16em;
+  text-transform: uppercase; font-weight: 600;
+}
+
+/* ============================ Decoración geométrica ============================ */
+/* Washi backdrop (variante A) — torii + sol + Fuji (composición central) */
+.washi-bg {
+  position: absolute; pointer-events: none;
+  inset: 0; overflow: hidden;
+  z-index: 0;
+}
+.washi-bg::before {
+  /* soft warm horizon glow */
+  content: ''; position: absolute;
+  left: 0; right: 0; bottom: 0; height: 380px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    color-mix(in oklab, var(--accent) 2%, transparent) 50%,
+    color-mix(in oklab, var(--gold) 8%, transparent) 100%);
+}
+
+/* sol detrás del torii */
+.washi-bg .sun {
+  position: absolute;
+  left: 50%; bottom: 110px;
+  transform: translateX(-50%);
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%,
+    var(--accent) 0%,
+    var(--accent) 55%,
+    color-mix(in oklab, var(--accent) 85%, var(--bg)) 100%);
+  opacity: 0.30;
+  box-shadow: 0 0 50px 4px color-mix(in oklab, var(--accent) 22%, transparent);
+  z-index: 1;
+}
+
+/* Fuji centrado, detrás del torii */
+.washi-bg .fuji {
+  position: absolute;
+  left: 50%; bottom: 30px;
+  transform: translateX(-50%);
+  width: 320px; height: 150px;
+  background: linear-gradient(180deg, #4A4842 0%, #6b6760 100%);
+  clip-path: polygon(0% 100%, 30% 44%, 42% 30%, 50% 22%, 58% 30%, 70% 44%, 100% 100%);
+  opacity: 0.72;
+  z-index: 2;
+}
+.washi-bg .fuji-snow {
+  position: absolute;
+  left: 50%; bottom: 30px;
+  transform: translateX(-50%);
+  width: 320px; height: 150px;
+  background: color-mix(in oklab, var(--bg) 80%, #fff);
+  clip-path: polygon(50% 22%, 58% 44%, 53% 39%, 50% 47%, 47% 39%, 42% 44%);
+  opacity: 0.92;
+  z-index: 3;
+}
+.washi-bg .fuji-foothill {
+  position: absolute;
+  left: 50%; bottom: 30px;
+  transform: translateX(-50%);
+  width: 360px; height: 72px;
+  background: linear-gradient(180deg, #5a564e 0%, #7d786d 100%);
+  clip-path: polygon(0% 100%, 18% 56%, 36% 74%, 54% 52%, 74% 72%, 90% 58%, 100% 70%, 100% 100%);
+  opacity: 0.5;
+  z-index: 4;
+}
+
+/* montañas en los lados, más bajas y más difuminadas */
+.washi-bg .mt-side {
+  position: absolute;
+  bottom: 24px;
+  height: 76px;
+  background: color-mix(in oklab, var(--ink) 30%, var(--bg));
+  opacity: 0.30;
+  z-index: 3;
+}
+.washi-bg .mt-side.left {
+  left: -30px;
+  width: 170px;
+  clip-path: polygon(0% 100%, 18% 50%, 38% 70%, 60% 25%, 82% 60%, 100% 80%, 100% 100%);
+}
+.washi-bg .mt-side.right {
+  right: -30px;
+  width: 170px;
+  clip-path: polygon(0% 100%, 0% 80%, 22% 55%, 44% 30%, 68% 65%, 86% 50%, 100% 100%);
+}
+
+/* niebla / agua en la base */
+.washi-bg .mist {
+  position: absolute;
+  left: 0; right: 0; bottom: 0; height: 80px;
+  background: linear-gradient(180deg,
+    transparent 0%,
+    color-mix(in oklab, var(--bg) 60%, var(--ink-3)) 50%,
+    color-mix(in oklab, var(--bg) 75%, var(--ink-3)) 100%);
+  opacity: 0.50;
+  z-index: 4;
+}
+
+/* TORII centrado y delantero */
+.washi-bg .torii {
+  position: absolute;
+  left: 50%; bottom: 20px;
+  transform: translateX(-50%);
+  width: 165px; height: 160px;
+  z-index: 6;
+  opacity: 0.85;
+}
+.washi-bg .torii .post {
+  position: absolute; bottom: 0; width: 10px;
+  background: linear-gradient(180deg,
+    color-mix(in oklab, var(--accent) 92%, var(--ink)) 0%,
+    color-mix(in oklab, var(--accent) 85%, var(--ink)) 80%,
+    color-mix(in oklab, var(--accent) 60%, var(--ink)) 100%);
+}
+.washi-bg .torii .post.left  { left: 32px;  height: 130px; }
+.washi-bg .torii .post.right { right: 32px; height: 130px; }
+.washi-bg .torii .post::after {
+  /* base/foot */
+  content: ''; position: absolute;
+  bottom: 0; left: -4px; right: -4px;
+  height: 7px;
+  background: color-mix(in oklab, var(--ink) 70%, var(--accent));
+  border-radius: 2px 2px 0 0;
+}
+.washi-bg .torii .nuki {
+  /* segundo travesaño bermellón */
+  position: absolute;
+  top: 34px; left: 22px; right: 22px;
+  height: 7px; background: var(--accent);
+}
+.washi-bg .torii .gakuzuka {
+  /* tablilla central */
+  position: absolute;
+  top: 20px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 16px;
+  background: var(--accent);
+}
+.washi-bg .torii .shimaki {
+  /* travesaño superior oscuro (más grueso) */
+  position: absolute;
+  top: 14px; left: 6px; right: 6px;
+  height: 10px;
+  background: color-mix(in oklab, var(--ink) 92%, transparent);
+}
+.washi-bg .torii .kasagi {
+  /* tejado curvado superior, oscuro con extremos elevados */
+  position: absolute;
+  top: 0; left: -12px; right: -12px;
+  height: 13px;
+  background: color-mix(in oklab, var(--ink) 92%, transparent);
+  clip-path: polygon(0% 75%, 6% 30%, 14% 8%, 86% 8%, 94% 30%, 100% 75%, 100% 100%, 0% 100%);
+}
+
+/* sello hanko 朱 arriba a la derecha */
+.washi-bg .seal {
+  position: absolute;
+  top: 26px; right: 24px;
+  width: 30px; height: 30px;
+  border-radius: 4px;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-weight: 700;
+  font-size: 16px; color: var(--bg);
+  opacity: 0.12;
+  box-shadow: inset 0 0 0 2px var(--accent), inset 0 0 0 3px color-mix(in oklab, var(--bg) 60%, var(--accent));
+  z-index: 7;
+}
+
+/* Torii (variante A) — rectángulos */
+.torii-watermark {
+  position: absolute; pointer-events: none;
+  opacity: 0.08; right: -20px; top: 8px;
+  width: 120px; height: 120px;
+}
+.torii-watermark .post {
+  position: absolute; bottom: 0; width: 14px;
+  background: var(--accent);
+}
+.torii-watermark .post.left  { left: 16px; height: 90px; }
+.torii-watermark .post.right { right: 16px; height: 90px; }
+.torii-watermark .lintel {
+  position: absolute; top: 12px; left: 0; right: 0;
+  height: 14px; background: var(--accent);
+}
+.torii-watermark .lintel-2 {
+  position: absolute; top: 32px; left: 8px; right: 8px;
+  height: 8px; background: var(--accent);
+}
+.torii-watermark .cap {
+  position: absolute; top: 4px; left: -6px; right: -6px;
+  height: 8px; background: var(--accent);
+  border-radius: 4px 4px 0 0;
+}
+
+/* Fuji + luna (variante B) */
+.fuji-bg {
+  position: absolute; pointer-events: none;
+  inset: 0; overflow: hidden;
+  z-index: 0;
+}
+.fuji-bg .moon {
+  position: absolute; right: 36px;
+  bottom: 150px;
+  width: 72px; height: 72px; border-radius: 50%;
+  background: color-mix(in oklab, var(--gold) 40%, var(--bg));
+  border: 1px solid color-mix(in oklab, var(--gold) 55%, transparent);
+  box-shadow: 0 0 70px color-mix(in oklab, var(--gold) 45%, transparent);
+}
+.fuji-bg .fuji {
+  position: absolute; left: -10%; right: -10%; bottom: -20px;
+  height: 180px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--bg-elev) 90%, var(--ink)) 0%, var(--bg) 100%);
+  clip-path: polygon(0% 100%, 38% 30%, 46% 38%, 56% 12%, 64% 28%, 100% 100%);
+  opacity: 0.55;
+}
+.fuji-bg .fuji-snow {
+  position: absolute; left: -10%; right: -10%; bottom: 100px;
+  height: 80px;
+  background: color-mix(in oklab, var(--ink) 78%, var(--bg));
+  clip-path: polygon(48% 100%, 53% 64%, 56% 70%, 60% 50%, 64% 76%, 65% 100%);
+  opacity: 0.32;
+}
+
+/* Sakura cluster decoration */
+.sakura {
+  display: inline-flex; gap: 2px; align-items: center;
+}
+.sakura .petal {
+  width: 6px; height: 6px; border-radius: 50% 60% 50% 60%;
+  background: var(--accent);
+  display: inline-block;
+}
+.sakura.tiny .petal { width: 4px; height: 4px; }
+
+/* Sumi brush dot */
+.sumi-dot {
+  width: 8px; height: 8px;
+  background: var(--ink);
+  border-radius: 50% 60% 40% 50%;
+  transform: rotate(-12deg);
+  display: inline-block;
+}
+
+/* generic helper */
+.app-frame {
+  position: relative;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: var(--sans);
+}
+.app-scroll {
+  position: relative;
+  width: 100%; height: 100%;
+  overflow: hidden;
+}
+
+/* Variant B subtle texture */
+.vb .topbar {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--bg) 92%, transparent) 0%, transparent 100%);
+  border-bottom-color: var(--border);
+}
+
+/* Per-variant kanji styling */
+.va .fcard-jp-big {
+  background: linear-gradient(180deg, var(--ink) 0%, color-mix(in oklab, var(--ink) 78%, var(--accent)) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+.vb .fcard-jp-big {
+  color: var(--ink);
+  text-shadow: 0 2px 24px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+/* Subtle horizontal rule (sumi) */
+.sumi-rule {
+  height: 1px; margin: 14px 18px 0;
+  background: linear-gradient(90deg, transparent 0%, var(--border) 12%, var(--border) 88%, transparent 100%);
+}

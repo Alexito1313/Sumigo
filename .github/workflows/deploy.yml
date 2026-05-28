@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+# Publica la app compilada en GitHub Pages.
+# NOTA: para que funcione hay que poner Settings → Pages → Source = "GitHub Actions".
+# Mientras tanto, la versión vanilla sigue servida desde la rama main (deploy from branch).
+# Se activará cuando la versión React esté lista para sustituir a la vanilla.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Un único despliegue concurrente.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # SPA fallback: GitHub Pages sirve 404.html en rutas no encontradas;
+      # al ser una copia del index, react-router resuelve la ruta del lado cliente.
+      - run: cp dist/index.html dist/404.html
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

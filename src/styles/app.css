@@ -1,0 +1,114 @@
+/* ============================================================
+   Layout base de la app (Fase 0). El sistema de tokens vive en
+   styles.css (.va / .vb). Aquí solo el shell y la pantalla provisional.
+   ============================================================ */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+* {
+  box-sizing: border-box;
+}
+
+.app-root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- Pantalla provisional ---------- */
+.ph {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 72px 24px 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.ph .brand-mark {
+  width: 56px;
+  height: 56px;
+  font-size: 30px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+.ph-title {
+  font-size: clamp(30px, 6vw, 40px);
+  line-height: 1.1;
+  margin: 4px 0 0;
+  letter-spacing: -0.01em;
+}
+.ph-jp {
+  font-weight: 400;
+  font-size: 0.5em;
+  color: var(--ink-3);
+  margin-left: 6px;
+}
+.ph-sub {
+  color: var(--ink-2);
+  font-size: 14px;
+  margin: 2px 0 0;
+}
+.ph-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+.ph-nav a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 9px 15px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: var(--bg-card);
+  transition: border-color 0.15s ease, transform 0.1s ease;
+}
+.ph-nav a:hover {
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+
+/* ---------- Conmutador de tema flotante ---------- */
+.theme-toggle {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  z-index: 50;
+}
+.theme-toggle button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-3);
+  padding: 6px 14px;
+  border-radius: 999px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.theme-toggle button.on {
+  background: var(--accent);
+  color: #fff;
+}

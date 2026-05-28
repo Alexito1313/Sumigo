@@ -2,10 +2,10 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "japones-app",
-      "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8181"],
-      "port": 8181
+      "name": "japoweb",
+      "runtimeExecutable": "C:\\Users\\afbhd\\nodejs\\node.exe",
+      "runtimeArgs": ["node_modules/vite/bin/vite.js", "--port", "5173", "--strictPort"],
+      "port": 5173
     }
   ]
 }

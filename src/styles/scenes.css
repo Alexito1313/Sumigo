@@ -1,0 +1,182 @@
+/* ============================================================
+   Escenas decorativas washi — 10 variantes (geométrico mínimo)
+   Colores washi fijos para comparar de forma aislada.
+   ============================================================ */
+
+.scene {
+  position: relative;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: #F6EFE0;
+  background-image:
+    radial-gradient(circle at 50% 120%, rgba(200,16,46,0.05) 0%, transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(184,149,89,0.06) 0%, transparent 45%);
+}
+.scene .label {
+  position: absolute; top: 12px; left: 14px; z-index: 20;
+  font-family: 'Shippori Mincho', serif; font-weight: 700;
+  font-size: 12px; color: #1B1A17;
+  display: flex; align-items: center; gap: 8px;
+}
+.scene .label .num {
+  width: 22px; height: 22px; border-radius: 5px;
+  background: #C8102E; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px;
+}
+.scene .label .jp {
+  font-family: 'Noto Sans JP', sans-serif; font-weight: 400;
+  font-size: 10px; color: #7A7568; letter-spacing: 0.08em;
+}
+
+/* ---------- piezas reutilizables ---------- */
+.sc-sun {
+  position: absolute; left: 50%; bottom: 56px; transform: translateX(-50%);
+  width: 156px; height: 156px; border-radius: 50%;
+  background: radial-gradient(circle at 50% 45%, #C8102E 0%, #C8102E 58%, #d8455c 100%);
+  opacity: 0.18;
+}
+.sc-sun.ring {
+  background: none; border: 1.5px solid rgba(200,16,46,0.4); opacity: 0.7;
+  width: 176px; height: 176px; bottom: 46px;
+}
+.sc-moon {
+  position: absolute; left: 50%; bottom: 70px; transform: translateX(-50%);
+  width: 96px; height: 96px; border-radius: 50%;
+  background: radial-gradient(circle at 42% 40%, #d8c089 0%, #B89559 70%);
+  opacity: 0.5;
+}
+
+.sc-fuji {
+  position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%);
+  width: 300px; height: 138px;
+  background: linear-gradient(180deg, #4A4842 0%, #6b6760 100%);
+  clip-path: polygon(0% 100%, 38% 30%, 45% 36%, 50% 16%, 55% 36%, 62% 30%, 100% 100%);
+  opacity: 0.72;
+}
+.sc-fuji-snow {
+  position: absolute; left: 50%; bottom: 16px; transform: translateX(-50%);
+  width: 300px; height: 138px;
+  background: #F3EEE1;
+  clip-path: polygon(50% 16%, 57% 38%, 52% 34%, 50% 42%, 48% 34%, 43% 38%);
+  opacity: 0.95;
+}
+.sc-fuji.tall { width: 360px; height: 178px; bottom: 14px; }
+.sc-fuji.tall + .sc-fuji-snow, .sc-fuji-snow.tall { width: 360px; height: 178px; bottom: 14px; }
+
+/* sierra de 3 picos */
+.sc-range {
+  position: absolute; left: -6%; right: -6%; bottom: 16px; height: 110px;
+  background: linear-gradient(180deg, #5a564e 0%, #736e64 100%);
+  clip-path: polygon(0% 100%, 12% 55%, 24% 72%, 40% 30%, 52% 50%, 66% 22%, 80% 52%, 92% 40%, 100% 64%, 100% 100%);
+  opacity: 0.55;
+}
+.sc-range.back {
+  bottom: 40px; height: 90px; opacity: 0.3;
+  clip-path: polygon(0% 100%, 18% 48%, 34% 66%, 50% 38%, 70% 60%, 86% 34%, 100% 56%, 100% 100%);
+}
+
+/* montañas laterales (legacy, sin uso) */
+.sc-mt {
+  position: absolute; bottom: 14px; height: 78px;
+  background: #8a8378; opacity: 0.3;
+}
+.sc-mt.l { left: -30px; width: 170px;
+  clip-path: polygon(0% 100%, 20% 48%, 40% 70%, 62% 26%, 84% 60%, 100% 80%, 100% 100%); }
+.sc-mt.r { right: -30px; width: 170px;
+  clip-path: polygon(0% 100%, 0% 80%, 22% 55%, 44% 30%, 68% 64%, 86% 50%, 100% 100%); }
+
+/* cordillera de fondo a todo lo ancho (orgánica, se adapta a cualquier anchura) */
+.sc-backrange {
+  position: absolute; left: 0; right: 0; bottom: 16px; height: 84px;
+  background: linear-gradient(180deg, #8a8378 0%, #9b9488 100%);
+  opacity: 0.32; z-index: 1;
+  clip-path: polygon(0% 100%, 5% 66%, 12% 80%, 21% 52%, 30% 72%, 40% 48%, 50% 70%, 60% 50%, 69% 74%, 79% 54%, 88% 72%, 95% 60%, 100% 70%, 100% 100%);
+}
+.sc-backrange.front {
+  bottom: 16px; height: 58px; opacity: 0.22; z-index: 1;
+  background: linear-gradient(180deg, #736e64 0%, #847e72 100%);
+  clip-path: polygon(0% 100%, 8% 72%, 18% 84%, 28% 64%, 38% 80%, 50% 60%, 60% 80%, 70% 66%, 82% 82%, 92% 70%, 100% 78%, 100% 100%);
+}
+
+/* niebla / suelo */
+.sc-mist {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 70px;
+  background: linear-gradient(180deg, transparent 0%, rgba(246,239,224,0.7) 55%, rgba(216,204,178,0.65) 100%);
+}
+
+/* torii */
+.sc-torii {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  width: 150px; height: 128px; z-index: 6;
+}
+.sc-torii.side { left: auto; right: 26px; transform: none; width: 104px; height: 96px; }
+.sc-torii .post {
+  position: absolute; bottom: 0; width: 12px;
+  background: linear-gradient(180deg, #C8102E 0%, #A50D26 88%, #7d0a1d 100%);
+}
+.sc-torii .post.l { left: 30px; height: 116px; }
+.sc-torii .post.r { right: 30px; height: 116px; }
+.sc-torii.side .post { width: 8px; }
+.sc-torii.side .post.l { left: 20px; height: 84px; }
+.sc-torii.side .post.r { right: 20px; height: 84px; }
+.sc-torii .nuki { position: absolute; top: 30px; left: 22px; right: 22px; height: 8px; background: #C8102E; }
+.sc-torii .gakuzuka { position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 10px; height: 15px; background: #C8102E; }
+.sc-torii .shimaki { position: absolute; top: 12px; left: 6px; right: 6px; height: 9px; background: #1B1A17; }
+.sc-torii .kasagi {
+  position: absolute; top: 0; left: -10px; right: -10px; height: 12px; background: #1B1A17;
+  clip-path: polygon(0% 75%, 6% 30%, 14% 8%, 86% 8%, 94% 30%, 100% 75%, 100% 100%, 0% 100%);
+}
+
+/* torii en modo oscuro: rojo encendido (el negro no se ve sobre el índigo) */
+.vb .sc-torii .post { background: linear-gradient(180deg, #b8313c 0%, #931f29 88%, #6a141c 100%); }
+.vb .sc-torii .nuki, .vb .sc-torii .gakuzuka { background: #b8313c; }
+.vb .sc-torii .shimaki, .vb .sc-torii .kasagi { background: #8a1a24; }
+
+/* sakura cayendo */
+.sc-petal {
+  position: absolute;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(200,16,46,0.6) 0 40%, transparent 41%),
+    radial-gradient(circle at 24% 68%, rgba(200,16,46,0.55) 0 32%, transparent 33%),
+    radial-gradient(circle at 76% 68%, rgba(200,16,46,0.55) 0 32%, transparent 33%),
+    radial-gradient(circle at 34% 92%, rgba(200,16,46,0.5) 0 28%, transparent 29%),
+    radial-gradient(circle at 66% 92%, rgba(200,16,46,0.5) 0 28%, transparent 29%);
+}
+
+/* bandas de nube (kasumi) */
+.sc-cloud {
+  position: absolute; height: 9px; border-radius: 6px;
+  background: rgba(27,26,23,0.13);
+}
+
+/* agua seigaiha */
+.sc-waves {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 76px;
+  background:
+    repeating-radial-gradient(circle at 50% 100%, transparent 0 10px, rgba(200,16,46,0.16) 10px 12px, transparent 12px 22px),
+    repeating-radial-gradient(circle at 16% 100%, transparent 0 10px, rgba(27,26,23,0.08) 10px 12px, transparent 12px 22px),
+    repeating-radial-gradient(circle at 84% 100%, transparent 0 10px, rgba(27,26,23,0.08) 10px 12px, transparent 12px 22px);
+}
+
+/* pagoda (3 tejados) */
+.sc-pagoda {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  width: 110px; height: 140px; z-index: 5;
+}
+.sc-pagoda .body { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 26px; height: 120px; background: #A50D26; opacity: 0.9; }
+.sc-pagoda .roof {
+  position: absolute; left: 50%; transform: translateX(-50%); height: 16px; background: #1B1A17;
+  clip-path: polygon(10% 100%, 0% 60%, 50% 0%, 100% 60%, 90% 100%);
+}
+.sc-pagoda .roof.r1 { top: 0; width: 70px; }
+.sc-pagoda .roof.r2 { top: 34px; width: 88px; }
+.sc-pagoda .roof.r3 { top: 70px; width: 106px; }
+
+/* línea de horizonte (sumi) */
+.sc-horizon {
+  position: absolute; left: 8%; right: 8%; bottom: 64px; height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(27,26,23,0.4) 18%, rgba(27,26,23,0.55) 50%, rgba(27,26,23,0.4) 82%, transparent);
+  opacity: 0.5; border-radius: 2px;
+}
+.sc-horizon.two { bottom: 56px; opacity: 0.3; }
