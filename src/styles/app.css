@@ -195,9 +195,16 @@ body {
   word-break: break-word;
   text-align: center;
 }
-/* Detalle: la métrica de la fuente deja el glifo bajo → nudge óptico arriba. */
+/* Detalle: marco y kanji RESPONSIVOS (escalan con el dispositivo, no px fijos).
+   El centrado óptico es proporcional (em) para que valga en cualquier pantalla. */
+.detail-hero {
+  grid-template-columns: auto 1fr;
+}
 .detail-kanji {
-  padding-bottom: 8px;
+  width: clamp(116px, 33vmin, 196px);
+  height: clamp(116px, 33vmin, 196px);
+  font-size: clamp(82px, 23vmin, 140px);
+  padding-bottom: 0.06em;
 }
 /* Stats: las etiquetas del bloque grande (cartas vistas / acierto / racha) se
    veían a la izquierda (letter-spacing + posible envoltura). Centrar y compensar. */
