@@ -93,7 +93,9 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
           setDx(0)
           setExiting(null)
           setStreakFlash(null)
-          window.setTimeout(() => setFeedback(null), 220)
+          // Limpiar el feedback AL cambiar de carta: si no, la nueva (que se
+          // remonta con key) heredaría el brillo verde/rojo de la anterior.
+          setFeedback(null)
         }
       }, 420)
     },
