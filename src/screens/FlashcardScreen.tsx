@@ -244,7 +244,8 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
           >
             {/* key={index}: cada carta es un elemento nuevo, así la siguiente
                 nace sin girar (sin transición de giro que enseñe la respuesta). */}
-            <div key={index} className={'flip-card' + (flipped ? ' is-flipped' : '')}>
+            <div key={index} className="card-rise">
+              <div className={'flip-card' + (flipped ? ' is-flipped' : '')}>
               <div className="flip-inner">
                 <div className="flip-face front">
                   <div className="fcard proto-card">
@@ -282,6 +283,7 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
               </div>
 
               <div className={'feedback-glow' + (feedback ? ' ' + feedback : '')}></div>
+              </div>
             </div>
 
             {dragging && swipeDir === 'know' && (
