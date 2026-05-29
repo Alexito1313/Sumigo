@@ -19,6 +19,19 @@ type ContentSel = 'kanji' | 'vocab' | 'both'
 
 const WEEKDAYS_JP = ['日', '月', '火', '水', '木', '金', '土']
 
+// Etiquetas ES + lectura JP para cada tipo gramatical del vocab (valores reales
+// del campo `type` en los datos). Base para el futuro sistema de tags.
+const TYPE_LABELS: Record<string, { label: string; jp: string }> = {
+  verbo: { label: 'Verbos', jp: '動詞' },
+  sustantivo: { label: 'Sustantivos', jp: '名詞' },
+  'adjetivo-i': { label: 'Adj. い', jp: 'い形' },
+  'adjetivo-na': { label: 'Adj. な', jp: 'な形' },
+  adverbio: { label: 'Adverbios', jp: '副詞' },
+  expresion: { label: 'Expresiones', jp: '表現' },
+}
+// Orden de aparición de los chips de tipo.
+const TYPE_ORDER = ['verbo', 'sustantivo', 'adjetivo-i', 'adjetivo-na', 'adverbio', 'expresion']
+
 function greeting(d = new Date()) {
   const h = d.getHours()
   const text =
@@ -157,26 +170,29 @@ function ContentChips({
   )
 }
 
-function TypeChips({ active, onSelect }: { active: string; onSelect: (l: string) => void }) {
-  // Nota: el filtrado real por tipo se aplica al mazo en la Fase 2 (modos).
+function TypeChips({
+  types,
+  active,
+  onSelect,
+}: {
+  types: string[]
+  active: string
+  onSelect: (v: string) => void
+}) {
   const items = [
-    { label: 'Todos', jp: '全部' },
-    { label: 'Verbos', jp: '動詞' },
-    { label: 'Sustantivos', jp: '名詞' },
-    { label: 'Adj. い', jp: 'い形' },
-    { label: 'Adj. な', jp: 'な形' },
-    { label: 'Adverbios', jp: '副詞' },
+    { value: 'all', label: 'Todos', jp: '全部' },
+    ...types.map((t) => ({ value: t, ...(TYPE_LABELS[t] ?? { label: t, jp: '' }) })),
   ]
   return (
     <div className="chips">
       {items.map((i) => (
         <button
-          key={i.label}
-          className={'chip ' + (active === i.label ? 'active' : '')}
-          onClick={() => onSelect(i.label)}
+          key={i.value}
+          className={'chip ' + (active === i.value ? 'active' : '')}
+          onClick={() => onSelect(i.value)}
         >
           {i.label}
-          <span className="jp-tiny">{i.jp}</span>
+          {i.jp && <span className="jp-tiny">{i.jp}</span>}
         </button>
       ))}
     </div>
@@ -293,7 +309,7 @@ export function HomeScreen() {
 
   const [levelSel, setLevelSel] = useState<string | null>(null)
   const [contentSel, setContentSel] = useState<ContentSel | null>(null)
-  const [typeSel, setTypeSel] = useState('Todos')
+  const [typeSel, setTypeSel] = useState('all')
   const [selectedBlocks, setSelectedBlocks] = useState<Set<string>>(new Set())
 
   const greet = useMemo(() => greeting(), [])
@@ -308,11 +324,37 @@ export function HomeScreen() {
     return out
   }, [contentSel, kanjiCounts, vocabCounts])
 
-  const total = blocks.filter((b) => selectedBlocks.has(b.id)).reduce((s, b) => s + b.count, 0)
+  // Cartas de los bloques elegidos (sin filtro de tipo) → para el conteo de bloques.
+  const blockCards = useMemo(() => {
+    if (!content || !contentSel) return []
+    const pool: Card[] = []
+    if (contentSel !== 'vocab') pool.push(...content.kanji)
+    if (contentSel !== 'kanji') pool.push(...content.vocab)
+    return pool.filter((c) => selectedBlocks.has(c.block))
+  }, [content, contentSel, selectedBlocks])
+
+  // Tipos gramaticales presentes en los bloques elegidos (solo vocab).
+  const availableTypes = useMemo(() => {
+    if (contentSel !== 'vocab') return []
+    const present = new Set(blockCards.map((c) => c.type))
+    const ordered = TYPE_ORDER.filter((t) => present.has(t))
+    const extra = [...present].filter((t) => !TYPE_ORDER.includes(t))
+    return [...ordered, ...extra]
+  }, [contentSel, blockCards])
+
+  // Tipo efectivo: si el elegido ya no está disponible, equivale a "todos".
+  const effectiveType = typeSel !== 'all' && availableTypes.includes(typeSel) ? typeSel : 'all'
+
+  // Mazo final (con filtro de tipo) → para el botón Empezar y la selección.
+  const studyCards =
+    effectiveType === 'all' ? blockCards : blockCards.filter((c) => c.type === effectiveType)
+  const blockTotal = blockCards.length
+  const total = studyCards.length
 
   const selection: Selection = {
     content: contentSel ?? 'kanji',
-    blocks: blocks.filter((b) => selectedBlocks.has(b.id)).map((b) => b.id),
+    blocks: [...selectedBlocks],
+    type: effectiveType === 'all' ? undefined : effectiveType,
   }
   const goStudy = (path: string) => {
     if (!contentSel || selectedBlocks.size === 0) return
@@ -329,10 +371,12 @@ export function HomeScreen() {
     // cambiar de nivel reinicia lo de abajo (la cascada se recalcula)
     setContentSel(null)
     setSelectedBlocks(new Set())
+    setTypeSel('all')
   }
   const changeContent = (c: ContentSel) => {
     setContentSel(c)
     setSelectedBlocks(new Set()) // los bloques cambian según el contenido
+    setTypeSel('all')
   }
   const toggleBlock = (id: string) =>
     setSelectedBlocks((prev) => {
@@ -408,7 +452,7 @@ export function HomeScreen() {
             <SectionTitle
               title="Bloques"
               jp={contentSel === 'vocab' ? 'MNN · L26—L36' : 'J3 · D1—D10'}
-              toggle={total ? `${total} cartas` : 'elige bloques'}
+              toggle={blockTotal ? `${blockTotal} cartas` : 'elige bloques'}
             />
             <BlockGrid
               blocks={blocks}
@@ -422,10 +466,14 @@ export function HomeScreen() {
           <div className="reveal">
             {/* El filtro por tipo es gramatical (verbos, sustantivos…) → solo vocab.
                 El kanji se estudia por bloques, así que se salta este paso. */}
-            {contentSel === 'vocab' && (
+            {contentSel === 'vocab' && availableTypes.length > 0 && (
               <>
-                <SectionTitle title="Filtro por tipo" jp="品詞" />
-                <TypeChips active={typeSel} onSelect={setTypeSel} />
+                <SectionTitle
+                  title="Filtro por tipo"
+                  jp="品詞"
+                  toggle={effectiveType === 'all' ? undefined : `${total} cartas`}
+                />
+                <TypeChips types={availableTypes} active={effectiveType} onSelect={setTypeSel} />
               </>
             )}
 
