@@ -10,6 +10,7 @@ import { DetailScreen } from './screens/DetailScreen'
 import { CalendarScreen } from './screens/CalendarScreen'
 import { TablasScreen } from './screens/TablasScreen'
 import { TraceScreen } from './screens/TraceScreen'
+import { CuentaScreen } from './screens/CuentaScreen'
 import { WriteScreen } from './screens/WriteScreen'
 import { SimulacroScreen } from './screens/SimulacroScreen'
 import { Placeholder } from './screens/Placeholder'
@@ -42,6 +43,7 @@ export const router = createBrowserRouter(
         { path: 'calendar', element: <CalendarScreen /> },
         { path: 'tablas', element: <TablasScreen /> },
         { path: 'trazar/:char', element: <TraceScreen /> },
+        { path: 'cuenta', element: <CuentaScreen /> },
         { path: 'detail/:id', element: <DetailScreen /> },
       ],
     },

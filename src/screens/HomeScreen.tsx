@@ -359,8 +359,22 @@ export function HomeScreen() {
       <div className="home-content">
         <div className="home-header">
           <LevelChip />
-          {/* Hueco derecho reservado para el icono de Cuenta (Fase E):
-              perfil → stats + opciones de cuenta. */}
+          <button className="home-acc-btn" onClick={() => go('/cuenta')} aria-label="Cuenta">
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4.5 20c0-4 3.5-6.2 7.5-6.2s7.5 2.2 7.5 6.2" />
+            </svg>
+          </button>
         </div>
 
         <div className="greet-wrap">
