@@ -298,7 +298,9 @@ body {
    y disparaba el bug). La carta saliente sigue desmontándose por el key del wrap.
    ============================================================ */
 .flip-face {
-  transition: opacity 0s linear calc(var(--flip-dur, 650ms) / 2);
+  /* delay = mitad del giro (--flip-dur es 650ms) → el swap cae con la carta de
+     canto. Hardcodeado a 325ms porque calc(var()/2) no resolvía fiable. */
+  transition: opacity 0s linear 325ms;
 }
 .flip-face.front {
   opacity: 1;
@@ -311,4 +313,11 @@ body {
 }
 .flip-card.is-flipped .flip-face.back {
   opacity: 1;
+}
+/* El swap de opacidad cae a MITAD DE TIEMPO del giro. Con la curva original
+   (cubic-bezier(0.5,0,0.2,1), asimétrica) la carta NO estaba de canto en ese
+   instante → el cambio de cara se notaba (pop). Con un easing SIMÉTRICO la mitad
+   del tiempo coincide con los 90° (carta de canto), donde el swap es invisible. */
+.flip-inner {
+  transition-timing-function: ease-in-out;
 }
