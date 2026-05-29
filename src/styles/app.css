@@ -170,3 +170,32 @@ body {
   height: 100%;
   overflow-y: auto;
 }
+
+/* ============================================================
+   Fixes de responsividad (móvil) — adaptarse a cualquier ancho de pantalla.
+   ============================================================ */
+/* Bloques: rejilla que se adapta al ancho (antes 5 col fijas se salían). */
+.blocks {
+  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
+}
+.block {
+  min-width: 0;
+}
+.block .b-count {
+  font-size: 8px;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-align: center;
+}
+/* Kanji/vocab de las cartas: nunca desbordar (envuelve si hace falta). */
+.fcard-jp-big,
+.fcard-jp-back,
+.test-card-mini .test-jp {
+  max-width: 100%;
+  word-break: break-word;
+  text-align: center;
+}
+/* Detalle: la métrica de la fuente deja el glifo bajo → nudge óptico arriba. */
+.detail-kanji {
+  padding-bottom: 8px;
+}

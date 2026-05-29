@@ -15,6 +15,16 @@ const SPEED_VARS: Record<string, string> = {
   '--exit-dur': '420ms',
 }
 
+// Tamaño adaptable al nº de caracteres (vocab largo no se sale de la tarjeta).
+function testFont(jp: string): string {
+  const n = [...jp].length
+  if (n <= 1) return 'clamp(64px, 24vw, 92px)'
+  if (n === 2) return 'clamp(50px, 19vw, 76px)'
+  if (n === 3) return 'clamp(40px, 15vw, 60px)'
+  if (n <= 5) return 'clamp(30px, 11vw, 48px)'
+  return 'clamp(24px, 8vw, 38px)'
+}
+
 type Option = Card & { correct: boolean }
 
 /** 1 correcta + 3 distractores del mazo, barajado de forma determinista por semilla. */
@@ -171,7 +181,9 @@ export function TestScreen() {
 
         <div className={'test-card-area' + (transitioning ? ' transitioning' : '')}>
           <div className="test-card-mini">
-            <div className="test-jp">{card.jp}</div>
+            <div className="test-jp" style={{ fontSize: testFont(card.jp) }}>
+              {card.jp}
+            </div>
             <div className="test-reading">{card.read}</div>
           </div>
 

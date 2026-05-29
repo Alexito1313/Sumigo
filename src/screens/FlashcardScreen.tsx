@@ -22,6 +22,23 @@ const SPEED_VARS: Record<string, string> = {
 }
 const SWIPE_THRESHOLD = 90
 
+// Tamaño de fuente adaptable al nº de caracteres (clamp → escala con el ancho)
+// para que el vocabulario largo no se salga de la carta.
+function jpFont(jp: string, face: 'front' | 'back'): string {
+  const n = [...jp].length
+  if (face === 'front') {
+    if (n <= 1) return 'clamp(92px, 34vw, 150px)'
+    if (n === 2) return 'clamp(64px, 25vw, 108px)'
+    if (n === 3) return 'clamp(48px, 19vw, 84px)'
+    if (n <= 5) return 'clamp(34px, 13vw, 58px)'
+    return 'clamp(26px, 9.5vw, 44px)'
+  }
+  if (n <= 1) return 'clamp(46px, 17vw, 70px)'
+  if (n <= 3) return 'clamp(34px, 12vw, 50px)'
+  if (n <= 5) return 'clamp(26px, 9vw, 40px)'
+  return 'clamp(22px, 7vw, 34px)'
+}
+
 type Exiting = 'left' | 'right' | null
 type Feedback = 'good' | 'bad' | null
 
@@ -229,7 +246,9 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
                 <div className="flip-face front">
                   <div className="fcard proto-card">
                     <div className="fcard-body" style={{ minHeight: 360 }}>
-                      <div className="fcard-jp-big">{card.jp}</div>
+                      <div className="fcard-jp-big" style={{ fontSize: jpFont(card.jp, 'front') }}>
+                        {card.jp}
+                      </div>
                     </div>
                     <div className="fcard-hint">
                       <span>toca para girar · desliza para responder</span>
@@ -239,7 +258,9 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
                 <div className="flip-face back">
                   <div className="fcard proto-card">
                     <div className="fcard-body" style={{ paddingTop: 28, paddingBottom: 20, minHeight: 360 }}>
-                      <div className="fcard-jp-back">{card.jp}</div>
+                      <div className="fcard-jp-back" style={{ fontSize: jpFont(card.jp, 'back') }}>
+                        {card.jp}
+                      </div>
                       <div className="fcard-reading">{card.read}</div>
                       <div className="fcard-meaning">{card.mean}</div>
                       {card.extras.length > 0 && (
