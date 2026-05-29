@@ -199,3 +199,10 @@ body {
 .detail-kanji {
   padding-bottom: 8px;
 }
+/* Stats: las etiquetas del bloque grande (cartas vistas / acierto / racha) se
+   veían a la izquierda (letter-spacing + posible envoltura). Centrar y compensar. */
+.stats-hero .hero-item .lbl,
+.stats-hero .hero-item .jp-mini {
+  text-align: center;
+  text-indent: 0.1em;
+}
