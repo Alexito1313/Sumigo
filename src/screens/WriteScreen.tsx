@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useRef, useState, type PointerEvent } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type PointerEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme, type Variant } from '../theme/ThemeProvider'
 import { useDeck } from '../data/useDeck'
 import { useProgressRepo } from '../data/progress/ProgressContext'
 import type { Card } from '../data/content'
-import { loadKvg, measurePath, matchStroke, type Pt } from '../data/kanjivg'
+import { loadKvg, measurePath, matchStroke, pathTotalLength, type Pt } from '../data/kanjivg'
 import { Backdrop } from '../components/Backdrop'
 import { Topbar } from '../components/Topbar'
 import { ProgressMeta } from '../components/mode/ProgressMeta'
@@ -173,6 +173,13 @@ function AutoStage({
     redrawCanvas()
   }, [redrawCanvas])
 
+  // Longitud real del trazo de la pista → anima el "dibujado" sin depender de
+  // pathLength (que provocaba un parpadeo rojo en el primer frame).
+  const hintLen = useMemo(
+    () => (showHint && paths[doneCount] ? pathTotalLength(paths[doneCount]) : 0),
+    [showHint, hintKey, doneCount, paths],
+  )
+
   const passed = mistakes === 0
 
   if (loadError) {
@@ -221,7 +228,12 @@ function AutoStage({
               <path key={'d' + i} className="kvg-done-stroke" d={d} />
             ))}
             {showHint && paths[doneCount] && (
-              <path key={'h' + hintKey} className="kvg-hint-stroke" pathLength={1} d={paths[doneCount]} />
+              <path
+                key={'h' + hintKey}
+                className="kvg-hint-stroke"
+                style={{ '--klen': hintLen } as CSSProperties}
+                d={paths[doneCount]}
+              />
             )}
           </svg>
           <canvas

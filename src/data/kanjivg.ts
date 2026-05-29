@@ -48,6 +48,29 @@ export function measurePath(d: string, n: number): Pt[] {
   return pts
 }
 
+/** Longitud total de un path (unidades 109), para animar la pista sin depender de pathLength. */
+export function pathTotalLength(d: string): number {
+  const ns = 'http://www.w3.org/2000/svg'
+  if (!measSvg) {
+    measSvg = document.createElementNS(ns, 'svg')
+    measSvg.setAttribute('viewBox', '0 0 109 109')
+    measSvg.style.cssText =
+      'position:absolute;left:-9999px;top:0;width:0;height:0;overflow:hidden;opacity:0;pointer-events:none'
+    document.body.appendChild(measSvg)
+  }
+  const p = document.createElementNS(ns, 'path')
+  p.setAttribute('d', d)
+  measSvg.appendChild(p)
+  let len = 0
+  try {
+    len = p.getTotalLength()
+  } catch {
+    len = 0
+  }
+  measSvg.removeChild(p)
+  return len
+}
+
 export function polylen(pts: Pt[]): number {
   let t = 0
   for (let i = 1; i < pts.length; i++) {
