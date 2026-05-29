@@ -56,9 +56,8 @@ export function computeStats(content: Content, snap: ProgressSnapshot): StatsDat
     const blockCards = content.kanji.filter((c) => c.block === b)
     const total = blockCards.length
     const done = blockCards.filter((c) => (cards[c.jp]?.views ?? 0) > 0).length
-    const r = blockCards.reduce((s, c) => s + (cards[c.jp]?.right ?? 0), 0)
-    const w = blockCards.reduce((s, c) => s + (cards[c.jp]?.wrong ?? 0), 0)
-    const pct = r + w ? Math.round((r / (r + w)) * 100) : 0
+    // % = lo completado del bloque (coincide con la barra y el conteo X/total).
+    const pct = total ? Math.round((done / total) * 100) : 0
     return { id: b, done, total, pct }
   })
 
