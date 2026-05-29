@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - uses: actions/setup-java@v4
@@ -39,8 +39,8 @@ jobs:
         env:
           CAP_BUILD: '1'
 
-      - name: Copiar web a Android
-        run: npx cap copy android
+      - name: Sync Capacitor (genera capacitor-cordova-android-plugins)
+        run: npx cap sync android
 
       - name: Build debug APK
         run: |
