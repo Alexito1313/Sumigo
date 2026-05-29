@@ -232,12 +232,6 @@ export function TestScreen() {
               </button>
             </div>
           )}
-          {!answeredNow && (
-            <div className="test-hint">
-              elige con <span className="kbd">A</span> <span className="kbd">B</span>{' '}
-              <span className="kbd">C</span> <span className="kbd">D</span> o toca una opción
-            </div>
-          )}
         </div>
       </div>
     </div>
