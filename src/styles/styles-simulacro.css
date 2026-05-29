@@ -1,0 +1,367 @@
+/* ============================================================
+   Simulacro JLPT — estilos
+   ============================================================ */
+
+.sim { font-family: var(--sans); }
+
+/* ============================ INTRO ============================ */
+.sim-intro {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 30px 26px;
+  gap: 4px;
+}
+.sim-seal {
+  width: 60px; height: 60px;
+  border-radius: 12px;
+  background: var(--accent); color: #fff;
+  font-family: var(--serif); font-weight: 700; font-size: 34px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 22px color-mix(in oklab, var(--accent) 38%, transparent);
+  margin-bottom: 12px;
+}
+.sim-intro-eyebrow {
+  font-family: var(--serif); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--accent);
+}
+.sim-intro-title {
+  font-family: var(--serif); font-weight: 700;
+  font-size: 32px; margin: 6px 0 0; color: var(--ink);
+  letter-spacing: -0.01em;
+  display: flex; align-items: center; gap: 10px;
+}
+.sim-intro-title .lvl {
+  background: var(--ink); color: var(--bg-card);
+  font-size: 16px; padding: 3px 10px; border-radius: 6px;
+  letter-spacing: 0.04em;
+}
+.vb .sim-intro-title .lvl { background: var(--accent); color: #fff; }
+.sim-intro-desc {
+  font-size: 13px; color: var(--ink-2); line-height: 1.6;
+  max-width: 300px; margin: 14px 0 6px;
+}
+.sim-rules {
+  display: flex; flex-direction: column; gap: 8px;
+  width: 100%; max-width: 320px; margin: 16px 0 24px;
+}
+.sim-rule {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 12px 14px;
+  text-align: left;
+}
+.sim-rule .sr-ico {
+  width: 34px; height: 34px; flex-shrink: 0;
+  border-radius: 8px;
+  background: color-mix(in oklab, var(--accent) 10%, transparent);
+  color: var(--accent);
+  font-family: var(--serif); font-size: 17px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.sim-rule .sr-text { display: flex; flex-direction: column; line-height: 1.3; }
+.sim-rule .sr-text b { font-family: var(--serif); font-size: 14px; color: var(--ink); }
+.sim-rule .sr-text span { font-size: 11px; color: var(--ink-3); }
+.sim-start-btn {
+  width: 100%; max-width: 320px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: 13px;
+  padding: 16px; cursor: pointer;
+  font-family: var(--sans); font-size: 15px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 6px 20px color-mix(in oklab, var(--accent) 38%, transparent);
+}
+.sim-start-btn .jp { font-family: var(--jp); font-size: 11px; opacity: 0.82; letter-spacing: 0.12em; }
+
+/* ============================ EXAM HEADER ============================ */
+.sim-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px 10px;
+}
+.sim-exit {
+  width: 32px; height: 32px; flex-shrink: 0;
+  border-radius: 8px; cursor: pointer;
+  background: var(--bg-card); border: 1px solid var(--border);
+  color: var(--ink-3); font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.sim-head-mid {
+  flex: 1; display: flex; flex-direction: column; gap: 1px; min-width: 0;
+}
+.sim-q-count {
+  font-family: var(--serif); font-size: 14px; font-weight: 700; color: var(--ink);
+}
+.sim-answered {
+  font-size: 10px; color: var(--ink-3); letter-spacing: 0.06em;
+}
+.sim-timer {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--serif); font-size: 17px; font-weight: 700;
+  color: var(--ink);
+  background: var(--bg-card); border: 1px solid var(--border);
+  padding: 6px 12px; border-radius: 999px;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+.sim-timer .st-ico {
+  font-size: 11px; color: var(--accent);
+}
+.sim-timer.low {
+  color: #fff; background: var(--accent); border-color: var(--accent);
+  animation: simPulse 1s ease-in-out infinite;
+}
+.sim-timer.low .st-ico { color: #fff; }
+@keyframes simPulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 40%, transparent); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
+.sim-progress-track {
+  height: 3px; margin: 0 16px;
+  background: var(--border-2); border-radius: 2px; overflow: hidden;
+}
+.sim-progress-fill {
+  height: 100%; background: var(--accent); border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+/* ============================ EXAM BODY ============================ */
+.sim-exam-body {
+  flex: 1; padding: 16px 18px 0;
+  display: flex; flex-direction: column; gap: 12px;
+  min-height: 0;
+}
+.sim-q-head {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.sim-q-type {
+  font-family: var(--serif); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent);
+}
+.sim-q-type .jp {
+  font-family: var(--jp); font-weight: 400; color: var(--ink-3);
+  letter-spacing: 0.1em; margin-left: 4px; text-transform: none;
+}
+.sim-mark {
+  background: none; border: 1px solid var(--border);
+  border-radius: 999px; padding: 4px 12px; cursor: pointer;
+  font-family: var(--sans); font-size: 11px; font-weight: 600;
+  color: var(--ink-3);
+}
+.sim-mark.on {
+  background: color-mix(in oklab, var(--gold) 18%, transparent);
+  border-color: var(--gold); color: color-mix(in oklab, var(--gold) 70%, var(--ink));
+}
+
+.sim-q-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 14px; padding: 24px 20px;
+  box-shadow: 0 4px 14px rgba(27,26,23,0.04);
+}
+.vb .sim-q-card { box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
+.sim-q-prompt {
+  font-family: var(--jp); font-size: 21px; line-height: 1.7;
+  color: var(--ink); margin: 0; text-align: center;
+  font-weight: 500;
+}
+.sim-q-prompt .q-focus {
+  color: var(--accent); font-weight: 700;
+  border-bottom: 2px solid color-mix(in oklab, var(--accent) 45%, transparent);
+  padding-bottom: 1px;
+}
+
+.sim-options {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sim-option {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--bg-card); border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 13px 14px; cursor: pointer;
+  text-align: left; font-family: var(--sans);
+  transition: all 0.14s ease;
+}
+.sim-option .so-letter {
+  width: 26px; height: 26px; flex-shrink: 0;
+  border-radius: 50%; border: 1px solid var(--border);
+  background: var(--bg-elev); color: var(--ink-2);
+  font-family: var(--serif); font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.sim-option .so-text {
+  font-size: 14px; color: var(--ink); flex: 1; line-height: 1.35;
+}
+.sim-option .so-text.jp, .sim-option.jp-opt .so-text { font-family: var(--jp); }
+.sim-option:hover { border-color: color-mix(in oklab, var(--accent) 45%, var(--border)); }
+.sim-option.selected {
+  border-color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 8%, var(--bg-card));
+}
+.sim-option.selected .so-letter {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+
+/* ============================ BOTTOM ============================ */
+.sim-bottom {
+  padding: 12px 16px 14px;
+  border-top: 1px solid var(--border);
+  background: color-mix(in oklab, var(--bg) 80%, transparent);
+}
+.sim-palette {
+  display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
+  margin-bottom: 12px;
+}
+.sim-palette .pal {
+  width: 28px; height: 28px; border-radius: 7px;
+  border: 1px solid var(--border); background: var(--bg-card);
+  font-family: var(--serif); font-size: 12px; font-weight: 700;
+  color: var(--ink-3); cursor: pointer;
+}
+.sim-palette .pal.done {
+  background: color-mix(in oklab, var(--accent) 14%, var(--bg-card));
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--border));
+  color: var(--accent);
+}
+.sim-palette .pal.marked {
+  background: color-mix(in oklab, var(--gold) 18%, var(--bg-card));
+  border-color: var(--gold);
+  color: color-mix(in oklab, var(--gold) 70%, var(--ink));
+}
+.sim-palette .pal.current {
+  background: var(--accent); border-color: var(--accent); color: #fff;
+  box-shadow: 0 2px 8px color-mix(in oklab, var(--accent) 30%, transparent);
+}
+.sim-nav {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.sim-nav-btn {
+  padding: 12px; border-radius: 11px; cursor: pointer;
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  background: var(--bg-card); border: 1px solid var(--border); color: var(--ink);
+}
+.sim-nav-btn:disabled { opacity: 0.4; cursor: default; }
+.sim-nav-btn.next, .sim-nav-btn.finish {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+}
+.sim-nav-btn.finish { background: var(--green); border-color: var(--green); }
+
+/* ============================ RESULTS ============================ */
+.sim-results { padding: 22px 18px 26px; }
+.sim-verdict {
+  border-radius: 18px; padding: 26px 20px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  text-align: center; position: relative; overflow: hidden;
+  margin-bottom: 14px;
+}
+.sim-verdict.pass {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--green) 16%, var(--bg-card)) 0%, var(--bg-card) 100%);
+  border: 1px solid color-mix(in oklab, var(--green) 38%, var(--border));
+}
+.sim-verdict.fail {
+  background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 12%, var(--bg-card)) 0%, var(--bg-card) 100%);
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, var(--border));
+}
+.sim-verdict .sv-seal {
+  width: 48px; height: 48px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--serif); font-size: 26px; font-weight: 700; color: #fff;
+  margin-bottom: 6px;
+}
+.sim-verdict.pass .sv-seal { background: var(--green); }
+.sim-verdict.fail .sv-seal { background: var(--accent); }
+.sim-verdict .sv-pct {
+  font-family: var(--serif); font-size: 52px; font-weight: 700;
+  line-height: 1; color: var(--ink); letter-spacing: -0.03em;
+}
+.sim-verdict .sv-pct small { font-size: 22px; opacity: 0.6; }
+.sim-verdict .sv-label {
+  font-family: var(--serif); font-size: 17px; font-weight: 700; color: var(--ink);
+}
+.sim-verdict.pass .sv-label { color: var(--green); }
+.sim-verdict.fail .sv-label { color: var(--accent); }
+.sim-verdict .sv-jp {
+  font-family: var(--jp); font-size: 11px; color: var(--ink-3);
+  letter-spacing: 0.1em;
+}
+
+.sim-res-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  margin-bottom: 16px;
+}
+.sim-res-stats .srs {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 11px; padding: 12px 6px;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.sim-res-stats .srs .n {
+  font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink);
+  letter-spacing: -0.01em; font-variant-numeric: tabular-nums;
+}
+.sim-res-stats .srs .n.good { color: var(--green); }
+.sim-res-stats .srs .n.bad { color: var(--accent); }
+.sim-res-stats .srs .l {
+  font-size: 9px; color: var(--ink-3); letter-spacing: 0.14em;
+  text-transform: uppercase; font-weight: 700;
+}
+
+.sim-section-scores {
+  display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px;
+}
+.sim-sec-row { display: flex; align-items: center; gap: 12px; }
+.sim-sec-row .sec-name {
+  font-family: var(--sans); font-size: 12px; font-weight: 600; color: var(--ink);
+  min-width: 92px;
+}
+.sim-sec-row .sec-bar {
+  flex: 1; height: 6px; background: var(--border-2);
+  border-radius: 3px; overflow: hidden;
+}
+.sim-sec-row .sec-fill { height: 100%; background: var(--accent); border-radius: 3px; }
+.sim-sec-row .sec-score {
+  font-family: var(--serif); font-size: 12px; font-weight: 700; color: var(--ink-2);
+  min-width: 32px; text-align: right; font-variant-numeric: tabular-nums;
+}
+
+.sim-review { margin-bottom: 18px; }
+.sim-review-h {
+  font-family: var(--serif); font-weight: 700; font-size: 13px; color: var(--ink);
+  display: flex; align-items: center; gap: 10px; margin: 0 0 10px;
+}
+.sim-review-h .strk { width: 22px; height: 2px; background: var(--accent); border-radius: 2px; display: inline-block; }
+.sim-review-h .jp-side { font-family: var(--jp); font-size: 11px; color: var(--ink-3); font-weight: 400; }
+.sim-review-h .cnt {
+  margin-left: auto; font-size: 10px; color: var(--ink-3); letter-spacing: 0.16em; font-weight: 600;
+  background: var(--bg-card); border: 1px solid var(--border); padding: 2px 8px; border-radius: 999px;
+}
+.sim-wrong {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 6px;
+}
+.sim-wrong .sw-q {
+  font-family: var(--jp); font-size: 14px; color: var(--ink); line-height: 1.5; margin-bottom: 8px;
+}
+.sim-wrong .sw-rows { display: flex; flex-direction: column; gap: 4px; }
+.sim-wrong .sw-line { display: flex; align-items: center; gap: 10px; }
+.sim-wrong .sw-tag {
+  font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700;
+  min-width: 86px;
+}
+.sim-wrong .sw-line.your .sw-tag { color: var(--accent); }
+.sim-wrong .sw-line.ok .sw-tag { color: var(--green); }
+.sim-wrong .sw-val { font-family: var(--jp); font-size: 13px; color: var(--ink); font-weight: 600; }
+.sim-wrong .sw-val.muted { color: var(--ink-3); font-style: italic; font-weight: 400; }
+
+.sim-res-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.sim-btn {
+  padding: 14px; border-radius: 12px; border: none; cursor: pointer;
+  font-family: var(--sans); font-size: 13px; font-weight: 600;
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.sim-btn .jp-mini { font-family: var(--jp); font-size: 9px; letter-spacing: 0.16em; opacity: 0.78; }
+.sim-btn.primary { background: var(--accent); color: #fff; }
+.sim-btn.ghost { background: var(--bg-card); border: 1px solid var(--border); color: var(--ink); }
+.sim-btn.ghost .jp-mini { color: var(--ink-3); }

@@ -9,6 +9,7 @@ import { StatsScreen } from './screens/StatsScreen'
 import { DetailScreen } from './screens/DetailScreen'
 import { CalendarScreen } from './screens/CalendarScreen'
 import { WriteScreen } from './screens/WriteScreen'
+import { SimulacroScreen } from './screens/SimulacroScreen'
 import { Placeholder } from './screens/Placeholder'
 
 /**
@@ -32,7 +33,7 @@ export const router = createBrowserRouter(
         { path: 'test', element: <TestScreen /> },
         { path: 'repaso', element: <FlashcardScreen mode="review" /> },
         { path: 'escritura', element: <WriteScreen /> },
-        { path: 'simulacro', element: <Placeholder name="Simulacro JLPT" jp="模擬試験" /> },
+        { path: 'simulacro', element: <SimulacroScreen /> },
         { path: 'stats', element: <StatsScreen /> },
         { path: 'settings', element: <SettingsScreen /> },
         { path: 'onboarding', element: <OnboardingScreen /> },
