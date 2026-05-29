@@ -213,3 +213,52 @@ body {
   text-align: center;
   text-indent: 0.1em;
 }
+
+/* ============================================================
+   Pase fluido — escalar con el dispositivo. Los "min" de cada clamp son los
+   tamaños ACTUALES (en móvil no cambia nada); crecen en pantallas grandes.
+   Se usa vmin para que escale con la dimensión menor (tablet, no en horizontal).
+   ============================================================ */
+/* La columna crece en pantallas grandes (en móvil sigue a pantalla completa). */
+@media (min-width: 640px) {
+  .home-frame,
+  .mode-frame {
+    max-width: 540px;
+  }
+}
+@media (min-width: 1024px) {
+  .home-frame,
+  .mode-frame {
+    max-width: 600px;
+  }
+}
+/* Títulos grandes (serif) y números destacados: fluidos y capados. */
+.greet-title {
+  font-size: clamp(22px, 4.8vmin, 30px);
+}
+.section-title h3 {
+  font-size: clamp(13px, 2.9vmin, 16px);
+}
+.stats-title,
+.settings-title,
+.cal-title {
+  font-size: clamp(24px, 5.2vmin, 33px);
+}
+.summary-title {
+  font-size: clamp(22px, 4.8vmin, 30px);
+}
+.onb-title {
+  font-size: clamp(30px, 6.5vmin, 40px);
+}
+.sim-intro-title {
+  font-size: clamp(32px, 7vmin, 43px);
+}
+.detail-mean {
+  font-size: clamp(21px, 4.6vmin, 28px);
+}
+.stats-hero .hero-item .num {
+  font-size: clamp(32px, 7vmin, 44px);
+}
+.cal-stats .cs .n {
+  font-size: clamp(22px, 4.8vmin, 29px);
+}
