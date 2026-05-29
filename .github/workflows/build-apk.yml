@@ -39,8 +39,8 @@ jobs:
         env:
           CAP_BUILD: '1'
 
-      - name: Sync Capacitor
-        run: npx cap sync android
+      - name: Copiar web a Android
+        run: npx cap copy android
 
       - name: Build debug APK
         run: |
