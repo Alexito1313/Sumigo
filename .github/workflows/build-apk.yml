@@ -5,6 +5,8 @@ name: Build Android APK
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main] # TEMP: para verificar el build; se quita después
 
 permissions:
   contents: read
@@ -24,6 +26,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Instalar SDK de Android 36
+        run: sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
       - run: npm ci
 
