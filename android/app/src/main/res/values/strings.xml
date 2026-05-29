@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">JapoWeb</string>
+    <string name="title_activity_main">JapoWeb</string>
+    <string name="package_name">com.alexito1313.japoweb</string>
+    <string name="custom_url_scheme">com.alexito1313.japoweb</string>
+</resources>

@@ -1,0 +1,49 @@
+name: Build Android APK
+
+# Compila el APK (Android) en la nube. Lánzalo a mano desde la pestaña Actions
+# (Run workflow) y descarga el .apk del apartado "Artifacts" del run.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - run: npm ci
+
+      - name: Build web (modo Capacitor)
+        run: npm run build
+        env:
+          CAP_BUILD: '1'
+
+      - name: Sync Capacitor
+        run: npx cap sync android
+
+      - name: Build debug APK
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Subir APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: japoweb-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error

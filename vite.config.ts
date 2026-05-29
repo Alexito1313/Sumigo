@@ -6,9 +6,14 @@ import { VitePWA } from 'vite-plugin-pwa'
 // En desarrollo servimos en '/' para que el dev server y el preview sean cómodos.
 // (Cuando se empaquete con Capacitor para tiendas, cambiar base a './'.)
 export default defineConfig(({ command, isPreview }) => ({
-  base: command === 'build' || isPreview ? '/JapoWeb/' : '/',
+  // CAP_BUILD (APK Capacitor): base '/' (la WebView sirve desde la raíz).
+  base: process.env.CAP_BUILD ? '/' : command === 'build' || isPreview ? '/JapoWeb/' : '/',
   plugins: [
     react(),
+    // En el build de Capacitor no usamos PWA: los assets ya van dentro del APK.
+    ...(process.env.CAP_BUILD
+      ? []
+      : [
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['icon-src.svg', 'icons/apple-touch-icon.png'],
@@ -52,6 +57,7 @@ export default defineConfig(({ command, isPreview }) => ({
         ],
       },
     }),
+        ]),
   ],
   server: {
     port: 5173,
