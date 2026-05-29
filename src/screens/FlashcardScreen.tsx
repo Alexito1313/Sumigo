@@ -216,7 +216,7 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
 
         <ProgressMeta index={progressIndex} total={TOTAL_SESSION} right={stats.right} wrong={stats.wrong} />
 
-        <div className="proto-stage">
+        <div className={'proto-stage' + (exiting ? ' is-advancing' : '')}>
           <div className="proto-behind b2" aria-hidden="true">
             <div className="behind-card">
               <div className="behind-jp">{next2.jp}</div>
@@ -229,6 +229,7 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
           </div>
 
           <div
+            key={index}
             className={wrapClasses.join(' ')}
             style={{ transform: wrapTransform }}
             onPointerDown={onPointerDown}

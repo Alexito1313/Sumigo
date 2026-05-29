@@ -285,3 +285,42 @@ body {
     animation: none;
   }
 }
+
+/* ============================================================
+   Flashcards — sensación de "mazo del que descartas". El feedback decía que la
+   carta parecía VOLVER con el nuevo kanji (el wrap rebotaba de 140% a 0). Con
+   key={index} en el wrap la carta saliente se DESMONTA; aquí las cartas de
+   detrás suben para ocupar el hueco y la nueva entra con un fundido.
+   ============================================================ */
+.proto-stage.is-advancing .proto-behind {
+  transition: transform var(--exit-dur, 420ms) cubic-bezier(0.22, 1, 0.36, 1),
+    opacity var(--exit-dur, 420ms) ease;
+}
+.proto-stage.is-advancing .proto-behind.b1 {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+.proto-stage.is-advancing .proto-behind.b2 {
+  transform: scale(0.94) translateY(14px);
+  opacity: 0.85;
+}
+.proto-stage.is-advancing .proto-behind.b1 .behind-jp {
+  transition: opacity var(--exit-dur, 420ms) ease;
+  opacity: 0.45;
+}
+.flip-card {
+  animation: fcard-in 0.3s ease both;
+}
+@keyframes fcard-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-card {
+    animation: none;
+  }
+}
