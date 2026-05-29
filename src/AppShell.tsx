@@ -1,17 +1,9 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
-import { useTheme, type ThemePref } from './theme/ThemeProvider'
 import { ONBOARDED_KEY } from './screens/OnboardingScreen'
 
-const OPTIONS: { value: ThemePref; label: string }[] = [
-  { value: 'light', label: '☀ Claro' },
-  { value: 'dark', label: '☾ Oscuro' },
-  { value: 'auto', label: 'Auto' },
-]
-
-/** Layout raíz: contenido de la ruta + conmutador de tema flotante. */
+/** Layout raíz: contenido de la ruta + redirección a onboarding en la 1ª visita. */
 export function AppShell() {
-  const { pref, setPref } = useTheme()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -25,20 +17,6 @@ export function AppShell() {
   return (
     <div className="app-root">
       <Outlet />
-
-      <div className="theme-toggle" role="group" aria-label="Tema">
-        {OPTIONS.map((o) => (
-          <button
-            key={o.value}
-            type="button"
-            className={pref === o.value ? 'on' : ''}
-            aria-pressed={pref === o.value}
-            onClick={() => setPref(o.value)}
-          >
-            {o.label}
-          </button>
-        ))}
-      </div>
     </div>
   )
 }
