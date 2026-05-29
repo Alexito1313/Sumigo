@@ -12,6 +12,9 @@ import './styles/styles-prototype.css'
 import './styles/styles-test-prototype.css'
 import './styles/styles-settings.css'
 import './styles/styles-onboarding.css'
+import './styles/styles-stats.css'
+import './styles/styles-detail.css'
+import './styles/styles-calendar.css'
 import './styles/app.css'
 
 createRoot(document.getElementById('root')!).render(

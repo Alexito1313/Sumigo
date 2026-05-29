@@ -5,6 +5,9 @@ import { FlashcardScreen } from './screens/FlashcardScreen'
 import { TestScreen } from './screens/TestScreen'
 import { SettingsScreen } from './screens/SettingsScreen'
 import { OnboardingScreen } from './screens/OnboardingScreen'
+import { StatsScreen } from './screens/StatsScreen'
+import { DetailScreen } from './screens/DetailScreen'
+import { CalendarScreen } from './screens/CalendarScreen'
 import { Placeholder } from './screens/Placeholder'
 
 /**
@@ -29,11 +32,11 @@ export const router = createBrowserRouter(
         { path: 'repaso', element: <FlashcardScreen mode="review" /> },
         { path: 'escritura', element: <Placeholder name="Escritura" jp="書き取り" /> },
         { path: 'simulacro', element: <Placeholder name="Simulacro JLPT" jp="模擬試験" /> },
-        { path: 'stats', element: <Placeholder name="Estadísticas" jp="統計" /> },
+        { path: 'stats', element: <StatsScreen /> },
         { path: 'settings', element: <SettingsScreen /> },
         { path: 'onboarding', element: <OnboardingScreen /> },
-        { path: 'calendar', element: <Placeholder name="Calendario" jp="カレンダー" /> },
-        { path: 'detail/:id', element: <Placeholder name="Detalle de carta" jp="詳細" /> },
+        { path: 'calendar', element: <CalendarScreen /> },
+        { path: 'detail/:id', element: <DetailScreen /> },
       ],
     },
   ],
