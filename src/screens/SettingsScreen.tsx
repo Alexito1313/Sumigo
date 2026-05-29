@@ -114,7 +114,6 @@ export function SettingsScreen() {
               <SettingsRow
                 label="Tema"
                 jp="テーマ"
-                hint="Claro · papel washi · Oscuro · índigo yoru"
                 control={
                   <ChipGroup
                     value={pref}
