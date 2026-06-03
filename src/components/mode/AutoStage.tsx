@@ -245,11 +245,10 @@ export function AutoStage({
               <line x1="54.5" y1="6" x2="54.5" y2="103" />
               <line x1="6" y1="54.5" x2="103" y2="54.5" />
             </g>
-            {guideOn &&
-              paths.map((d, i) => (i >= doneCount ? <path key={'g' + i} className="kvg-guide-stroke" d={d} /> : null))}
-            {paths.slice(0, doneCount).map((d, i) => (
-              <path key={'d' + i} className="kvg-done-stroke" d={d} />
-            ))}
+            {/* Guía = plantilla COMPLETA y constante del kanji (todos los trazos),
+                no por "hechos/restantes" → no aparece ni desaparece de golpe. La
+                tinta del usuario se dibuja entera encima, en el lienzo. */}
+            {guideOn && paths.map((d, i) => <path key={'g' + i} className="kvg-guide-stroke" d={d} />)}
             {showHint && paths[doneCount] && (
               <path
                 key={'h' + hintKey}

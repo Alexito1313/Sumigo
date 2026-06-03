@@ -236,11 +236,10 @@
 }
 .kvg-guide-stroke {
   fill: none;
-  stroke: color-mix(in oklab, var(--ink-3) 55%, transparent);
-  stroke-width: 3.2;
+  stroke: color-mix(in oklab, var(--ink-3) 50%, transparent);
+  stroke-width: 3.4;
   stroke-linecap: round;
   stroke-linejoin: round;
-  opacity: 0.5;
 }
 /* Trazo oficial ya hecho: ahora TENUE de fondo (referencia); la tinta del
    usuario se dibuja entera encima, en el lienzo. */
