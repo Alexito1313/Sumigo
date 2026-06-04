@@ -15,7 +15,7 @@ const NAV: { group: string; items: { path: string; glyph: string; label: string 
     group: 'Estudio',
     items: [
       { path: '/', glyph: '学', label: 'Estudiar' },
-      { path: '/tablas', glyph: '字', label: 'Tablas' },
+      { path: '/tablas', glyph: '表', label: 'Tablas' },
     ],
   },
   {

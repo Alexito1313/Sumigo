@@ -425,4 +425,82 @@
     font-size: 11px;
     color: var(--ink-3);
   }
+
+  /* ---------- ESTADÍSTICAS ESCRITORIO (6 KPIs + 2 columnas) ---------- */
+  .dk-host .home-frame.sd-frame {
+    max-width: 1100px;
+  }
+  .dk-host .sd-content {
+    padding: 30px 30px 48px;
+  }
+  .sd-content .stats-title {
+    font-size: 34px;
+    margin-bottom: 20px;
+  }
+  .sd-kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+  .sd-kpi {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sd-kpi .n {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .sd-kpi .n small {
+    font-size: 0.5em;
+    opacity: 0.7;
+    margin-left: 1px;
+  }
+  .sd-kpi .n.good {
+    color: var(--green);
+  }
+  .sd-kpi .n.accent {
+    color: var(--accent);
+  }
+  .sd-kpi .l {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 700;
+  }
+  .sd-kpi .jp {
+    font-family: var(--jp);
+    font-size: 9px;
+    color: var(--ink-3);
+    letter-spacing: 0.14em;
+    opacity: 0.7;
+  }
+  .sd-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .sd-col {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-width: 0;
+  }
+  .sd-col .stats-section {
+    margin-bottom: 0;
+  }
+  .sd-col .stats-actions {
+    margin-top: 4px;
+  }
 }
