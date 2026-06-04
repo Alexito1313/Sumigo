@@ -18,6 +18,7 @@ import './styles/styles-calendar.css'
 import './styles/styles-write.css'
 import './styles/styles-simulacro.css'
 import './styles/app.css'
+import './styles/styles-desktop.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

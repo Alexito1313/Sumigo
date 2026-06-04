@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { ONBOARDED_KEY } from './screens/OnboardingScreen'
 import { TabBar } from './components/TabBar'
+import { DesktopNav } from './components/DesktopNav'
 
 // Rutas de "sección" que muestran la tab bar inferior. Los modos de estudio y
 // las vistas empujadas (detalle, stats, onboarding) NO la muestran.
@@ -20,9 +21,17 @@ export function AppShell() {
   }, [location.pathname, navigate])
 
   const showTabBar = SECTION_PATHS.includes(location.pathname)
+  // La sidebar de escritorio se muestra en todas las rutas salvo onboarding
+  // (el CSS la oculta por debajo de 960px → móvil sin cambios).
+  const showDesktopNav = location.pathname !== '/onboarding'
 
   return (
-    <div className={'app-root' + (showTabBar ? ' has-tabbar' : '')}>
+    <div
+      className={
+        'app-root' + (showTabBar ? ' has-tabbar' : '') + (showDesktopNav ? ' dk-host' : '')
+      }
+    >
+      {showDesktopNav && <DesktopNav />}
       <Outlet />
       {showTabBar && <TabBar />}
     </div>

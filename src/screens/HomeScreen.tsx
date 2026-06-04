@@ -16,6 +16,7 @@ import {
 import type { Selection } from '../data/deck'
 import { Backdrop } from '../components/Backdrop'
 import { LevelChip } from '../components/LevelChip'
+import { useIsDesktop } from '../components/useIsDesktop'
 
 type ContentSel = 'kanji' | 'vocab' | 'both'
 
@@ -225,7 +226,15 @@ function BlockGrid({
   )
 }
 
-function ModeTiles({ go, content }: { go: (path: string) => void; content: ContentSel | null }) {
+function ModeTiles({
+  go,
+  content,
+  hideExam = false,
+}: {
+  go: (path: string) => void
+  content: ContentSel | null
+  hideExam?: boolean
+}) {
   // La escritura (trazar el kanji) es exclusiva de kanji; no aplica a vocabulario.
   const showWrite = content !== 'vocab'
   return (
@@ -269,14 +278,16 @@ function ModeTiles({ go, content }: { go: (path: string) => void; content: Conte
           <div className="m-desc">Trazar el kanji con el dedo</div>
         </div>
       )}
-      <div className="mode full" onClick={() => go('/simulacro')} style={{ cursor: 'pointer' }}>
-        <div className="m-row">
-          <span className="m-kanji">検</span>
-          <span className="m-pill">EXAMEN JLPT</span>
+      {!hideExam && (
+        <div className="mode full" onClick={() => go('/simulacro')} style={{ cursor: 'pointer' }}>
+          <div className="m-row">
+            <span className="m-kanji">検</span>
+            <span className="m-pill">EXAMEN JLPT</span>
+          </div>
+          <div className="m-title">Simulacro cronometrado</div>
+          <div className="m-desc">formato N4 · cronometrado</div>
         </div>
-        <div className="m-title">Simulacro cronometrado</div>
-        <div className="m-desc">formato N4 · cronometrado</div>
-      </div>
+      )}
     </div>
   )
 }
@@ -289,6 +300,7 @@ export function HomeScreen() {
   const { snapshot, repo } = useProgress()
   const navigate = useNavigate()
   const go = (path: string) => navigate(path)
+  const isDesktop = useIsDesktop()
 
   const [contentSel, setContentSel] = useState<ContentSel | null>(null)
   const [selectedTypes, setSelectedTypes] = useState<Set<string>>(new Set())
@@ -414,6 +426,169 @@ export function HomeScreen() {
   }
 
   const cont = continuarInfo(content, snapshot)
+
+  // ---------- Layout ESCRITORIO (≥960px) ----------
+  // Mismos subcomponentes y handlers; solo cambia la distribución: hero ancho +
+  // 2 columnas (izq: contenido/bloques/modos · der: Continuar/mini-stats/Simulacro).
+  // La sidebar la pone AppShell. El layout móvil (más abajo) queda intacto.
+  if (isDesktop) {
+    let dRight = 0
+    let dWrong = 0
+    let dSeen = 0
+    for (const c of Object.values(snapshot.cards)) {
+      dRight += c.right || 0
+      dWrong += c.wrong || 0
+      if ((c.views || 0) > 0) dSeen++
+    }
+    const dAcc = dRight + dWrong ? Math.round((dRight / (dRight + dWrong)) * 100) : 0
+
+    return (
+      <div className="home-frame hd-frame">
+        <Backdrop variant={variant} />
+        <div className="home-content hd-content">
+          <div className="chome-headrow">
+            <div className="chome-headl">
+              <div className="greet-eyebrow">
+                <span className="dot"></span>
+                <span className="meta">{greet.meta}</span>
+              </div>
+              <h1 className="greet-title chome-h1">{greet.text}</h1>
+              <button
+                className="chome-week"
+                onClick={() => go('/calendar')}
+                aria-label="Ver calendario"
+              >
+                <span className="cw-dots">
+                  {week.map((d, i) => (
+                    <span
+                      key={i}
+                      className={'cwd ' + (d === 1 ? 'done' : d === 2 ? 'today' : '')}
+                    ></span>
+                  ))}
+                </span>
+                <span className="cw-lbl">
+                  <b>{streak.current}</b> días de racha · {completedWeek}/7 semana
+                </span>
+              </button>
+            </div>
+            {daily && (
+              <button
+                className="chome-daily"
+                onClick={() => go(`/detail/${encodeURIComponent(daily.jp)}`)}
+                aria-label="Kanji del día"
+              >
+                <span className="cd-eyebrow">今日</span>
+                <span className="cd-kanji">{daily.jp}</span>
+                <span className="cd-mean">{daily.mean.split(/[,，]/)[0].trim()}</span>
+              </button>
+            )}
+          </div>
+
+          <div className="hd-grid">
+            <div className="hd-main">
+              <div className="hd-card">
+                <SectionTitle title="Contenido" jp="教材" />
+                <ContentChips active={contentSel} onSelect={changeContent} />
+                {showBlocks && (
+                  <div className="reveal">
+                    <SectionTitle
+                      title="Bloques"
+                      jp={contentSel === 'vocab' ? 'MNN · L26—L36' : `${level} · D1—D10`}
+                      action={
+                        <div className="blk-action">
+                          {blockTotal > 0 && <span className="blk-count">{blockTotal} cartas</span>}
+                          <button className="sel-all-btn" onClick={toggleAllBlocks}>
+                            {allBlocksSelected ? 'Quitar todo' : 'Todo'}
+                          </button>
+                        </div>
+                      }
+                    />
+                    <BlockGrid
+                      blocks={blocks}
+                      isSelected={(id) => selectedBlocks.has(id)}
+                      onToggle={toggleBlock}
+                    />
+                  </div>
+                )}
+              </div>
+
+              {showStudy && (
+                <div className="hd-card reveal">
+                  {contentSel === 'vocab' && availableTypes.length > 0 && (
+                    <>
+                      <SectionTitle
+                        title="Filtro por tipo"
+                        jp="品詞"
+                        toggle={effectiveTypes.size ? `${total} cartas` : undefined}
+                      />
+                      <TypeChips
+                        types={availableTypes}
+                        selected={effectiveTypes}
+                        onToggle={toggleType}
+                        onClear={clearTypes}
+                      />
+                    </>
+                  )}
+                  <SectionTitle title="Modo de estudio" jp="学習方法" />
+                  <ModeTiles go={goStudy} content={contentSel} hideExam />
+                </div>
+              )}
+            </div>
+
+            <div className="hd-side">
+              {cont && (
+                <button
+                  className="continuar hd-continuar"
+                  onClick={() => navigate(cont.path, { state: { selection: cont.selection } })}
+                >
+                  <span className="cont-k">{cont.glyph}</span>
+                  <span className="cont-body">
+                    <span className="cont-eyebrow">CONTINUAR · 続き</span>
+                    <span className="cont-title">{cont.title}</span>
+                    <span className="cont-sub">
+                      {cont.modeLabel} ·{' '}
+                      {cont.pending > 0
+                        ? `${cont.pending} ${
+                            cont.pending === 1 ? 'carta pendiente' : 'cartas pendientes'
+                          }`
+                        : 'repasar bloque'}
+                    </span>
+                    <span className="cont-prog">
+                      <span className="cont-prog-bar" style={{ width: cont.pct + '%' }}></span>
+                    </span>
+                  </span>
+                  <span className="cont-go">→</span>
+                </button>
+              )}
+
+              <div className="hd-ministats">
+                <div className="hd-stat">
+                  <div className="n">{streak.current}</div>
+                  <div className="l">racha</div>
+                </div>
+                <div className="hd-stat">
+                  <div className="n">{dSeen}</div>
+                  <div className="l">vistas</div>
+                </div>
+                <div className="hd-stat">
+                  <div className="n">{dAcc}%</div>
+                  <div className="l">acierto</div>
+                </div>
+              </div>
+
+              <button className="hd-exam" onClick={() => navigate('/simulacro')}>
+                <span className="he-k">検</span>
+                <span className="he-t">
+                  <b>Simulacro JLPT</b>
+                  <small>formato N4 · cronometrado</small>
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="home-frame">
