@@ -156,7 +156,18 @@ export function AutoStage({
     setupCanvas()
     const onR = () => setupCanvas()
     window.addEventListener('resize', onR)
-    return () => window.removeEventListener('resize', onR)
+    // El pad cambia de tamaño al aparecer la barra de "completado" (reflujo, no un
+    // resize de ventana) → ResizeObserver reajusta el lienzo a la nueva medida para
+    // que siga coincidiendo con la guía (SVG, que se reescala solo).
+    let ro: ResizeObserver | null = null
+    if (typeof ResizeObserver !== 'undefined' && canvasRef.current) {
+      ro = new ResizeObserver(() => setupCanvas())
+      ro.observe(canvasRef.current)
+    }
+    return () => {
+      window.removeEventListener('resize', onR)
+      ro?.disconnect()
+    }
   }, [loading, loadError, setupCanvas])
 
   const getPos = (e: PointerEvent<HTMLCanvasElement>) => {
