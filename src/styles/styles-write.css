@@ -185,7 +185,15 @@
   line-height: 1;
 }
 .write-tool.on {
-  background: var(--accent); color: #fff; border-color: var(--accent);
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: var(--accent);
+}
+/* Icono (薄, serif) del botón activo: blanco sólido sí o sí (en modo claro a
+   veces no se veía sobre el fondo rojo). */
+.write-tool.on .wt-ico {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
 }
 
 /* hint */

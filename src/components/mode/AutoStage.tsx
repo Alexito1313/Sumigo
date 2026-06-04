@@ -92,20 +92,23 @@ export function AutoStage({
     ctx.clearRect(0, 0, rect.width, rect.height)
     ctx.lineCap = 'round'
     ctx.lineJoin = 'round'
-    const sx = rect.width / 109
-    const sy = rect.height / 109
-    // Trazos ya validados: la forma OFICIAL (sampleada) en SÓLIDO, dibujada en el
-    // LIENZO (no en el SVG) para esquivar el bug de repintado de iOS Safari (los
-    // <path> nuevos no se pintaban hasta togglear la guía).
+    // Escala UNIFORME y centrada (igual que el SVG con preserveAspectRatio "meet"),
+    // para que el trazo coincida con la guía aunque el pad no sea perfectamente
+    // cuadrado (si no, el canvas estiraba el kanji a lo ancho → se veía achatado).
+    const sc = Math.min(rect.width, rect.height) / 109
+    const ox = (rect.width - 109 * sc) / 2
+    const oy = (rect.height - 109 * sc) / 2
+    // Trazos ya validados: la forma OFICIAL (sampleada) en SÓLIDO, en el LIENZO
+    // (no en el SVG) para esquivar el bug de repintado de iOS Safari.
     ctx.strokeStyle = inkRef.current
-    ctx.lineWidth = 3.6 * sx // grosor ~igual al de la guía (3.4) para que coincidan
+    ctx.lineWidth = 3.6 * sc // grosor ~igual al de la guía (3.4) para que coincidan
     const exp = expSamples.current
     for (let i = 0; i < doneRef.current; i++) {
       const st = exp[i]
       if (!st || !st.length) continue
       ctx.beginPath()
-      ctx.moveTo(st[0][0] * sx, st[0][1] * sy)
-      for (const [ux, uy] of st) ctx.lineTo(ux * sx, uy * sy)
+      ctx.moveTo(ox + st[0][0] * sc, oy + st[0][1] * sc)
+      for (const [ux, uy] of st) ctx.lineTo(ox + ux * sc, oy + uy * sc)
       ctx.stroke()
     }
     // Trazo en curso (color acento mientras lo dibujas).
@@ -162,7 +165,12 @@ export function AutoStage({
   }
   const toUnits = (pt: { x: number; y: number }): Pt => {
     const rect = canvasRef.current!.getBoundingClientRect()
-    return [(pt.x * 109) / rect.width, (pt.y * 109) / rect.height]
+    // Misma escala uniforme + centrado que el dibujo, para que la validación use
+    // el mismo espacio 0-109 centrado que la guía/los trazos esperados.
+    const sc = Math.min(rect.width, rect.height) / 109
+    const ox = (rect.width - 109 * sc) / 2
+    const oy = (rect.height - 109 * sc) / 2
+    return [(pt.x - ox) / sc, (pt.y - oy) / sc]
   }
 
   const onDown = (e: PointerEvent<HTMLCanvasElement>) => {
