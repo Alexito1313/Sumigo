@@ -8,6 +8,7 @@ import { StudyHeader } from '../components/StudyHeader'
 import { ProgressMeta } from '../components/mode/ProgressMeta'
 import { SessionSummary, type Answer } from '../components/mode/SessionSummary'
 import { AutoStage } from '../components/mode/AutoStage'
+import { ModeEmpty } from '../components/mode/ModeEmpty'
 
 /* ============================================================
    WriteScreen — contenedor de sesión de escritura (motor en AutoStage).
@@ -48,11 +49,21 @@ export function WriteScreen() {
     setFinished(false)
   }, [])
 
-  if (loading || total === 0) {
+  if (loading) {
     return (
       <div className="mode-frame proto">
         <div className="home-loading">読み込み中… · cargando</div>
       </div>
+    )
+  }
+
+  if (total === 0) {
+    return (
+      <ModeEmpty
+        title="Escritura"
+        subtitle="書 · trazar el kanji"
+        message="No hay kanji para escribir en esta selección. Prueba con otros bloques."
+      />
     )
   }
 

@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { AppShell } from './AppShell'
 import { HomeScreen } from './screens/HomeScreen'
 import { FlashcardScreen } from './screens/FlashcardScreen'
@@ -30,6 +30,11 @@ export const router = createBrowserRouter(
     {
       path: '/',
       element: <AppShell />,
+      errorElement: (
+        <div className="home-loading" style={{ padding: 24, textAlign: 'center' }}>
+          Algo salió mal. <a href={import.meta.env.BASE_URL}>Volver al inicio</a>
+        </div>
+      ),
       children: [
         { index: true, element: <HomeScreen /> },
         { path: 'flash', element: <FlashcardScreen /> },
@@ -45,6 +50,7 @@ export const router = createBrowserRouter(
         { path: 'trazar/:char', element: <TraceScreen /> },
         { path: 'cuenta', element: <CuentaScreen /> },
         { path: 'detail/:id', element: <DetailScreen /> },
+        { path: '*', element: <Navigate to="/" replace /> },
       ],
     },
   ],

@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties }
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../theme/ThemeProvider'
 import { useDeck } from '../data/useDeck'
+import { useContent } from '../data/useContent'
+import { shuffle } from '../data/deck'
 import { useProgressRepo } from '../data/progress/ProgressContext'
 import type { Card } from '../data/content'
 import { Backdrop } from '../components/Backdrop'
@@ -9,6 +11,7 @@ import { StudyHeader } from '../components/StudyHeader'
 import { ProgressMeta } from '../components/mode/ProgressMeta'
 import { StreakChip } from '../components/mode/StreakChip'
 import { SessionSummary, type Answer } from '../components/mode/SessionSummary'
+import { ModeEmpty } from '../components/mode/ModeEmpty'
 
 const SPEED_VARS: Record<string, string> = {
   '--flip-dur': '650ms',
@@ -27,27 +30,32 @@ function testFont(jp: string): string {
 
 type Option = Card & { correct: boolean }
 
-/** 1 correcta + 3 distractores del mazo, barajado de forma determinista por semilla. */
-function buildOptions(current: Card, deck: Card[], seed: number): Option[] {
-  const others = deck.filter((c) => c.jp !== current.jp)
-  const shuffled = [...others]
-  let s = seed | 0
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    s = (s * 9301 + 49297) % 233280
-    const j = Math.floor((s / 233280) * (i + 1))
-    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+/**
+ * 1 correcta + hasta 3 distractores, barajado determinista por semilla.
+ * Los distractores salen primero del mazo en estudio y, si éste se ha quedado
+ * pequeño (p. ej. al filtrar por tipo gramatical), se rellenan desde un pool
+ * amplio del mismo tipo para que SIEMPRE haya 4 opciones plausibles y distintas.
+ */
+function buildOptions(current: Card, deck: Card[], fallback: Card[], seed: number): Option[] {
+  const usedJp = new Set([current.jp])
+  const usedMean = new Set([current.mean])
+  const collect = (arr: Card[]): Card[] => {
+    const out: Card[] = []
+    for (const c of arr) {
+      if (usedJp.has(c.jp) || usedMean.has(c.mean)) continue
+      usedJp.add(c.jp)
+      usedMean.add(c.mean)
+      out.push(c)
+    }
+    return out
   }
-  const distractors = shuffled.slice(0, 3)
+  const cands = [...shuffle(collect(deck), seed), ...shuffle(collect(fallback), seed + 1)]
+  const distractors = cands.slice(0, 3)
   const pool: Option[] = [
     { ...current, correct: true },
     ...distractors.map((c) => ({ ...c, correct: false })),
   ]
-  for (let i = pool.length - 1; i > 0; i--) {
-    s = (s * 9301 + 49297) % 233280
-    const j = Math.floor((s / 233280) * (i + 1))
-    ;[pool[i], pool[j]] = [pool[j], pool[i]]
-  }
-  return pool
+  return shuffle(pool, seed + 2)
 }
 
 export function TestScreen() {
@@ -55,6 +63,7 @@ export function TestScreen() {
   const navigate = useNavigate()
   const repo = useProgressRepo()
   const { deck, loading } = useDeck('study')
+  const { content } = useContent()
   const total = deck.length
 
   const [index, setIndex] = useState(0)
@@ -72,9 +81,16 @@ export function TestScreen() {
   const TOTAL_SESSION = Math.min(perSession, total || perSession)
   const card = total ? deck[index % total] : null
 
+  // Pool amplio para rellenar distractores cuando el mazo filtrado es pequeño:
+  // del mismo tipo que la carta (kanji con kanji, vocab con vocab).
+  const fallbackPool = useMemo<Card[]>(() => {
+    if (!content) return []
+    return card && card.type === 'kanji' ? content.kanji : content.vocab
+  }, [content, card])
+
   const options = useMemo(
-    () => (card ? buildOptions(card, deck, index * 1009 + 7) : []),
-    [card, deck, index],
+    () => (card ? buildOptions(card, deck, fallbackPool, index * 1009 + 7) : []),
+    [card, deck, fallbackPool, index],
   )
   const correctIdx = useMemo(() => options.findIndex((o) => o.correct), [options])
 
@@ -145,12 +161,16 @@ export function TestScreen() {
     return () => window.removeEventListener('keydown', onKey)
   }, [selected, finished, onPick, goNext])
 
-  if (loading || total === 0 || !card) {
+  if (loading) {
     return (
       <div className="mode-frame proto">
         <div className="home-loading">読み込み中… · cargando</div>
       </div>
     )
+  }
+
+  if (total === 0 || !card) {
+    return <ModeEmpty title="Test" subtitle="試 · opción múltiple" />
   }
 
   if (finished) {

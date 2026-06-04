@@ -191,7 +191,7 @@ export function SimulacroScreen() {
                 <div className="sim-sec-row" key={name}>
                   <span className="sec-name">{name}</span>
                   <div className="sec-bar">
-                    <div className="sec-fill" style={{ width: (v.right / v.total) * 100 + '%' }}></div>
+                    <div className="sec-fill" style={{ width: (v.total ? (v.right / v.total) * 100 : 0) + '%' }}></div>
                   </div>
                   <span className="sec-score">
                     {v.right}/{v.total}

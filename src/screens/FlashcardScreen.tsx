@@ -15,6 +15,7 @@ import { StudyHeader } from '../components/StudyHeader'
 import { ProgressMeta } from '../components/mode/ProgressMeta'
 import { StreakChip } from '../components/mode/StreakChip'
 import { SessionSummary, type Answer } from '../components/mode/SessionSummary'
+import { ModeEmpty } from '../components/mode/ModeEmpty'
 
 const SPEED_VARS: Record<string, string> = {
   '--flip-dur': '650ms',
@@ -161,11 +162,25 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
     return () => window.removeEventListener('keydown', onKey)
   }, [flipped, exiting, advance, finished])
 
-  if (loading || total === 0) {
+  if (loading) {
     return (
       <div className="mode-frame proto">
         <div className="home-loading">読み込み中… · cargando</div>
       </div>
+    )
+  }
+
+  if (total === 0) {
+    return (
+      <ModeEmpty
+        title={mode === 'review' ? 'Repaso' : 'Flashcards'}
+        subtitle={mode === 'review' ? '復習 · repaso' : '札 · tarjetas'}
+        message={
+          mode === 'review'
+            ? 'No hay nada que repasar todavía. Estudia algunas cartas primero.'
+            : 'No hay cartas para esta selección.'
+        }
+      />
     )
   }
 
