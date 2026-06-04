@@ -98,7 +98,7 @@ export function AutoStage({
     // LIENZO (no en el SVG) para esquivar el bug de repintado de iOS Safari (los
     // <path> nuevos no se pintaban hasta togglear la guía).
     ctx.strokeStyle = inkRef.current
-    ctx.lineWidth = 5 * sx
+    ctx.lineWidth = 3.6 * sx // grosor ~igual al de la guía (3.4) para que coincidan
     const exp = expSamples.current
     for (let i = 0; i < doneRef.current; i++) {
       const st = exp[i]
