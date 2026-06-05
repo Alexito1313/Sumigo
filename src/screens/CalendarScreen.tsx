@@ -3,6 +3,7 @@ import { useTheme } from '../theme/ThemeProvider'
 import { useProgress } from '../data/progress/ProgressContext'
 import { dayKey } from '../data/progress/srs'
 import { Backdrop } from '../components/Backdrop'
+import { useIsDesktop } from '../components/useIsDesktop'
 
 const WEEK_LABELS = ['月', '火', '水', '木', '金', '土', '日']
 const MONTHS_ES = [
@@ -25,6 +26,7 @@ type Cell =
 export function CalendarScreen() {
   const { variant } = useTheme()
   const { snapshot } = useProgress()
+  const isDesktop = useIsDesktop()
   const [offset, setOffset] = useState(0) // 0 = mes actual, +1 = mes anterior…
 
   const { cells, label, monthCards, activeDays } = useMemo(() => {
@@ -72,6 +74,136 @@ export function CalendarScreen() {
     { days: 100, label: 'Centena' },
   ]
 
+  // Secciones reutilizadas por el layout móvil y el de escritorio.
+  const monthNav = (
+    <div className="cal-month-nav">
+      <button className="cmn-btn" onClick={() => setOffset((o) => o + 1)}>
+        ←
+      </button>
+      <div className="cmn-label">{label}</div>
+      <button className="cmn-btn" disabled={offset === 0} onClick={() => setOffset((o) => Math.max(0, o - 1))}>
+        →
+      </button>
+    </div>
+  )
+
+  const calCard = (
+    <div className="cal-card">
+      <div className="cal-grid-wrap">
+        <div className="cal-week-head">
+          {WEEK_LABELS.map((l, i) => (
+            <span key={i} className={'cwh' + (i >= 5 ? ' wknd' : '')}>
+              {l}
+            </span>
+          ))}
+        </div>
+        <div className="cal-grid">
+          {cells.map((c) =>
+            c.blank ? (
+              <span key={c.key} className="cal-cell blank"></span>
+            ) : (
+              <span
+                key={c.key}
+                className={
+                  'cal-cell hm-' + c.v + (c.today ? ' today' : '') + (c.future ? ' future' : '')
+                }
+              >
+                <span className="cc-day">{c.day}</span>
+              </span>
+            ),
+          )}
+        </div>
+      </div>
+      <div className="cal-legend">
+        <span className="cl-lbl">Menos</span>
+        <span className="cl-dots">
+          <span className="cal-cell hm-0"></span>
+          <span className="cal-cell hm-1"></span>
+          <span className="cal-cell hm-2"></span>
+          <span className="cal-cell hm-3"></span>
+          <span className="cal-cell hm-4"></span>
+        </span>
+        <span className="cl-lbl">Más</span>
+      </div>
+    </div>
+  )
+
+  const calStats = (
+    <div className="cal-stats">
+      <div className="cs">
+        <span className="n accent">{streak.current}</span>
+        <span className="l">racha actual</span>
+      </div>
+      <div className="cs">
+        <span className="n">{activeDays}</span>
+        <span className="l">activos este mes</span>
+      </div>
+      <div className="cs">
+        <span className="n">{monthCards}</span>
+        <span className="l">cartas este mes</span>
+      </div>
+    </div>
+  )
+
+  const milestonesSection = (
+    <div className="cal-section">
+      <h3 className="cal-section-h">
+        <span className="strk"></span>
+        Hitos de racha <span className="jp-side">連続記録</span>
+      </h3>
+      <div className="cal-milestones">
+        {milestones.map((m) => {
+          const done = streak.longest >= m.days
+          return (
+            <div className={'milestone' + (done ? ' done' : '')} key={m.days}>
+              <div className="ms-ring">
+                {done ? (
+                  <span className="ms-check">✓</span>
+                ) : (
+                  <span className="ms-prog">
+                    {Math.min(streak.current, m.days)}
+                    <small>/{m.days}</small>
+                  </span>
+                )}
+              </div>
+              <div className="ms-info">
+                <span className="ms-days">{m.days} días</span>
+                <span className="ms-label">{m.label}</span>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+
+  // ---------- CALENDARIO ESCRITORIO: 2 columnas en marco centrado ----------
+  if (isDesktop) {
+    return (
+      <div className="home-frame cdk-frame">
+        <Backdrop variant={variant} />
+        <div className="home-content cdk-content">
+          <div className="cal-eyebrow">Calendario · 学習カレンダー</div>
+          <h1 className="cal-title">
+            Tu constancia.
+            <span className="cal-sub">cada día cuenta para la racha</span>
+          </h1>
+
+          <div className="cdk-grid">
+            <div className="cdk-col">
+              {monthNav}
+              {calCard}
+            </div>
+            <div className="cdk-col">
+              {calStats}
+              {milestonesSection}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="home-frame">
       <Backdrop variant={variant} />
@@ -83,99 +215,13 @@ export function CalendarScreen() {
             <span className="cal-sub">cada día cuenta para la racha</span>
           </h1>
 
-          <div className="cal-month-nav">
-            <button className="cmn-btn" onClick={() => setOffset((o) => o + 1)}>
-              ←
-            </button>
-            <div className="cmn-label">{label}</div>
-            <button className="cmn-btn" disabled={offset === 0} onClick={() => setOffset((o) => Math.max(0, o - 1))}>
-              →
-            </button>
-          </div>
+          {monthNav}
 
-          <div className="cal-card">
-            <div className="cal-grid-wrap">
-              <div className="cal-week-head">
-                {WEEK_LABELS.map((l, i) => (
-                  <span key={i} className={'cwh' + (i >= 5 ? ' wknd' : '')}>
-                    {l}
-                  </span>
-                ))}
-              </div>
-              <div className="cal-grid">
-                {cells.map((c) =>
-                  c.blank ? (
-                    <span key={c.key} className="cal-cell blank"></span>
-                  ) : (
-                    <span
-                      key={c.key}
-                      className={
-                        'cal-cell hm-' + c.v + (c.today ? ' today' : '') + (c.future ? ' future' : '')
-                      }
-                    >
-                      <span className="cc-day">{c.day}</span>
-                    </span>
-                  ),
-                )}
-              </div>
-            </div>
-            <div className="cal-legend">
-              <span className="cl-lbl">Menos</span>
-              <span className="cl-dots">
-                <span className="cal-cell hm-0"></span>
-                <span className="cal-cell hm-1"></span>
-                <span className="cal-cell hm-2"></span>
-                <span className="cal-cell hm-3"></span>
-                <span className="cal-cell hm-4"></span>
-              </span>
-              <span className="cl-lbl">Más</span>
-            </div>
-          </div>
+          {calCard}
 
-          <div className="cal-stats">
-            <div className="cs">
-              <span className="n accent">{streak.current}</span>
-              <span className="l">racha actual</span>
-            </div>
-            <div className="cs">
-              <span className="n">{activeDays}</span>
-              <span className="l">activos este mes</span>
-            </div>
-            <div className="cs">
-              <span className="n">{monthCards}</span>
-              <span className="l">cartas este mes</span>
-            </div>
-          </div>
+          {calStats}
 
-          <div className="cal-section">
-            <h3 className="cal-section-h">
-              <span className="strk"></span>
-              Hitos de racha <span className="jp-side">連続記録</span>
-            </h3>
-            <div className="cal-milestones">
-              {milestones.map((m) => {
-                const done = streak.longest >= m.days
-                return (
-                  <div className={'milestone' + (done ? ' done' : '')} key={m.days}>
-                    <div className="ms-ring">
-                      {done ? (
-                        <span className="ms-check">✓</span>
-                      ) : (
-                        <span className="ms-prog">
-                          {Math.min(streak.current, m.days)}
-                          <small>/{m.days}</small>
-                        </span>
-                      )}
-                    </div>
-                    <div className="ms-info">
-                      <span className="ms-days">{m.days} días</span>
-                      <span className="ms-label">{m.label}</span>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
+          {milestonesSection}
         </div>
       </div>
     </div>

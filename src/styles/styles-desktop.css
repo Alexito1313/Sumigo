@@ -503,4 +503,159 @@
   .sd-col .stats-actions {
     margin-top: 4px;
   }
+
+  /* ---------- AJUSTES ESCRITORIO (cabecera ancha + 4 secciones en 2 columnas) ---------- */
+  .dk-host .home-frame.setk-frame {
+    max-width: 900px;
+  }
+  .dk-host .setk-content {
+    padding: 30px 30px 48px;
+  }
+
+  .setk-head {
+    margin-bottom: 6px;
+  }
+  .setk-head .settings-eyebrow {
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+  .setk-head .settings-eyebrow::before {
+    width: 18px;
+  }
+  .setk-head .settings-title {
+    font-size: 34px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 28px;
+  }
+  .setk-head .settings-title .settings-sub {
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .setk-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .setk-col {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    min-width: 0;
+  }
+  /* Las secciones ya traen su propio margen inferior; en la rejilla
+     el espaciado lo controla el gap de la columna. */
+  .setk-col .settings-section {
+    margin-bottom: 0;
+  }
+  .setk-grid .settings-card {
+    border-radius: 16px;
+  }
+  .setk-grid .settings-card .setting-row,
+  .setk-grid .settings-card .settings-actions-row {
+    padding: 14px 18px;
+  }
+
+  /* Footer a lo ancho, fuera de la rejilla. */
+  .setk-content .settings-footer {
+    margin-top: 34px;
+  }
+
+  /* ---------- CALENDARIO ESCRITORIO (2 columnas + calendario grande) ---------- */
+  .dk-host .home-frame.cdk-frame {
+    max-width: 1100px;
+  }
+  .dk-host .cdk-content {
+    padding: 30px 30px 48px;
+  }
+  .cdk-content .cal-eyebrow {
+    margin-bottom: 10px;
+  }
+  .cdk-content .cal-title {
+    font-size: 34px;
+    margin-bottom: 22px;
+  }
+  .cdk-content .cal-title .cal-sub {
+    font-size: 14px;
+  }
+
+  .cdk-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 22px;
+    align-items: start;
+  }
+  .cdk-col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  /* Columna izquierda: navegación de mes + tarjeta de calendario grande. */
+  .cdk-content .cal-month-nav {
+    margin-bottom: 16px;
+  }
+  .cdk-content .cmn-label {
+    font-size: 18px;
+  }
+  .cdk-content .cal-card {
+    padding: 22px;
+    margin-bottom: 0;
+  }
+  .cdk-content .cal-grid {
+    gap: 8px;
+  }
+  .cdk-content .cal-week-head {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .cdk-content .cal-week-head .cwh {
+    font-size: 12px;
+  }
+  /* Celdas más grandes para que el calendario luzca en escritorio. */
+  .cdk-content .cal-grid .cal-cell {
+    border-radius: 9px;
+    min-height: 52px;
+  }
+  .cdk-content .cal-grid .cal-cell .cc-day {
+    font-size: 11px;
+    padding: 5px 7px;
+  }
+  .cdk-content .cal-legend {
+    margin-top: 16px;
+  }
+
+  /* Columna derecha: stats apiladas en vertical + hitos de racha. */
+  .cdk-content .cal-stats {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .cdk-content .cal-stats .cs {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px;
+    border-radius: 14px;
+  }
+  .cdk-content .cal-stats .cs .n {
+    font-size: 30px;
+    line-height: 1;
+  }
+  .cdk-content .cal-stats .cs .l {
+    text-align: right;
+    font-size: 10px;
+  }
+  .cdk-content .cal-section {
+    margin-bottom: 0;
+  }
+  .cdk-content .cal-section-h {
+    font-size: 14px;
+  }
+  .cdk-content .cal-milestones {
+    gap: 10px;
+  }
 }
