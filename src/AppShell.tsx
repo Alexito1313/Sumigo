@@ -17,7 +17,10 @@ export function AppShell() {
   useEffect(() => {
     const onboarded =
       localStorage.getItem(ONBOARDED_KEY) === '1' || !!localStorage.getItem('japoweb.progress')
-    if (!onboarded && location.pathname === '/') navigate('/onboarding', { replace: true })
+    // Fuerza el onboarding en CUALQUIER ruta para un usuario nuevo (antes solo en
+    // '/', así que un deep-link a una sub-ruta se lo saltaba entero).
+    if (!onboarded && location.pathname !== '/onboarding')
+      navigate('/onboarding', { replace: true })
   }, [location.pathname, navigate])
 
   const showTabBar = SECTION_PATHS.includes(location.pathname)

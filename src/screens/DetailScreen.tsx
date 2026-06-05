@@ -6,6 +6,8 @@ import { useProgress } from '../data/progress/ProgressContext'
 import { DAY_MS } from '../data/progress/srs'
 import { TYPE_LABELS } from '../data/stats'
 import { Backdrop } from '../components/Backdrop'
+import { ContentStatus } from '../components/ContentStatus'
+import { useSafeBack } from '../components/useSafeBack'
 
 function relPast(ts: number): string {
   if (!ts) return 'nunca'
@@ -47,9 +49,10 @@ function splitReadings(read: string): { on: string[]; kun: string[] } {
 
 export function DetailScreen() {
   const { variant } = useTheme()
-  const { content, loading } = useContent()
+  const { content, loading, error, retry } = useContent()
   const { snapshot } = useProgress()
   const navigate = useNavigate()
+  const back = useSafeBack()
   const params = useParams()
   const id = params.id ? decodeURIComponent(params.id) : ''
 
@@ -65,12 +68,8 @@ export function DetailScreen() {
     [content, card],
   )
 
-  if (loading || !content) {
-    return (
-      <div className="home-frame">
-        <div className="home-loading">読み込み中… · cargando</div>
-      </div>
-    )
+  if (loading || error || !content) {
+    return <ContentStatus loading={loading} onRetry={retry} />
   }
 
   if (!card) {
@@ -103,7 +102,7 @@ export function DetailScreen() {
       <Backdrop variant={variant} />
       <div className="home-content">
         <div className="detail-wrap">
-          <button className="detail-back" onClick={() => navigate(-1)}>
+          <button className="detail-back" onClick={back}>
             <span className="db-arrow">←</span>
             Volver
             <span className="db-jp">戻る</span>

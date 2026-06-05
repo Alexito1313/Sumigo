@@ -17,6 +17,7 @@ import type { Selection } from '../data/deck'
 import { Backdrop } from '../components/Backdrop'
 import { LevelChip } from '../components/LevelChip'
 import { useIsDesktop } from '../components/useIsDesktop'
+import { ContentStatus } from '../components/ContentStatus'
 
 type ContentSel = 'kanji' | 'vocab' | 'both'
 
@@ -296,7 +297,7 @@ function ModeTiles({
 
 export function HomeScreen() {
   const { variant } = useTheme()
-  const { content, loading } = useContent()
+  const { content, loading, error, retry } = useContent()
   const { snapshot, repo } = useProgress()
   const navigate = useNavigate()
   const go = (path: string) => navigate(path)
@@ -408,12 +409,8 @@ export function HomeScreen() {
   const showBlocks = contentSel !== null
   const showStudy = showBlocks && selectedBlocks.size > 0
 
-  if (loading || !content) {
-    return (
-      <div className="home-frame">
-        <div className="home-loading">読み込み中… · cargando contenido</div>
-      </div>
-    )
+  if (loading || error || !content) {
+    return <ContentStatus loading={loading} onRetry={retry} />
   }
 
   // Racha real: últimos 7 días (hoy a la derecha), nº de días estudiados.

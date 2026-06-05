@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 import { useTheme } from '../theme/ThemeProvider'
 import { Backdrop } from '../components/Backdrop'
 import { StudyHeader } from '../components/StudyHeader'
@@ -13,7 +13,6 @@ import type { Card } from '../data/content'
  */
 export function TraceScreen() {
   const { variant } = useTheme()
-  const navigate = useNavigate()
   const params = useParams()
   const location = useLocation()
   const meta = (location.state as { romaji?: string; system?: string } | null) ?? {}
@@ -24,7 +23,7 @@ export function TraceScreen() {
     return (
       <div className="mode-frame proto">
         <div className="mode-inner">
-          <StudyHeader title="Trazar" onBack={() => navigate(-1)} />
+          <StudyHeader title="Trazar" />
           <p style={{ padding: '40px 18px', color: 'var(--ink-3)' }}>Carácter no válido.</p>
         </div>
       </div>
@@ -46,7 +45,7 @@ export function TraceScreen() {
     <div className="mode-frame proto">
       <Backdrop variant={variant} />
       <div className="mode-inner">
-        <StudyHeader title={ch} subtitle={subtitle || 'trazar'} onBack={() => navigate(-1)} />
+        <StudyHeader title={ch} subtitle={subtitle || 'trazar'} />
 
         <div className="write-prompt">
           <div className="write-prompt-mean">{meta.romaji || ch}</div>

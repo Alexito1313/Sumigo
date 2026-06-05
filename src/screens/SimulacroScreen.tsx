@@ -6,6 +6,7 @@ import { useProgressRepo } from '../data/progress/ProgressContext'
 import { buildExam, type ExamQuestion } from '../data/exam'
 import { Backdrop } from '../components/Backdrop'
 import { StudyHeader } from '../components/StudyHeader'
+import { ContentStatus } from '../components/ContentStatus'
 
 const EXAM_N = 10
 const EXAM_SECONDS = 10 * 60
@@ -17,7 +18,7 @@ function fmtTime(s: number): string {
 
 export function SimulacroScreen() {
   const { variant } = useTheme()
-  const { content, loading } = useContent()
+  const { content, loading, error, retry } = useContent()
   const repo = useProgressRepo()
   const navigate = useNavigate()
 
@@ -82,12 +83,8 @@ export function SimulacroScreen() {
     })
   const go = (i: number) => setQIndex(Math.max(0, Math.min(total - 1, i)))
 
-  if (loading || !content) {
-    return (
-      <div className="mode-frame proto sim">
-        <div className="home-loading">読み込み中… · cargando</div>
-      </div>
-    )
+  if (loading || error || !content) {
+    return <ContentStatus loading={loading} onRetry={retry} frame="mode" />
   }
 
   /* ============================ INTRO ============================ */

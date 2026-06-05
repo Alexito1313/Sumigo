@@ -7,6 +7,7 @@ import { computeStats } from '../data/stats'
 import { Backdrop } from '../components/Backdrop'
 import { StudyHeader } from '../components/StudyHeader'
 import { useIsDesktop } from '../components/useIsDesktop'
+import { ContentStatus } from '../components/ContentStatus'
 
 function downloadJSON(filename: string, json: string) {
   const blob = new Blob([json], { type: 'application/json' })
@@ -20,7 +21,7 @@ function downloadJSON(filename: string, json: string) {
 
 export function StatsScreen() {
   const { variant } = useTheme()
-  const { content, loading } = useContent()
+  const { content, loading, error, retry } = useContent()
   const { snapshot, repo } = useProgress()
   const navigate = useNavigate()
   const isDesktop = useIsDesktop()
@@ -30,12 +31,8 @@ export function StatsScreen() {
     [content, snapshot],
   )
 
-  if (loading || !content || !stats) {
-    return (
-      <div className="home-frame">
-        <div className="home-loading">読み込み中… · cargando</div>
-      </div>
-    )
+  if (loading || error || !content || !stats) {
+    return <ContentStatus loading={loading} onRetry={retry} />
   }
 
   const streak = snapshot.streak
@@ -244,7 +241,7 @@ export function StatsScreen() {
     <div className="home-frame">
       <Backdrop variant={variant} />
       <div className="home-content">
-        <StudyHeader title="Estadísticas" subtitle="統計" onBack={() => navigate(-1)} />
+        <StudyHeader title="Estadísticas" subtitle="統計" />
 
         <div className="stats-wrap">
           <div className="stats-eyebrow">Estadísticas · 統計</div>

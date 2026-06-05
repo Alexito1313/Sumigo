@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { loadContent, type Content } from './content'
 import { customToCard, useCustom } from './custom/customStore'
 
@@ -11,17 +11,22 @@ import { customToCard, useCustom } from './custom/customStore'
 export function useContent() {
   const [base, setBase] = useState<Content | null>(null)
   const [error, setError] = useState<Error | null>(null)
+  const [attempt, setAttempt] = useState(0)
   const { entries } = useCustom()
 
   useEffect(() => {
     let alive = true
+    setError(null)
     loadContent()
       .then((c) => alive && setBase(c))
       .catch((e) => alive && setError(e instanceof Error ? e : new Error(String(e))))
     return () => {
       alive = false
     }
-  }, [])
+  }, [attempt])
+
+  /** Reintenta la carga (loadContent no cachea los fallos totales → re-fetch). */
+  const retry = useCallback(() => setAttempt((n) => n + 1), [])
 
   const content = useMemo<Content | null>(() => {
     if (!base) return null
@@ -39,5 +44,5 @@ export function useContent() {
     }
   }, [base, entries])
 
-  return { content, error, loading: !content && !error }
+  return { content, error, loading: !content && !error, retry }
 }

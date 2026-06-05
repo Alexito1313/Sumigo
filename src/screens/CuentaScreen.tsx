@@ -29,7 +29,7 @@ export function CuentaScreen() {
     <div className="home-frame">
       <Backdrop variant={variant} />
       <div className="home-content">
-        <StudyHeader title="Cuenta" subtitle="アカウント" onBack={() => navigate(-1)} />
+        <StudyHeader title="Cuenta" subtitle="アカウント" />
 
         <div className="cuenta-wrap">
           {account ? (

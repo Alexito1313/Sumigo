@@ -115,6 +115,12 @@ export async function loadContent(): Promise<Content> {
 
   const kanji = kanjiArrs.flat()
   const vocab = vocabArrs.flat()
+  // Si NO se cargó NADA (p. ej. red caída en la primera visita), no cachear y
+  // fallar: así useContent expone el error y la UI ofrece "Reintentar". Antes se
+  // cacheaba el contenido vacío en silencio y la app quedaba vacía sin salida.
+  if (kanji.length === 0 && vocab.length === 0) {
+    throw new Error('No se pudo cargar el contenido')
+  }
   const writable = kanji.filter((k) => [...k.jp].length === 1)
 
   cache = { kanji, vocab, all: kanji.concat(vocab), writable }

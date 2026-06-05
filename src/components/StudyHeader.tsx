@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useSafeBack } from './useSafeBack'
 
 /**
  * Cabecera mínima de los modos de estudio y vistas empujadas:
@@ -18,8 +18,8 @@ export function StudyHeader({
   /** Acción de "atrás" (por defecto vuelve al menú principal). */
   onBack?: () => void
 }) {
-  const navigate = useNavigate()
-  const back = onBack ?? (() => navigate('/'))
+  const safeBack = useSafeBack()
+  const back = onBack ?? safeBack
   return (
     <div className="study-header">
       <button className="sh-back" onClick={back} aria-label="Volver">
