@@ -259,12 +259,16 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
         <div className="proto-stage">
           <div className="proto-behind b2" aria-hidden="true">
             <div className="behind-card">
-              <div className="behind-jp">{next2.jp}</div>
+              <div className="behind-jp" style={{ fontSize: jpFont(next2.jp, 'front') }}>
+                {next2.jp}
+              </div>
             </div>
           </div>
           <div className="proto-behind b1" aria-hidden="true">
             <div className="behind-card">
-              <div className="behind-jp">{next1.jp}</div>
+              <div className="behind-jp" style={{ fontSize: jpFont(next1.jp, 'front') }}>
+                {next1.jp}
+              </div>
             </div>
           </div>
 
