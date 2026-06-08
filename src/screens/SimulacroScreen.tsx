@@ -93,12 +93,12 @@ export function SimulacroScreen() {
       <div className="mode-frame proto sim">
         <Backdrop variant={variant} />
         <div className="mode-inner">
-          <StudyHeader title="Simulacro" subtitle="検 · JLPT N4" />
+          <StudyHeader title="Simulacro" subtitle="検 · examen N4" />
           <div className="sim-intro">
             <div className="sim-seal">検</div>
             <div className="sim-intro-eyebrow">模擬試験 · simulacro</div>
             <h1 className="sim-intro-title">
-              Examen JLPT<span className="lvl">N4</span>
+              Examen <span className="lvl">N4</span>
             </h1>
             <p className="sim-intro-desc">
               Examen cronometrado en condiciones reales. No verás los aciertos hasta el final.
@@ -158,7 +158,7 @@ export function SimulacroScreen() {
       <div className="mode-frame proto sim">
         <Backdrop variant={variant} />
         <div className="mode-scroll">
-          <StudyHeader title="Simulacro" subtitle="検 · JLPT N4" />
+          <StudyHeader title="Simulacro" subtitle="検 · examen N4" />
           <div className="sim-results">
             <div className={'sim-verdict ' + (passed ? 'pass' : 'fail')}>
               <div className="sv-seal">{passed ? '合' : '否'}</div>

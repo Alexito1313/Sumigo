@@ -22,7 +22,7 @@ export interface Card {
   block: string
   /** 'kanji' o el tipo gramatical (verbo, sustantivo, adjetivo-i, …). */
   type: string
-  /** Etiqueta de categoría legible: "J3 · kanji" o "MNN · L26". */
+  /** Etiqueta de categoría legible: "J3 · kanji" o "N4 · L26". */
   cat: string
   /** Ejemplos/extras ya partidos en líneas (kanji); vacío en vocab. */
   extras: string[]
@@ -76,7 +76,7 @@ function normVocab(it: RawItem, block: string): Card {
     mean: it.mean,
     block,
     type: it.type || 'vocab',
-    cat: 'MNN · ' + block,
+    cat: 'N4 · ' + block,
     extras: [],
   }
 }

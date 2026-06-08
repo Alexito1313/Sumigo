@@ -283,7 +283,7 @@ function ModeTiles({
         <div className="mode full" onClick={() => go('/simulacro')} style={{ cursor: 'pointer' }}>
           <div className="m-row">
             <span className="m-kanji">検</span>
-            <span className="m-pill">EXAMEN JLPT</span>
+            <span className="m-pill">EXAMEN N4</span>
           </div>
           <div className="m-title">Simulacro cronometrado</div>
           <div className="m-desc">formato N4 · cronometrado</div>
@@ -494,7 +494,7 @@ export function HomeScreen() {
                   <div className="reveal">
                     <SectionTitle
                       title="Bloques"
-                      jp={contentSel === 'vocab' ? 'MNN · L26—L36' : `${level} · D1—D10`}
+                      jp={contentSel === 'vocab' ? 'N4 · L26—L36' : `${level} · D1—D10`}
                       action={
                         <div className="blk-action">
                           {blockTotal > 0 && <span className="blk-count">{blockTotal} cartas</span>}
@@ -580,7 +580,7 @@ export function HomeScreen() {
               <button className="hd-exam" onClick={() => navigate('/simulacro')}>
                 <span className="he-k">検</span>
                 <span className="he-t">
-                  <b>Simulacro JLPT</b>
+                  <b>Simulacro examen N4</b>
                   <small>formato N4 · cronometrado</small>
                 </span>
               </button>
@@ -657,7 +657,7 @@ export function HomeScreen() {
           <div className="reveal">
             <SectionTitle
               title="Bloques"
-              jp={contentSel === 'vocab' ? 'MNN · L26—L36' : `${level} · D1—D10`}
+              jp={contentSel === 'vocab' ? 'N4 · L26—L36' : `${level} · D1—D10`}
               action={
                 <div className="blk-action">
                   {blockTotal > 0 && <span className="blk-count">{blockTotal} cartas</span>}

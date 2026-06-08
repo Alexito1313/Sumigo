@@ -208,7 +208,7 @@ export function SettingsScreen() {
       </h3>
       <div className="settings-card">
         <SettingsRow label="Versión" control={<span className="setting-value muted">0.1.0</span>} />
-        <SettingsRow label="Contenido" control={<span className="setting-value muted">J3 · MNN L26-L36</span>} />
+        <SettingsRow label="Contenido" control={<span className="setting-value muted">J3 · N4 · L26-L36</span>} />
         <SettingsRow
           label="Repositorio"
           control={<span className="setting-value muted">Alexito1313/JapoWeb</span>}
@@ -222,6 +222,52 @@ export function SettingsScreen() {
       <span className="brushstroke"></span>
       日本語 estudio
       <span className="brushstroke"></span>
+    </div>
+  )
+
+  const secCredits = (
+    <div className="settings-section">
+      <h3 className="settings-section-h">
+        <span className="strk"></span>
+        Créditos y licencias
+        <span className="jp-side">謝辞</span>
+      </h3>
+      <div className="settings-card" style={{ padding: '4px 16px' }}>
+        <div style={{ padding: '11px 0', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>Trazos de kanji y kana</div>
+          <div style={{ fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.5, marginTop: 3 }}>
+            KanjiVG © Ulrich Apel —{' '}
+            <a
+              href="https://creativecommons.org/licenses/by-sa/3.0/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'var(--accent)', textDecoration: 'none' }}
+            >
+              CC BY-SA 3.0
+            </a>
+          </div>
+        </div>
+        <div style={{ padding: '11px 0', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>Tipografías</div>
+          <div style={{ fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.5, marginTop: 3 }}>
+            Noto Sans JP, Noto Serif JP, Shippori Mincho e Inter —{' '}
+            <a
+              href="https://openfontlicense.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ color: 'var(--accent)', textDecoration: 'none' }}
+            >
+              SIL Open Font License
+            </a>
+          </div>
+        </div>
+        <div style={{ padding: '11px 0' }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>Tecnología</div>
+          <div style={{ fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.5, marginTop: 3 }}>
+            Construido con React, Vite y otras librerías de código abierto.
+          </div>
+        </div>
+      </div>
     </div>
   )
 
@@ -239,7 +285,10 @@ export function SettingsScreen() {
               {secStudy}
               {secAbout}
             </div>
-            <div className="setk-col">{secProgress}</div>
+            <div className="setk-col">
+              {secProgress}
+              {secCredits}
+            </div>
           </div>
 
           {footer}
@@ -258,6 +307,7 @@ export function SettingsScreen() {
           {secStudy}
           {secProgress}
           {secAbout}
+          {secCredits}
           {footer}
         </div>
       </div>
