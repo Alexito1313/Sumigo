@@ -303,9 +303,15 @@ export function HomeScreen() {
   const go = (path: string) => navigate(path)
   const isDesktop = useIsDesktop()
 
-  const [contentSel, setContentSel] = useState<ContentSel | null>(null)
-  const [selectedTypes, setSelectedTypes] = useState<Set<string>>(new Set())
-  const [selectedBlocks, setSelectedBlocks] = useState<Set<string>>(new Set())
+  // Restaura la última selección de estudio (contenido/bloques/tipo) para no
+  // rehacer la cascada cada vez que vuelves al menú: al pulsar un modo, goStudy
+  // guarda settings.lastSession; al re-montar la Home estos inicializadores
+  // perezosos la recuperan → los modos aparecen al instante. Sin sesión guardada
+  // (primer uso) la cascada arranca limpia, como al entrar a la app por primera vez.
+  const saved = snapshot.settings.lastSession
+  const [contentSel, setContentSel] = useState<ContentSel | null>(saved?.content ?? null)
+  const [selectedTypes, setSelectedTypes] = useState<Set<string>>(() => new Set(saved?.types ?? []))
+  const [selectedBlocks, setSelectedBlocks] = useState<Set<string>>(() => new Set(saved?.blocks ?? []))
 
   // Sin useMemo([]): así el saludo/hora reflejan el momento actual en cada
   // render (antes quedaban congelados a la hora de montaje).
