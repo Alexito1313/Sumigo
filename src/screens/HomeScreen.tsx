@@ -123,7 +123,9 @@ function continuarInfo(content: Content, snapshot: ProgressSnapshot): ContInfo |
   const done = cards.filter((c) => (snapshot.cards[c.jp]?.views ?? 0) > 0).length
   const pending = cards.length - done
   const pct = cards.length ? Math.round((done / cards.length) * 100) : 0
-  const glyph = (cards.find((c) => (snapshot.cards[c.jp]?.views ?? 0) === 0) ?? cards[0]).jp
+  // Glifo decorativo: SOLO el primer carácter. Con vocab, jp es una palabra
+  // entera ("見ます／診ます") y a 34-60px reventaba el layout de la tarjeta.
+  const glyph = [...(cards.find((c) => (snapshot.cards[c.jp]?.views ?? 0) === 0) ?? cards[0]).jp][0]
   const title =
     block === 'MIOS' ? 'Míos' : block.startsWith('L') ? `Lección ${block}` : `Bloque ${block}`
 
