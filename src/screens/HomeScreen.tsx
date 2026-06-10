@@ -4,7 +4,7 @@ import { useTheme } from '../theme/ThemeProvider'
 import { useContent } from '../data/useContent'
 import { useProgress } from '../data/progress/ProgressContext'
 import type { ProgressSnapshot } from '../data/progress/types'
-import { dayKey, DAY_MS } from '../data/progress/srs'
+import { currentStreak, dayKey, DAY_MS } from '../data/progress/srs'
 import {
   KANJI_BLOCKS,
   VOCAB_BLOCKS,
@@ -17,6 +17,7 @@ import type { Selection } from '../data/deck'
 import { Backdrop } from '../components/Backdrop'
 import { LevelChip } from '../components/LevelChip'
 import { useIsDesktop } from '../components/useIsDesktop'
+import { useTodayKey } from '../components/useTodayKey'
 import { ContentStatus } from '../components/ContentStatus'
 
 type ContentSel = 'kanji' | 'vocab' | 'both'
@@ -304,6 +305,9 @@ export function HomeScreen() {
   const navigate = useNavigate()
   const go = (path: string) => navigate(path)
   const isDesktop = useIsDesktop()
+  // Re-render al volver a primer plano: "hoy" puede haber cambiado y la racha
+  // vigente (currentStreak) depende de ello. SIEMPRE antes del early return.
+  useTodayKey()
 
   // Restaura la última selección de estudio (contenido/bloques/tipo) para no
   // rehacer la cascada cada vez que vuelves al menú: al pulsar un modo, goStudy
@@ -425,6 +429,7 @@ export function HomeScreen() {
 
   // Racha real: últimos 7 días (hoy a la derecha), nº de días estudiados.
   const streak = snapshot.streak
+  const streakNow = currentStreak(streak) // racha vigente (0 si se rompió)
   const week: number[] = []
   let completedWeek = 0
   for (let i = 6; i >= 0; i--) {
@@ -476,7 +481,7 @@ export function HomeScreen() {
                   ))}
                 </span>
                 <span className="cw-lbl">
-                  <b>{streak.current}</b> días de racha · {completedWeek}/7 semana
+                  <b>{streakNow}</b> días de racha · {completedWeek}/7 semana
                 </span>
               </button>
             </div>
@@ -572,7 +577,7 @@ export function HomeScreen() {
 
               <div className="hd-ministats">
                 <div className="hd-stat">
-                  <div className="n">{streak.current}</div>
+                  <div className="n">{streakNow}</div>
                   <div className="l">racha</div>
                 </div>
                 <div className="hd-stat">
@@ -641,7 +646,7 @@ export function HomeScreen() {
                 ))}
               </span>
               <span className="cw-lbl">
-                <b>{streak.current}</b> días de racha · {completedWeek}/7 semana
+                <b>{streakNow}</b> días de racha · {completedWeek}/7 semana
               </span>
             </button>
           </div>

@@ -78,7 +78,8 @@
 /* ============================ EXAM HEADER ============================ */
 .sim-header {
   display: flex; align-items: center; gap: 12px;
-  padding: 14px 16px 10px;
+  /* la fase de examen no usa StudyHeader: compensa el notch/isla (marco 100dvh) */
+  padding: calc(14px + env(safe-area-inset-top, 0px)) 16px 10px;
 }
 .sim-exit {
   width: 32px; height: 32px; flex-shrink: 0;
@@ -206,7 +207,7 @@
 
 /* ============================ BOTTOM ============================ */
 .sim-bottom {
-  padding: 12px 16px 14px;
+  padding: 12px 16px calc(14px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--border);
   background: color-mix(in oklab, var(--bg) 80%, transparent);
 }
@@ -246,7 +247,7 @@
 .sim-nav-btn.next, .sim-nav-btn.finish {
   background: var(--accent); color: #fff; border-color: var(--accent);
 }
-.sim-nav-btn.finish { background: var(--green); border-color: var(--green); }
+.sim-nav-btn.finish { background: var(--green-strong); border-color: var(--green-strong); }
 
 /* ============================ RESULTS ============================ */
 .sim-results { padding: 22px 18px 26px; }
@@ -270,7 +271,7 @@
   font-family: var(--serif); font-size: 26px; font-weight: 700; color: #fff;
   margin-bottom: 6px;
 }
-.sim-verdict.pass .sv-seal { background: var(--green); }
+.sim-verdict.pass .sv-seal { background: var(--green-strong); }
 .sim-verdict.fail .sv-seal { background: var(--accent); }
 .sim-verdict .sv-pct {
   font-family: var(--serif); font-size: 52px; font-weight: 700;

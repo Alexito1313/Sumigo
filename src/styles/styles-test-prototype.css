@@ -138,7 +138,7 @@
   flex-shrink: 0;
 }
 .test-feedback-bar.good .fb-glyph {
-  background: var(--green); color: #fff;
+  background: var(--green-strong); color: #fff;
 }
 .test-feedback-bar.bad .fb-glyph {
   background: var(--accent); color: #fff;

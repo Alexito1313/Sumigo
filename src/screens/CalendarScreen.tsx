@@ -1,9 +1,10 @@
 import { useMemo, useState } from 'react'
 import { useTheme } from '../theme/ThemeProvider'
 import { useProgress } from '../data/progress/ProgressContext'
-import { dayKey } from '../data/progress/srs'
+import { currentStreak, dayKey } from '../data/progress/srs'
 import { Backdrop } from '../components/Backdrop'
 import { useIsDesktop } from '../components/useIsDesktop'
+import { useTodayKey } from '../components/useTodayKey'
 
 const WEEK_LABELS = ['月', '火', '水', '木', '金', '土', '日']
 const MONTHS_ES = [
@@ -27,6 +28,7 @@ export function CalendarScreen() {
   const { variant } = useTheme()
   const { snapshot } = useProgress()
   const isDesktop = useIsDesktop()
+  useTodayKey() // re-render al volver a primer plano: "hoy" puede haber cambiado
   const [offset, setOffset] = useState(0) // 0 = mes actual, +1 = mes anterior…
 
   const { cells, label, monthCards, activeDays } = useMemo(() => {
@@ -68,6 +70,7 @@ export function CalendarScreen() {
   }, [offset, snapshot])
 
   const streak = snapshot.streak
+  const streakNow = currentStreak(streak) // racha vigente (0 si se rompió)
   const milestones = [
     { days: 7, label: 'Una semana' },
     { days: 30, label: 'Un mes' },
@@ -131,7 +134,7 @@ export function CalendarScreen() {
   const calStats = (
     <div className="cal-stats">
       <div className="cs">
-        <span className="n accent">{streak.current}</span>
+        <span className="n accent">{streakNow}</span>
         <span className="l">racha actual</span>
       </div>
       <div className="cs">
@@ -161,7 +164,7 @@ export function CalendarScreen() {
                   <span className="ms-check">✓</span>
                 ) : (
                   <span className="ms-prog">
-                    {Math.min(streak.current, m.days)}
+                    {Math.min(streakNow, m.days)}
                     <small>/{m.days}</small>
                   </span>
                 )}

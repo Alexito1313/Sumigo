@@ -316,7 +316,7 @@
   font-family: var(--serif); font-size: 18px; font-weight: 700;
   color: #fff;
 }
-.hw-complete.good .hw-seal { background: var(--green); }
+.hw-complete.good .hw-seal { background: var(--green-strong); }
 .hw-complete.warn .hw-seal { background: var(--gold); color: #1B1A17; }
 @keyframes hwSeal {
   0% { opacity: 0; transform: scale(0.4) rotate(-10deg); }
@@ -376,7 +376,7 @@
   font-family: var(--serif); font-size: 17px; font-weight: 700;
   color: #fff; flex-shrink: 0;
 }
-.auto-feedback.good .af-glyph { background: var(--green); }
+.auto-feedback.good .af-glyph { background: var(--green-strong); }
 .auto-feedback.warn .af-glyph { background: var(--gold); color: #1B1A17; }
 .auto-feedback .af-text {
   display: flex; flex-direction: column; line-height: 1.2; min-width: 0;

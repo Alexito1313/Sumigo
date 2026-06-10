@@ -1,4 +1,4 @@
-import type { CardProgress } from './types'
+import type { CardProgress, StreakState } from './types'
 
 export const DAY_MS = 86_400_000
 
@@ -8,6 +8,24 @@ export function dayKey(ts: number): string {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(
     d.getDate(),
   ).padStart(2, '0')}`
+}
+
+/** Clave del día ANTERIOR con aritmética de calendario (no de milisegundos):
+ *  restar 24h fijas falla 1 hora al año en cada cambio horario (días de 23/25h). */
+export function yesterdayKey(now: number): string {
+  const d = new Date(now)
+  d.setDate(d.getDate() - 1)
+  return dayKey(d.getTime())
+}
+
+/** Racha VIGENTE para mostrar: 0 si el último día estudiado no es hoy ni ayer.
+ *  streak.current solo se recalcula al responder una carta, así que tras faltar
+ *  días la UI seguía enseñando la racha vieja (y saltaba a 1 al responder).
+ *  streak.longest sí puede leerse cruda. */
+export function currentStreak(s: StreakState, now = Date.now()): number {
+  return s.lastStudyDay === dayKey(now) || s.lastStudyDay === yesterdayKey(now)
+    ? s.current
+    : 0
 }
 
 /**

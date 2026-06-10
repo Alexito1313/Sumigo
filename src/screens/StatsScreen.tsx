@@ -9,6 +9,8 @@ import { StudyHeader } from '../components/StudyHeader'
 import { useIsDesktop } from '../components/useIsDesktop'
 import { ContentStatus } from '../components/ContentStatus'
 import { buildBackup, downloadJSON } from '../data/backup'
+import { currentStreak } from '../data/progress/srs'
+import { useTodayKey } from '../components/useTodayKey'
 
 export function StatsScreen() {
   const { variant } = useTheme()
@@ -16,6 +18,7 @@ export function StatsScreen() {
   const { snapshot, repo } = useProgress()
   const navigate = useNavigate()
   const isDesktop = useIsDesktop()
+  useTodayKey() // re-render al volver a primer plano: "hoy" puede haber cambiado
 
   const stats = useMemo(
     () => (content ? computeStats(content, snapshot) : null),
@@ -27,6 +30,7 @@ export function StatsScreen() {
   }
 
   const streak = snapshot.streak
+  const streakNow = currentStreak(streak) // racha vigente (0 si se rompió)
 
   // Secciones reutilizadas por el layout móvil y el de escritorio.
   const heatmapSection = (
@@ -191,7 +195,7 @@ export function StatsScreen() {
               <span className="jp">正答率</span>
             </div>
             <div className="sd-kpi">
-              <span className="n accent">{streak.current}</span>
+              <span className="n accent">{streakNow}</span>
               <span className="l">racha actual</span>
               <span className="jp">連続日</span>
             </div>
@@ -258,7 +262,7 @@ export function StatsScreen() {
             </div>
             <div className="hero-divider"></div>
             <div className="hero-item">
-              <span className="num accent">{streak.current}</span>
+              <span className="num accent">{streakNow}</span>
               <span className="lbl">racha actual</span>
               <span className="jp-mini">連続日</span>
             </div>

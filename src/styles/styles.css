@@ -24,6 +24,8 @@
   --accent-2:  #A50D26;
   --gold:      #B89559;
   --green:     #3A8A4E;
+  /* verde apto como FONDO con texto blanco (>=4.5:1 en ambos temas) */
+  --green-strong: #3A8A4E;
   --red:       #B83A2A;
   color: var(--ink);
   font-family: var(--sans);
@@ -47,6 +49,9 @@
   --accent-2:  #F26A6A;
   --gold:      #D4A24A;
   --green:     #6EC78A;
+  /* el --green nocturno es pastel (pensado como TEXTO sobre fondo oscuro);
+     como fondo con texto blanco daba 2.1:1 → este oscuro da ~5:1 */
+  --green-strong: #2E7D4F;
   --red:       #E85C5A;
   color: var(--ink);
   font-family: var(--sans);
@@ -912,7 +917,7 @@
   position: relative;
 }
 .test-option.correct .opt-letter {
-  background: var(--green); color: #fff; border-color: var(--green);
+  background: var(--green-strong); color: #fff; border-color: var(--green-strong);
 }
 .test-option.correct::after {
   content: '正'; position: absolute; right: 12px; top: 50%;

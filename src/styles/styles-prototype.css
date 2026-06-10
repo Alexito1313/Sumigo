@@ -270,7 +270,8 @@
    ============================================================ */
 
 .proto-bottom {
-  padding: 18px 18px 16px;
+  /* botonera pegada al borde inferior en marco 100dvh: respeta la barra de gestos */
+  padding: 18px 18px calc(16px + env(safe-area-inset-bottom, 0px));
   position: relative;
   z-index: 4;
 }
@@ -305,7 +306,7 @@
   font-weight: 600; letter-spacing: 0.06em;
 }
 .proto-btn.know {
-  background: var(--green); color: #fff;
+  background: var(--green-strong); color: #fff;
   box-shadow: 0 4px 16px color-mix(in oklab, var(--green) 30%, transparent);
 }
 .proto-btn.know:hover {

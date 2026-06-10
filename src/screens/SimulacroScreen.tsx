@@ -29,6 +29,10 @@ export function SimulacroScreen() {
   const [marked, setMarked] = useState<boolean[]>([])
   const [secsLeft, setSecsLeft] = useState(EXAM_SECONDS)
   const submittedRef = useRef(false)
+  // Fecha límite absoluta del examen: el reloj se deriva de ella en vez de
+  // contar ticks (los navegadores ahogan los intervalos en segundo plano y el
+  // examen quedaba pausado de facto al ocultar la pestaña).
+  const endAtRef = useRef(0)
 
   const total = questions.length
 
@@ -46,6 +50,7 @@ export function SimulacroScreen() {
     if (!content) return
     const qs = buildExam(content, EXAM_N)
     submittedRef.current = false
+    endAtRef.current = Date.now() + EXAM_SECONDS * 1000
     setQuestions(qs)
     setAnswers(qs.map(() => null))
     setMarked(qs.map(() => false))
@@ -54,14 +59,23 @@ export function SimulacroScreen() {
     setPhase('exam')
   }, [content])
 
-  // Temporizador: UN solo intervalo mientras dura el examen. Antes el effect
-  // dependía de `submit` (que cambia de identidad en cada respuesta), así que
-  // cada pick reiniciaba la cuenta del segundo en curso y el cronómetro derivaba
-  // (regalaba tiempo). Ahora el intervalo no se reinicia al responder.
+  // Temporizador: UN solo intervalo mientras dura el examen y el valor se
+  // deriva de la fecha límite (endAtRef) — ni las respuestas reinician la
+  // cuenta ni el ahogado de intervalos en segundo plano regala tiempo. Al
+  // volver a la pestaña, visibilitychange corrige el reloj al instante.
   useEffect(() => {
     if (phase !== 'exam') return
-    const id = window.setInterval(() => setSecsLeft((s) => (s <= 0 ? 0 : s - 1)), 1000)
-    return () => window.clearInterval(id)
+    const tick = () =>
+      setSecsLeft(Math.max(0, Math.ceil((endAtRef.current - Date.now()) / 1000)))
+    const id = window.setInterval(tick, 500)
+    const onVisible = () => {
+      if (!document.hidden) tick()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      window.clearInterval(id)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
   }, [phase])
 
   // Auto-entrega al agotarse el tiempo (efecto aparte; submit está guardado por ref).
@@ -115,7 +129,7 @@ export function SimulacroScreen() {
               <div className="sim-rule">
                 <span className="sr-ico">時</span>
                 <div className="sr-text">
-                  <b>{fmtTime(EXAM_SECONDS)} min</b>
+                  <b>{Math.round(EXAM_SECONDS / 60)} min</b>
                   <span>el examen se entrega al acabar el tiempo</span>
                 </div>
               </div>
@@ -256,7 +270,16 @@ export function SimulacroScreen() {
       <Backdrop variant={variant} />
       <div className="mode-inner">
         <div className="sim-header">
-          <button className="sim-exit" onClick={() => setPhase('intro')}>
+          <button
+            className="sim-exit"
+            aria-label="Abandonar el examen"
+            onClick={() => {
+              // Antes un toque accidental en la esquina tiraba el examen entero.
+              const dirty = answers.some((a) => a !== null) || secsLeft < EXAM_SECONDS
+              if (!dirty || window.confirm('¿Abandonar el examen? Perderás el progreso de este intento.'))
+                setPhase('intro')
+            }}
+          >
             ✕
           </button>
           <div className="sim-head-mid">

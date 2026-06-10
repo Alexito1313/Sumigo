@@ -5,7 +5,7 @@ import type {
   Settings,
   StreakState,
 } from './types'
-import { DAY_MS, dayKey, nextSRS } from './srs'
+import { dayKey, nextSRS, yesterdayKey } from './srs'
 
 const KEY = 'japoweb.progress'
 const VERSION = 1
@@ -197,7 +197,8 @@ export class LocalProgressRepository implements ProgressRepository {
     const today = dayKey(now)
     streak.days[today] = (streak.days[today] ?? 0) + 1
     if (streak.lastStudyDay !== today) {
-      const yesterday = dayKey(now - DAY_MS)
+      // aritmética de calendario: dayKey(now - 24h) fallaba en los cambios de hora
+      const yesterday = yesterdayKey(now)
       streak.current = streak.lastStudyDay === yesterday ? streak.current + 1 : 1
       streak.lastStudyDay = today
       streak.longest = Math.max(streak.longest, streak.current)
