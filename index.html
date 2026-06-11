@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#C8102E" />
-    <link rel="icon" type="image/svg+xml" href="icon-src.svg" />
-    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+    <!-- %BASE_URL%: Vite lo sustituye por la base (/Sumigo/ en prod). Con href
+         relativo, en rutas profundas (/Sumigo/detail/X) el navegador resolvía
+         /Sumigo/detail/icon-src.svg → 404 y el favicon desaparecía. -->
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%icon-src.svg" />
+    <link rel="apple-touch-icon" href="%BASE_URL%icons/apple-touch-icon.png" />
     <title>Sumigo · 墨語</title>
     <script>
       // Aplica el tema (.va claro / .vb oscuro) en <html> ANTES de pintar, para

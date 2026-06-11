@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa'
 
 // En producción GitHub Pages sirve en https://alexito1313.github.io/Sumigo/ → base con la subruta.
 // En desarrollo servimos en '/' para que el dev server y el preview sean cómodos.
-// (Cuando se empaquete con Capacitor para tiendas, cambiar base a './'.)
+// El build de Capacitor ya fija su base automáticamente vía CAP_BUILD (abajo).
 export default defineConfig(({ command, isPreview }) => ({
   // CAP_BUILD (APK Capacitor): base '/' (la WebView sirve desde la raíz).
   base: process.env.CAP_BUILD ? '/' : command === 'build' || isPreview ? '/Sumigo/' : '/',
@@ -24,9 +24,13 @@ export default defineConfig(({ command, isPreview }) => ({
           'Estudia japonés: kanji y vocabulario con flashcards, test, escritura y simulacro de examen N4.',
         lang: 'es',
         theme_color: '#C8102E',
-        background_color: '#0E1E33',
+        // Splash de MARCA: el mismo rojo que el fondo del icono (sello 墨) → el
+        // arranque se ve igual de bien en tema claro y oscuro (antes era el azul
+        // nocturno y los usuarios de tema claro veían un splash oscuro ajeno).
+        background_color: '#C8102E',
         display: 'standalone',
-        orientation: 'portrait',
+        // Sin `orientation`: fijar 'portrait' BLOQUEABA el apaisado en tablets
+        // con la app instalada → nunca alcanzaban el modo escritorio (>=960px).
         icons: [
           { src: 'icons/pwa-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icons/pwa-512.png', sizes: '512x512', type: 'image/png' },
@@ -51,6 +55,17 @@ export default defineConfig(({ command, isPreview }) => ({
             options: {
               cacheName: 'google-fonts',
               expiration: { maxEntries: 40, maxAgeSeconds: 31536000 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          // Trazos de kanji fuera del temario (Míos): el fallback al CDN se
+          // cachea para que un kanji trazado una vez online funcione offline.
+          {
+            urlPattern: /^https:\/\/cdn\.jsdelivr\.net\/gh\/KanjiVG\//i,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'kanjivg-cdn',
+              expiration: { maxEntries: 200, maxAgeSeconds: 31536000 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },

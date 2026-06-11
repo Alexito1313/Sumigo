@@ -9,6 +9,7 @@ import { ProgressMeta } from '../components/mode/ProgressMeta'
 import { SessionSummary, type Answer } from '../components/mode/SessionSummary'
 import { AutoStage } from '../components/mode/AutoStage'
 import { ModeEmpty } from '../components/mode/ModeEmpty'
+import { ContentStatus } from '../components/ContentStatus'
 
 /* ============================================================
    WriteScreen — contenedor de sesión de escritura (motor en AutoStage).
@@ -16,7 +17,7 @@ import { ModeEmpty } from '../components/mode/ModeEmpty'
 
 export function WriteScreen() {
   const { variant } = useTheme()
-  const { deck, loading } = useDeck('write')
+  const { deck, loading, error, retry } = useDeck('write')
   const repo = useProgressRepo()
   const navigate = useNavigate()
   const total = deck.length
@@ -49,12 +50,9 @@ export function WriteScreen() {
     setFinished(false)
   }, [])
 
-  if (loading) {
-    return (
-      <div className="mode-frame proto">
-        <div className="home-loading">読み込み中… · cargando</div>
-      </div>
-    )
+  if (loading || error) {
+    // El error de carga muestra "Reintentar" (antes: spinner infinito sin salida).
+    return <ContentStatus loading={loading} onRetry={retry} frame="mode" />
   }
 
   if (total === 0) {

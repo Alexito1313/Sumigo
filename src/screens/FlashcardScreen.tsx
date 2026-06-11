@@ -16,6 +16,7 @@ import { ProgressMeta } from '../components/mode/ProgressMeta'
 import { StreakChip } from '../components/mode/StreakChip'
 import { SessionSummary, type Answer } from '../components/mode/SessionSummary'
 import { ModeEmpty } from '../components/mode/ModeEmpty'
+import { ContentStatus } from '../components/ContentStatus'
 
 const SPEED_VARS: Record<string, string> = {
   '--flip-dur': '650ms',
@@ -47,7 +48,7 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
   const { variant } = useTheme()
   const navigate = useNavigate()
   const repo = useProgressRepo()
-  const { deck, loading } = useDeck(mode)
+  const { deck, loading, error, retry } = useDeck(mode)
   const total = deck.length
 
   const [index, setIndex] = useState(0)
@@ -182,12 +183,9 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
     [],
   )
 
-  if (loading) {
-    return (
-      <div className="mode-frame proto">
-        <div className="home-loading">読み込み中… · cargando</div>
-      </div>
-    )
+  if (loading || error) {
+    // El error de carga muestra "Reintentar" (antes: spinner infinito sin salida).
+    return <ContentStatus loading={loading} onRetry={retry} frame="mode" />
   }
 
   if (total === 0) {
@@ -234,6 +232,10 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
   if (exiting === 'left') wrapClasses.push('exit-left')
 
   const progressIndex = Math.min(stats.right + stats.wrong + (exiting ? 0 : 1), TOTAL_SESSION)
+  // Cartas que quedan DESPUÉS de la actual en la sesión: el abanico de detrás
+  // no debe enseñar como "próximas" cartas que ya no van a venir (al final de
+  // la sesión el módulo daba la vuelta y reaparecían las ya respondidas).
+  const remainingAfterCurrent = TOTAL_SESSION - (stats.right + stats.wrong) - (exiting ? 0 : 1)
 
   return (
     <div className="mode-frame proto" style={SPEED_VARS as CSSProperties}>
@@ -257,20 +259,27 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
         <ProgressMeta index={progressIndex} total={TOTAL_SESSION} right={stats.right} wrong={stats.wrong} />
 
         <div className="proto-stage">
-          <div className="proto-behind b2" aria-hidden="true">
-            <div className="behind-card">
-              <div className="behind-jp" style={{ fontSize: jpFont(next2.jp, 'front') }}>
-                {next2.jp}
+          {/* Las cartas "de detrás" solo si de verdad vienen después: con mazos
+              de 1-2 cartas (o al final de la sesión) el módulo duplicaba cartas
+              ya vistas en el abanico. */}
+          {total > 2 && remainingAfterCurrent >= 2 && (
+            <div className="proto-behind b2" aria-hidden="true">
+              <div className="behind-card">
+                <div className="behind-jp" style={{ fontSize: jpFont(next2.jp, 'front') }}>
+                  {next2.jp}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="proto-behind b1" aria-hidden="true">
-            <div className="behind-card">
-              <div className="behind-jp" style={{ fontSize: jpFont(next1.jp, 'front') }}>
-                {next1.jp}
+          )}
+          {total > 1 && remainingAfterCurrent >= 1 && (
+            <div className="proto-behind b1" aria-hidden="true">
+              <div className="behind-card">
+                <div className="behind-jp" style={{ fontSize: jpFont(next1.jp, 'front') }}>
+                  {next1.jp}
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           <div
             key={index}

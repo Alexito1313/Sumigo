@@ -12,6 +12,7 @@ import { ProgressMeta } from '../components/mode/ProgressMeta'
 import { StreakChip } from '../components/mode/StreakChip'
 import { SessionSummary, type Answer } from '../components/mode/SessionSummary'
 import { ModeEmpty } from '../components/mode/ModeEmpty'
+import { ContentStatus } from '../components/ContentStatus'
 
 const SPEED_VARS: Record<string, string> = {
   '--flip-dur': '650ms',
@@ -62,7 +63,7 @@ export function TestScreen() {
   const { variant } = useTheme()
   const navigate = useNavigate()
   const repo = useProgressRepo()
-  const { deck, loading } = useDeck('study')
+  const { deck, loading, error, retry } = useDeck('study')
   const { content } = useContent()
   const total = deck.length
 
@@ -173,12 +174,9 @@ export function TestScreen() {
     [],
   )
 
-  if (loading) {
-    return (
-      <div className="mode-frame proto">
-        <div className="home-loading">読み込み中… · cargando</div>
-      </div>
-    )
+  if (loading || error) {
+    // El error de carga muestra "Reintentar" (antes: spinner infinito sin salida).
+    return <ContentStatus loading={loading} onRetry={retry} frame="mode" />
   }
 
   if (total === 0 || !card) {

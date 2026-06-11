@@ -1592,3 +1592,19 @@ body {
 .home-main .washi-bg .seal {
   display: none;
 }
+
+/* Móvil APAISADO: al quitar `orientation: portrait` del manifest la app
+   instalada ya puede rotar, pero los modos de estudio viven en un marco de
+   100dvh con overflow hidden y un stage de 460px mínimos → con ~360-420px de
+   alto la botonera quedaba cortada e inalcanzable. Con poca altura, el marco
+   pasa a crecer con el contenido y permite scroll. */
+@media (max-height: 520px) {
+  .mode-frame {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+  .proto-stage {
+    min-height: 320px;
+  }
+}

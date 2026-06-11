@@ -15,14 +15,20 @@ import { useProgressRepo } from './progress/ProgressContext'
 export function useDeck(mode: 'study' | 'review' | 'write' = 'study'): {
   deck: Card[]
   loading: boolean
+  error: Error | null
+  retry: () => void
 } {
-  const { content, loading } = useContent()
+  const { content, loading, error, retry } = useContent()
   const location = useLocation()
   const selection = (location.state as { selection?: Selection } | null)?.selection
   const selKey = JSON.stringify(selection ?? null)
   const repo = useProgressRepo()
 
   const [deck, setDeck] = useState<Card[]>([])
+  // El mazo se construye en un efecto (post-commit): sin este flag, el primer
+  // frame llegaba con loading=false y deck=[] y el "No hay cartas" (ModeEmpty)
+  // parpadeaba un instante en CADA entrada a un modo.
+  const [ready, setReady] = useState(false)
 
   useEffect(() => {
     if (!content) return
@@ -35,9 +41,12 @@ export function useDeck(mode: 'study' | 'review' | 'write' = 'study'): {
           ? writeDeck(content, selection)
           : buildDeck(content, selection),
     )
+    setReady(true)
     // selection se serializa en selKey para comparar por valor
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [content, mode, selKey, repo])
 
-  return { deck, loading }
+  // Con error de carga, ready nunca llegará: el error se propaga (las pantallas
+  // muestran reintento) en vez de dejar un spinner infinito sin salida.
+  return { deck, loading: loading || (!ready && !error), error, retry }
 }
