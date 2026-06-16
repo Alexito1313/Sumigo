@@ -1187,6 +1187,11 @@ body {
   gap: 12px;
   margin-bottom: 8px;
 }
+/* El <form> envuelve campos + botón pero NO debe alterar el layout flex de
+   .acc-auth (gap entre campos): display:contents lo hace transparente. */
+.acc-form {
+  display: contents;
+}
 .acc-submit {
   appearance: none;
   -webkit-appearance: none;

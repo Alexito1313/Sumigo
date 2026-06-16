@@ -119,9 +119,16 @@ export function useCustom(): { entries: CustomEntry[] } {
   return { entries }
 }
 
+/** ¿El carácter es un kanji (ideograma CJK)? Excluye emojis/letras latinas, que
+ *  no tienen trazos en KanjiVG y no deben pasar como "escribibles". */
+export function isKanjiChar(c: string): boolean {
+  return /^[㐀-䶿一-鿿々〆〇]$/u.test(c)
+}
+
 /** ¿Esta entrada puede practicarse en el modo escritura? (kanji de 1 carácter) */
 export function canWrite(e: { jp: string; kind: 'kanji' | 'vocab' }): boolean {
-  return e.kind === 'kanji' && [...e.jp.trim()].length === 1
+  const chars = [...e.jp.trim()]
+  return e.kind === 'kanji' && chars.length === 1 && isKanjiChar(chars[0])
 }
 
 /** Convierte una entrada propia en Card (block 'MIOS') para mazos / detalle. */

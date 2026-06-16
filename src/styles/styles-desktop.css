@@ -181,7 +181,7 @@
   }
   .dk-theme {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 4px;
     background: var(--bg);
     border: 1px solid var(--border);
@@ -195,15 +195,19 @@
     background: none;
     cursor: pointer;
     border-radius: 999px;
-    padding: 7px 6px;
+    padding: 7px 3px;
     font-family: var(--sans);
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 600;
     color: var(--ink-3);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 4px;
+    /* 3 columnas en la sidebar de 252px: que la celda pueda encoger y el
+       texto no envuelva ni desborde con fuentes/zoom distintos. */
+    min-width: 0;
+    white-space: nowrap;
     transition: background 0.14s ease, color 0.14s ease;
   }
   .dk-theme button.on {

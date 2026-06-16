@@ -56,29 +56,41 @@ export function CuentaScreen() {
                   Registrarse
                 </button>
               </div>
-              <label className="mf-field">
-                <span className="mf-label">Correo</span>
-                <input
-                  className="mf-input"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="tucorreo@ejemplo.com"
-                />
-              </label>
-              <label className="mf-field">
-                <span className="mf-label">Contraseña</span>
-                <input
-                  className="mf-input"
-                  type="password"
-                  value={pass}
-                  onChange={(e) => setPass(e.target.value)}
-                  placeholder="••••••••"
-                />
-              </label>
-              <button className="acc-submit" onClick={submit} disabled={!email.trim()}>
-                {mode === 'login' ? 'Entrar' : 'Crear cuenta'}
-              </button>
+              <form
+                className="acc-form"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  submit()
+                }}
+              >
+                <label className="mf-field">
+                  <span className="mf-label">Correo</span>
+                  <input
+                    className="mf-input"
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="tucorreo@ejemplo.com"
+                  />
+                </label>
+                <label className="mf-field">
+                  <span className="mf-label">Contraseña</span>
+                  <input
+                    className="mf-input"
+                    type="password"
+                    name="password"
+                    autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                    value={pass}
+                    onChange={(e) => setPass(e.target.value)}
+                    placeholder="••••••••"
+                  />
+                </label>
+                <button type="submit" className="acc-submit" disabled={!email.trim()}>
+                  {mode === 'login' ? 'Entrar' : 'Crear cuenta'}
+                </button>
+              </form>
               <p className="acc-note">
                 Maqueta · todavía sin servidor. De momento tu progreso se guarda en este dispositivo;
                 las cuentas en la nube llegarán pronto.

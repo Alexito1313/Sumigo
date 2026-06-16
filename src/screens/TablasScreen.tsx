@@ -10,8 +10,18 @@ import { MiosTab } from '../components/mios/MiosTab'
 
 type SubTab = 'hiragana' | 'katakana' | 'kanji' | 'mios'
 
-// Persiste la sub-pestaña al volver de un detalle/trazado (no se reinicia).
-let lastSubTab: SubTab = 'hiragana'
+// Persiste la sub-pestaña en sessionStorage: sobrevive al volver de un
+// detalle/trazado Y a una recarga de página (antes, con una var de módulo, la
+// recarga la reiniciaba a 'hiragana'); se resetea al cerrar la pestaña.
+const SUBTAB_KEY = 'sumigo.tablas.subtab'
+function readSubTab(): SubTab {
+  try {
+    const s = sessionStorage.getItem(SUBTAB_KEY)
+    return s === 'hiragana' || s === 'katakana' || s === 'kanji' || s === 'mios' ? s : 'hiragana'
+  } catch {
+    return 'hiragana'
+  }
+}
 
 const SUBTABS: { id: SubTab; label: string; glyph: string }[] = [
   { id: 'hiragana', label: 'Hiragana', glyph: 'あ' },
@@ -122,10 +132,14 @@ export function TablasScreen() {
   const { content } = useContent()
   const { snapshot } = useProgress()
   const level = snapshot.settings.level ?? 'J3'
-  const [tab, setTab] = useState<SubTab>(lastSubTab)
+  const [tab, setTab] = useState<SubTab>(readSubTab)
 
   const select = (t: SubTab) => {
-    lastSubTab = t
+    try {
+      sessionStorage.setItem(SUBTAB_KEY, t)
+    } catch {
+      /* sessionStorage no disponible */
+    }
     setTab(t)
   }
   const traceKana: TraceFn = (ch, romaji, system) =>

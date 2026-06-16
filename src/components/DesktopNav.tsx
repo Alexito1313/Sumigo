@@ -34,7 +34,7 @@ const NAV: { group: string; items: { path: string; glyph: string; label: string 
 export function DesktopNav() {
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  const { variant, setPref } = useTheme()
+  const { pref, setPref } = useTheme()
   const account = useAccount()
 
   const isActive = (p: string) => (p === '/' ? pathname === '/' : pathname.startsWith(p))
@@ -81,18 +81,27 @@ export function DesktopNav() {
       <div className="dk-spacer" />
 
       <div className="dk-foot">
+        {/* Resaltado por `pref` (no por la variante resuelta): con 'auto' ninguno
+            de Claro/Oscuro queda pulsado y el usuario puede volver a Auto. */}
         <div className="dk-theme" role="group" aria-label="Tema">
           <button
-            className={variant === 'a' ? 'on' : ''}
+            className={pref === 'light' ? 'on' : ''}
             onClick={() => setPref('light')}
-            aria-pressed={variant === 'a'}
+            aria-pressed={pref === 'light'}
           >
             ☀ Claro
           </button>
           <button
-            className={variant === 'b' ? 'on' : ''}
+            className={pref === 'auto' ? 'on' : ''}
+            onClick={() => setPref('auto')}
+            aria-pressed={pref === 'auto'}
+          >
+            ◐ Auto
+          </button>
+          <button
+            className={pref === 'dark' ? 'on' : ''}
             onClick={() => setPref('dark')}
-            aria-pressed={variant === 'b'}
+            aria-pressed={pref === 'dark'}
           >
             ☾ Oscuro
           </button>

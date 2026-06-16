@@ -99,7 +99,19 @@ export async function loadContent(): Promise<Content> {
       return [] as Card[]
     }
     try {
-      return ((await res.json()) as RawItem[]).map((it) => norm(it, b))
+      // Descarta items malformados: jp no vacío y read/mean string (se toleran
+      // vacíos, pero no undefined/no-string), para que el contrato Card se
+      // cumpla y no se cuelen cartas con campos undefined.
+      return ((await res.json()) as RawItem[])
+        .filter(
+          (it) =>
+            it &&
+            typeof it.jp === 'string' &&
+            it.jp.trim() &&
+            typeof it.read === 'string' &&
+            typeof it.mean === 'string',
+        )
+        .map((it) => norm(it, b))
     } catch {
       // 200 con cuerpo no-JSON (p.ej. index.html del fallback SPA del dev server
       // o de algún host): el bloque está ausente, NO es un fallo de red.

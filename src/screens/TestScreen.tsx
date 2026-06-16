@@ -275,7 +275,7 @@ export function TestScreen() {
                   <div className="fb-sub">
                     {correct
                       ? 'よくできました'
-                      : `${card.jp}（${card.read.split('／')[1] || card.read}）= ${card.mean}`}
+                      : `${card.jp}（${card.read}）= ${card.mean}`}
                   </div>
                 </div>
               </div>

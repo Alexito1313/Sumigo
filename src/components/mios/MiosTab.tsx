@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { canWrite, customStore, useCustom, type CustomEntry } from '../../data/custom/customStore'
+import {
+  canWrite,
+  customStore,
+  isKanjiChar,
+  useCustom,
+  type CustomEntry,
+} from '../../data/custom/customStore'
 
 const VOCAB_TAGS = [
   { id: 'sustantivo', label: 'Sustantivo' },
@@ -24,7 +30,8 @@ export function MiosTab() {
   const [tag, setTag] = useState('sustantivo')
   const [examples, setExamples] = useState('')
 
-  const oneCharKanji = kind === 'kanji' && [...jp.trim()].length === 1
+  const jpChars = [...jp.trim()]
+  const oneCharKanji = kind === 'kanji' && jpChars.length === 1 && isKanjiChar(jpChars[0])
   const canSave = jp.trim().length > 0 && mean.trim().length > 0
 
   const resetForm = () => {
