@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, ScrollRestoration, useLocation, useNavigate } from 'react-router-dom'
 import { ONBOARDED_KEY } from './screens/OnboardingScreen'
 import { TabBar } from './components/TabBar'
 import { DesktopNav } from './components/DesktopNav'
@@ -46,6 +46,9 @@ export function AppShell() {
       {showDesktopNav && <DesktopNav />}
       <Outlet />
       {showTabBar && <TabBar />}
+      {/* Resetea el scroll al navegar (push) y lo restaura al volver atrás;
+          sin esto se llegaba a mitad de página en la ruta nueva. */}
+      <ScrollRestoration />
     </div>
   )
 }

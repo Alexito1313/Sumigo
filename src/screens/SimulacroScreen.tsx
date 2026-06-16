@@ -324,6 +324,7 @@ export function SimulacroScreen() {
               <button
                 key={i}
                 className={'sim-option' + (answers[qIndex] === i ? ' selected' : '')}
+                aria-pressed={answers[qIndex] === i}
                 onClick={() => pick(i)}
               >
                 <span className="so-letter">{i + 1}</span>
@@ -341,7 +342,15 @@ export function SimulacroScreen() {
               else if (marked[i]) cls += ' marked'
               else if (answers[i] !== null) cls += ' done'
               return (
-                <button key={i} className={cls} onClick={() => go(i)}>
+                <button
+                  key={i}
+                  className={cls}
+                  aria-current={i === qIndex || undefined}
+                  aria-label={`Pregunta ${i + 1}${
+                    marked[i] ? ', marcada' : answers[i] !== null ? ', respondida' : ', sin responder'
+                  }`}
+                  onClick={() => go(i)}
+                >
                   {i + 1}
                 </button>
               )

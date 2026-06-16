@@ -62,7 +62,12 @@ export function DesktopNav() {
               <button
                 key={it.path}
                 className={'dk-navitem' + (isActive(it.path) ? ' active' : '')}
-                onClick={() => navigate(it.path)}
+                onClick={() => {
+                  // No apilar historial re-pulsando el ítem ya activo; en su
+                  // lugar, subir arriba (equivalente al gesto móvil).
+                  if (isActive(it.path)) window.scrollTo({ top: 0, behavior: 'smooth' })
+                  else navigate(it.path)
+                }}
                 aria-current={isActive(it.path) ? 'page' : undefined}
               >
                 <span className="dk-gl">{it.glyph}</span>

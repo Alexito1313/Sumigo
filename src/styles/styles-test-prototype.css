@@ -32,10 +32,6 @@
     0 1px 0 rgba(255,255,255,0.04) inset,
     0 10px 24px rgba(0,0,0,0.35);
 }
-.test-card-mini .fcard-header {
-  padding: 0; margin-bottom: 6px;
-  display: flex; align-items: center; justify-content: space-between;
-}
 .test-card-mini .test-jp {
   font-family: var(--serif); font-weight: 700;
   font-size: 88px; line-height: 1;

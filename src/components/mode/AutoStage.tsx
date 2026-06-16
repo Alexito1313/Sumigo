@@ -333,10 +333,20 @@ export function AutoStage({
         </div>
 
         <div className="write-tools auto-tools">
-          <button className="write-tool" onClick={restart} disabled={doneCount === 0 && status !== 'done'}>
+          <button
+            className="write-tool"
+            onClick={restart}
+            // también con errores acumulados y 0 trazos: si fallas el primer
+            // trazo, Reiniciar era la única forma de limpiar y estaba apagado
+            disabled={doneCount === 0 && mistakes === 0 && status !== 'done'}
+          >
             <span className="wt-ico">↺</span>Reiniciar
           </button>
-          <button className={'write-tool' + (guideOn ? ' on' : '')} onClick={() => setGuideOn((g) => !g)}>
+          <button
+            className={'write-tool' + (guideOn ? ' on' : '')}
+            aria-pressed={guideOn}
+            onClick={() => setGuideOn((g) => !g)}
+          >
             <span className="wt-ico">薄</span>Guía
           </button>
           <button

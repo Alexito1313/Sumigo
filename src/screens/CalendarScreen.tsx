@@ -80,11 +80,16 @@ export function CalendarScreen() {
   // Secciones reutilizadas por el layout móvil y el de escritorio.
   const monthNav = (
     <div className="cal-month-nav">
-      <button className="cmn-btn" onClick={() => setOffset((o) => o + 1)}>
+      <button className="cmn-btn" aria-label="Mes anterior" onClick={() => setOffset((o) => o + 1)}>
         ←
       </button>
       <div className="cmn-label">{label}</div>
-      <button className="cmn-btn" disabled={offset === 0} onClick={() => setOffset((o) => Math.max(0, o - 1))}>
+      <button
+        className="cmn-btn"
+        aria-label="Mes siguiente"
+        disabled={offset === 0}
+        onClick={() => setOffset((o) => Math.max(0, o - 1))}
+      >
         →
       </button>
     </div>
@@ -143,7 +148,8 @@ export function CalendarScreen() {
       </div>
       <div className="cs">
         <span className="n">{monthCards}</span>
-        <span className="l">cartas este mes</span>
+        {/* cuenta respuestas (una carta repasada 5 veces son 5), no cartas únicas */}
+        <span className="l">respuestas este mes</span>
       </div>
     </div>
   )

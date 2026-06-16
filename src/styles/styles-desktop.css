@@ -659,3 +659,13 @@
     gap: 10px;
   }
 }
+
+/* Contraste en OSCURO: el rojo --accent (#E03A47) como texto pequeño sobre el
+   fondo tintado de la sidebar daba ~3.4:1 (AA pide 4.5). --accent-2 nocturno
+   (#F26A6A) es la variante clara pensada para texto. */
+@media (min-width: 960px) {
+  .vb .dk-navitem.active,
+  .vb .dk-navitem.active .dk-gl {
+    color: var(--accent-2);
+  }
+}

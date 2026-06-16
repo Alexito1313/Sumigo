@@ -75,6 +75,9 @@
   opacity: 0.7;
 }
 .cal-cell.hm-0 { background: var(--border-2); }
+/* En oscuro --border-2 es un azul LUMINOSO: un día vacío brillaba más que uno
+   con actividad baja (rampa invertida). Se atenúa hacia el fondo de tarjeta. */
+.vb .cal-cell.hm-0 { background: color-mix(in oklab, var(--border-2) 35%, var(--bg-card)); }
 .cal-cell.hm-1 { background: color-mix(in oklab, var(--accent) 22%, var(--bg-card)); }
 .cal-cell.hm-2 { background: color-mix(in oklab, var(--accent) 42%, var(--bg-card)); }
 .cal-cell.hm-3 { background: color-mix(in oklab, var(--accent) 66%, var(--bg-card)); }

@@ -162,7 +162,12 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (exiting || finished) return
+      // Teclas con modificador (Ctrl+C…) no son atajos de estudio.
+      if (e.ctrlKey || e.metaKey || e.altKey) return
       if (e.key === ' ' || e.key === 'Enter') {
+        // Con un botón enfocado, Espacio/Enter activan ESE botón (no giran la
+        // carta); las flechas/letras de abajo siguen funcionando siempre.
+        if ((e.target as HTMLElement | null)?.closest?.('button')) return
         e.preventDefault()
         setFlipped((f) => !f)
       } else if (e.key === 'ArrowRight' || e.key.toLowerCase() === 'd') {
@@ -297,7 +302,9 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
                 nace sin girar (sin transición de giro que enseñe la respuesta). */}
             <div key={index} className={'flip-card' + (flipped ? ' is-flipped' : '')}>
               <div className="flip-inner">
-                <div className="flip-face front">
+                {/* aria-hidden alterna con el giro: el lector de pantalla leía
+                    la respuesta sin girar (la cara trasera siempre estaba en el árbol) */}
+                <div className="flip-face front" aria-hidden={flipped}>
                   <div className="fcard proto-card">
                     <div className="fcard-body" style={{ minHeight: 360 }}>
                       <div className="fcard-jp-big" style={{ fontSize: jpFont(card.jp, 'front') }}>
@@ -309,7 +316,7 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
                     </div>
                   </div>
                 </div>
-                <div className="flip-face back">
+                <div className="flip-face back" aria-hidden={!flipped}>
                   <div className="fcard proto-card">
                     <div className="fcard-body" style={{ paddingTop: 28, paddingBottom: 20, minHeight: 360 }}>
                       <div className="fcard-jp-back" style={{ fontSize: jpFont(card.jp, 'back') }}>

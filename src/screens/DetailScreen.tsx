@@ -83,7 +83,7 @@ export function DetailScreen() {
         <Backdrop variant={variant} />
         <div className="home-content">
           <div className="detail-wrap">
-            <button className="detail-back" onClick={() => navigate('/')}>
+            <button className="detail-back" onClick={back}>
               <span className="db-arrow">←</span>
               Volver
             </button>

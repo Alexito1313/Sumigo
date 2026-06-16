@@ -239,7 +239,7 @@ export function StatsScreen() {
         <StudyHeader title="Estadísticas" subtitle="統計" />
 
         <div className="stats-wrap">
-          <div className="stats-eyebrow">Estadísticas · 統計</div>
+          {/* sin eyebrow: la cabecera de arriba ya dice "Estadísticas" */}
           <h1 className="stats-title">
             Cómo vas.
             <span className="stats-sub">{stats.cardsSeen} cartas estudiadas · J3</span>

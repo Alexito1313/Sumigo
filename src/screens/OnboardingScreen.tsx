@@ -5,13 +5,14 @@ import { useProgressRepo } from '../data/progress/ProgressContext'
 import { Backdrop } from '../components/Backdrop'
 
 const LEVELS = [
-  { id: 'J1', sub: '1º', locked: true },
-  { id: 'J2', sub: '2º', locked: true },
-  { id: 'J3', sub: '3º', locked: false },
-  { id: 'J4', sub: '4º', locked: true },
-  { id: 'J5', sub: '5º', locked: true },
-  { id: 'J6', sub: '6º', locked: true },
-  { id: 'J7', sub: '7º', locked: true },
+  // Ordinales apocopados ("1.er año", no "1º año"), igual que LevelChip.
+  { id: 'J1', sub: '1.er', locked: true },
+  { id: 'J2', sub: '2.º', locked: true },
+  { id: 'J3', sub: '3.er', locked: false },
+  { id: 'J4', sub: '4.º', locked: true },
+  { id: 'J5', sub: '5.º', locked: true },
+  { id: 'J6', sub: '6.º', locked: true },
+  { id: 'J7', sub: '7.º', locked: true },
 ]
 
 export const ONBOARDED_KEY = 'japoweb.onboarded'
@@ -29,7 +30,8 @@ export function OnboardingScreen() {
     } catch {
       /* almacenamiento no disponible */
     }
-    navigate('/')
+    // replace: el onboarding desaparece del historial (antes "atrás" volvía aquí).
+    navigate('/', { replace: true })
   }
 
   return (

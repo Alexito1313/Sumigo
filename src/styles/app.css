@@ -81,38 +81,6 @@ body {
   transform: translateY(-1px);
 }
 
-/* ---------- Conmutador de tema flotante ---------- */
-.theme-toggle {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: inline-flex;
-  gap: 4px;
-  padding: 4px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-  z-index: 50;
-}
-.theme-toggle button {
-  border: none;
-  background: none;
-  cursor: pointer;
-  font-family: var(--sans);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ink-3);
-  padding: 6px 14px;
-  border-radius: 999px;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-.theme-toggle button.on {
-  background: var(--accent);
-  color: #fff;
-}
-
 /* ============================================================
    Home — columna mobile-first centrada (el layout desktop llega en Fase 7).
    El fondo decorativo (.washi-bg/.fuji-bg, position:absolute inset:0) se
@@ -477,46 +445,16 @@ body {
   justify-content: center;
   flex: none;
 }
-.levelchip .lc-text {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  line-height: 1;
-  text-align: left;
-}
 .levelchip .lc-id {
   font-family: var(--serif);
   font-weight: 700;
   font-size: 15px;
   color: var(--ink);
 }
-.levelchip .lc-sub {
-  font-size: 9px;
-  color: var(--ink-3);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
 .levelchip .lc-caret {
   font-size: 11px;
   color: var(--ink-3);
   margin-left: 2px;
-}
-.home-theme-toggle {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--ink-2);
-  font-size: 16px;
-  cursor: pointer;
-  flex: none;
-  transition: border-color 0.15s ease, transform 0.1s ease;
-}
-.home-theme-toggle:active {
-  transform: scale(0.92);
 }
 
 /* Bottom-sheet de nivel */
@@ -904,7 +842,8 @@ body {
   height: 20px;
   border-radius: 999px;
   background: var(--gold, #c9a227);
-  color: #fff;
+  /* tinta oscura sobre dorado (el blanco daba 2.3-2.8:1), como el sello "warn" */
+  color: #1b1a17;
   font-weight: 700;
   font-size: 13px;
   display: flex;
@@ -1591,6 +1530,15 @@ body {
    marca de agua decorativa sutil. */
 .home-main .washi-bg .seal {
   display: none;
+}
+
+/* Los tiles de modo ahora son <button> (acceso por teclado y lectores):
+   se neutraliza el estilo nativo conservando el aspecto del tile. */
+.modes .mode {
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
 }
 
 /* Móvil APAISADO: al quitar `orientation: portrait` del manifest la app

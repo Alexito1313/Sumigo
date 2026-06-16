@@ -45,6 +45,7 @@ function ChipGroup({
         <button
           key={o.value}
           className={'setting-chip' + (o.value === value ? ' active' : '')}
+          aria-pressed={o.value === value}
           onClick={() => onSelect(o.value)}
         >
           {o.label}

@@ -25,7 +25,13 @@ export function TabBar() {
           <button
             key={t.path}
             className={'tab' + (active ? ' active' : '')}
-            onClick={() => navigate(t.path)}
+            onClick={() => {
+              // Re-pulsar la pestaña activa apilaba entradas duplicadas en el
+              // historial (el "atrás" de Android parecía no responder). Ahora,
+              // en la activa, se conserva el gesto móvil de "subir arriba".
+              if (active) window.scrollTo({ top: 0, behavior: 'smooth' })
+              else navigate(t.path)
+            }}
             aria-current={active ? 'page' : undefined}
           >
             <span className="tab-glyph">{t.glyph}</span>

@@ -150,7 +150,11 @@ export function TestScreen() {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (finished) return
+      // Teclas con modificador (Ctrl+C…) no son atajos del test.
+      if (e.ctrlKey || e.metaKey || e.altKey) return
       if (selected === null) {
+        // Atajos de selección 1-4 / a-d: funcionan SIEMPRE (aunque una opción
+        // tenga el foco; '2' no activa un botón, así que no hay conflicto).
         const k = e.key.toLowerCase()
         const idx = '1234'.indexOf(k) >= 0 ? '1234'.indexOf(k) : 'abcd'.indexOf(k)
         if (idx >= 0) {
@@ -158,6 +162,13 @@ export function TestScreen() {
           onPick(idx)
         }
       } else if (e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') {
+        // Con un botón enfocado, Espacio/Enter activan ESE botón; la flecha
+        // derecha avanza siempre.
+        if (
+          (e.key === ' ' || e.key === 'Enter') &&
+          (e.target as HTMLElement | null)?.closest?.('button')
+        )
+          return
         e.preventDefault()
         goNext()
       }

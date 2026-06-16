@@ -142,14 +142,6 @@
   letter-spacing: 0.14em; text-transform: uppercase;
   font-weight: 700;
 }
-.dm-history {
-  display: flex; gap: 3px; margin-bottom: 10px;
-}
-.dm-history .dh-cell {
-  flex: 1; height: 8px; border-radius: 2px;
-}
-.dm-history .dh-cell.good { background: var(--green); }
-.dm-history .dh-cell.bad { background: color-mix(in oklab, var(--accent) 55%, var(--bg-card)); }
 .dm-sched {
   display: flex; align-items: center; justify-content: space-between;
   font-size: 10.5px; color: var(--ink-3);
@@ -248,51 +240,4 @@
 .detail-btn.ghost {
   background: var(--bg-card); color: var(--ink);
   border: 1px solid var(--border);
-}
-
-/* ============================================================
-   Detalle — escritorio
-   ============================================================ */
-.dt-detail-wrap {
-  max-width: 920px; margin: 0 auto;
-  padding: 32px 30px 44px;
-  position: relative; z-index: 1;
-}
-.dt-detail-back {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: none; border: none; cursor: pointer;
-  font-family: var(--sans); font-size: 13px; font-weight: 600;
-  color: var(--ink-2); padding: 0 0 18px;
-}
-.dt-detail-back .db-arrow { font-family: var(--serif); font-size: 17px; font-weight: 700; }
-.dt-detail-grid {
-  display: grid; grid-template-columns: 1fr 1.1fr;
-  gap: 24px; align-items: start;
-}
-.dt-detail-left { display: flex; flex-direction: column; gap: 18px; }
-.dt-detail-right { display: flex; flex-direction: column; gap: 18px; }
-
-.dt-detail-hero {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 26px;
-  display: flex; flex-direction: column; align-items: center; gap: 16px;
-  text-align: center;
-}
-.va .dt-detail-hero { background: linear-gradient(180deg, #FFFCF5 0%, #FBF3DD 100%); }
-.dt-detail-kanji {
-  font-family: var(--serif); font-weight: 700;
-  font-size: 180px; line-height: 1; color: var(--ink);
-  letter-spacing: -0.04em;
-}
-.dt-detail-mean {
-  font-family: var(--serif); font-weight: 700;
-  font-size: 24px; color: var(--ink);
-}
-.dt-detail-readings {
-  display: flex; gap: 10px; justify-content: center;
-}
-.dt-detail-tags {
-  display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;
 }

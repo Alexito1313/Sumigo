@@ -159,6 +159,7 @@ function ContentChips({
         <button
           key={i.id}
           className={'chip ' + (active === i.id ? 'active' : '')}
+          aria-pressed={active === i.id}
           onClick={() => onSelect(i.id)}
         >
           {i.label}
@@ -182,7 +183,11 @@ function TypeChips({
 }) {
   return (
     <div className="chips">
-      <button className={'chip ' + (selected.size === 0 ? 'active' : '')} onClick={onClear}>
+      <button
+        className={'chip ' + (selected.size === 0 ? 'active' : '')}
+        aria-pressed={selected.size === 0}
+        onClick={onClear}
+      >
         Todos
         <span className="jp-tiny">全部</span>
       </button>
@@ -192,6 +197,7 @@ function TypeChips({
           <button
             key={t}
             className={'chip ' + (selected.has(t) ? 'active' : '')}
+            aria-pressed={selected.has(t)}
             onClick={() => onToggle(t)}
           >
             {lab.label}
@@ -218,6 +224,7 @@ function BlockGrid({
         <button
           key={b.id}
           className={'block ' + (isSelected(b.id) ? 'active' : '')}
+          aria-pressed={isSelected(b.id)}
           onClick={() => onToggle(b.id)}
         >
           <span className="b-id">{b.id === 'MIOS' ? '自' : b.id}</span>
@@ -241,56 +248,54 @@ function ModeTiles({
 }) {
   // La escritura (trazar el kanji) es exclusiva de kanji; no aplica a vocabulario.
   const showWrite = content !== 'vocab'
+  // <button>, no <div onClick>: el control principal de la app era invisible
+  // para teclado y lectores de pantalla (el reset visual vive en app.css).
   return (
     <div className="modes">
-      <div className="mode" onClick={() => go('/flash')} style={{ cursor: 'pointer' }}>
+      <button type="button" className="mode" onClick={() => go('/flash')}>
         <div className="m-row">
           <span className="m-kanji">札</span>
           <span className="m-pill">RECOMENDADO</span>
         </div>
         <div className="m-title">Flashcards</div>
         <div className="m-desc">Toca para voltear · desliza para responder</div>
-      </div>
-      <div className="mode" onClick={() => go('/test')} style={{ cursor: 'pointer' }}>
+      </button>
+      <button type="button" className="mode" onClick={() => go('/test')}>
         <div className="m-row">
           <span className="m-kanji">試</span>
           <span className="m-pill">TEST</span>
         </div>
         <div className="m-title">Opción múltiple</div>
         <div className="m-desc">4 opciones del mismo tipo</div>
-      </div>
+      </button>
       {/* Si no hay Escritura, Repaso ocupa el ancho completo para no dejar hueco. */}
-      <div
-        className={'mode' + (showWrite ? '' : ' full')}
-        onClick={() => go('/repaso')}
-        style={{ cursor: 'pointer' }}
-      >
+      <button type="button" className={'mode' + (showWrite ? '' : ' full')} onClick={() => go('/repaso')}>
         <div className="m-row">
           <span className="m-kanji">復</span>
           <span className="m-pill">REPASO</span>
         </div>
         <div className="m-title">Más falladas</div>
         <div className="m-desc">Las que peor llevas, primero</div>
-      </div>
+      </button>
       {showWrite && (
-        <div className="mode" onClick={() => go('/escritura')} style={{ cursor: 'pointer' }}>
+        <button type="button" className="mode" onClick={() => go('/escritura')}>
           <div className="m-row">
             <span className="m-kanji">書</span>
             <span className="m-pill">KANJI</span>
           </div>
           <div className="m-title">Escritura</div>
           <div className="m-desc">Trazar el kanji con el dedo</div>
-        </div>
+        </button>
       )}
       {!hideExam && (
-        <div className="mode full" onClick={() => go('/simulacro')} style={{ cursor: 'pointer' }}>
+        <button type="button" className="mode full" onClick={() => go('/simulacro')}>
           <div className="m-row">
             <span className="m-kanji">検</span>
             <span className="m-pill">EXAMEN N4</span>
           </div>
-          <div className="m-title">Simulacro cronometrado</div>
-          <div className="m-desc">formato N4 · cronometrado</div>
-        </div>
+          <div className="m-title">Simulacro examen N4</div>
+          <div className="m-desc">10 preguntas · cronometrado</div>
+        </button>
       )}
     </div>
   )
@@ -594,7 +599,7 @@ export function HomeScreen() {
                 <span className="he-k">検</span>
                 <span className="he-t">
                   <b>Simulacro examen N4</b>
-                  <small>formato N4 · cronometrado</small>
+                  <small>10 preguntas · cronometrado</small>
                 </span>
               </button>
             </div>

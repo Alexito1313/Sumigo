@@ -49,7 +49,7 @@ export function LevelChip() {
       </button>
 
       {open && (
-        <div className="lvl-sheet-root" role="dialog" aria-modal="true">
+        <div className="lvl-sheet-root" role="dialog" aria-modal="true" aria-label="Cambiar de nivel">
           <div className="lvl-scrim" onClick={() => setOpen(false)} />
           <div className="lvl-sheet">
             <div className="lvl-handle" />
