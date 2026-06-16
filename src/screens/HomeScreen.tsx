@@ -92,6 +92,18 @@ interface ContInfo {
   selection: Selection
 }
 
+/** Glifo decorativo de un jp: 1er carácter de la PALABRA, saltando el contexto
+    inicial del vocab — "(電気が)" / "[お]" / marcador "〜" — para no mostrar un
+    paréntesis suelto. Si tras limpiar no queda nada, usa el primer carácter. */
+function firstGlyph(jp: string): string {
+  const s = jp
+    .trim()
+    .replace(/^[〜～・]+/, '') // marcadores de sufijo iniciales
+    .replace(/^[([（［][^)\]）］]*[)\]）］]/, '') // contexto (…) o [ … ] inicial
+    .replace(/^[〜～・\s]+/, '')
+  return [...s][0] ?? [...jp.trim()][0] ?? ''
+}
+
 /** Tarjeta "Continuar": última sesión guardada o, si no hay, el primer bloque
     de kanji en curso (o sin empezar) del temario. */
 function continuarInfo(content: Content, snapshot: ProgressSnapshot): ContInfo | null {
@@ -154,9 +166,10 @@ function continuarInfo(content: Content, snapshot: ProgressSnapshot): ContInfo |
   }
   if (!pool.length) return null
 
-  // Glifo: primer carácter de una carta no vista (o la primera). Solo el 1er
-  // char porque con vocab el jp es una palabra entera que reventaba la tarjeta.
-  const glyph = [...(pool.find((c) => (snapshot.cards[c.jp]?.views ?? 0) === 0) ?? pool[0]).jp][0]
+  // Glifo: primer carácter de la palabra de una carta no vista (o la primera).
+  // firstGlyph salta el contexto inicial "(電気が)" / "[お]" / "〜" del vocab para
+  // no mostrar un paréntesis suelto (antes con jp[0] salía "(" / "[" / "〜").
+  const glyph = firstGlyph((pool.find((c) => (snapshot.cards[c.jp]?.views ?? 0) === 0) ?? pool[0]).jp)
 
   // Repaso: todas las falladas están "para repasar" (sin barra de progreso).
   if (path === '/repaso') {
