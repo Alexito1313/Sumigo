@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useProgress } from '../data/progress/ProgressContext'
 
 /* ============================================================
@@ -12,7 +12,14 @@ import { useProgress } from '../data/progress/ProgressContext'
 export function SaveErrorBanner() {
   const { repo } = useProgress()
   const [dismissed, setDismissed] = useState(false)
-  if (!repo.hasSaveError() || dismissed) return null
+  const hasError = repo.hasSaveError()
+  // Al despejarse el error (un guardado posterior funciona), se rearma el aviso:
+  // si vuelve a fallar, el banner reaparece (antes, descartarlo lo silenciaba
+  // para siempre aunque el guardado volviera a fallar).
+  useEffect(() => {
+    if (!hasError) setDismissed(false)
+  }, [hasError])
+  if (!hasError || dismissed) return null
   return (
     <div
       role="alert"

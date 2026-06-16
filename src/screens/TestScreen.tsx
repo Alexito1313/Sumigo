@@ -77,6 +77,7 @@ export function TestScreen() {
   const [answered, setAnswered] = useState<Answer[]>([])
   const [finished, setFinished] = useState(false)
   const advanceTimer = useRef<number | null>(null)
+  const streakFlashTimer = useRef<number | null>(null)
 
   const perSession = repo.getSnapshot().settings.cardsPerSession
   const TOTAL_SESSION = Math.min(perSession, total || perSession)
@@ -123,7 +124,13 @@ export function TestScreen() {
       if (correct) setMaxStreak((m) => Math.max(m, nextStreak))
       if (correct && nextStreak >= 3) {
         setStreakFlash({ value: nextStreak, key: Date.now() })
-        window.setTimeout(() => setStreakFlash(null), 1100)
+        // Guardado en ref y limpiado: sin esto, un reset/desmontaje antes de
+        // 1100ms disparaba setState fuera de tiempo (o sobre la sesión siguiente).
+        if (streakFlashTimer.current) clearTimeout(streakFlashTimer.current)
+        streakFlashTimer.current = window.setTimeout(() => {
+          streakFlashTimer.current = null
+          setStreakFlash(null)
+        }, 1100)
       }
       setAnswered((a) => [...a, { card, correct }])
     },
@@ -134,6 +141,10 @@ export function TestScreen() {
     if (advanceTimer.current) {
       clearTimeout(advanceTimer.current)
       advanceTimer.current = null
+    }
+    if (streakFlashTimer.current) {
+      clearTimeout(streakFlashTimer.current)
+      streakFlashTimer.current = null
     }
     setIndex(0)
     setSelected(null)
@@ -177,10 +188,11 @@ export function TestScreen() {
     return () => window.removeEventListener('keydown', onKey)
   }, [selected, finished, onPick, goNext])
 
-  // Limpia el timeout de avance al desmontar (evita setState tras unmount).
+  // Limpia los timeouts al desmontar (evita setState tras unmount).
   useEffect(
     () => () => {
       if (advanceTimer.current) clearTimeout(advanceTimer.current)
+      if (streakFlashTimer.current) clearTimeout(streakFlashTimer.current)
     },
     [],
   )

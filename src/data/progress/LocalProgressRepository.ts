@@ -211,6 +211,33 @@ export class LocalProgressRepository implements ProgressRepository {
     })
   }
 
+  recordAnswers(answers: { jp: string; correct: boolean }[]): void {
+    if (!answers.length) return
+    const now = Date.now()
+    const cards = { ...this.snapshot.cards }
+    for (const { jp, correct } of answers) {
+      const prev = cards[jp]
+      cards[jp] = {
+        jp,
+        views: (prev?.views ?? 0) + 1,
+        right: (prev?.right ?? 0) + (correct ? 1 : 0),
+        wrong: (prev?.wrong ?? 0) + (correct ? 0 : 1),
+        lastSeen: now,
+        ...nextSRS(prev, correct, now),
+      }
+    }
+    const streak = { ...this.snapshot.streak, days: { ...this.snapshot.streak.days } }
+    const today = dayKey(now)
+    streak.days[today] = (streak.days[today] ?? 0) + answers.length
+    if (streak.lastStudyDay !== today) {
+      const yesterday = yesterdayKey(now)
+      streak.current = streak.lastStudyDay === yesterday ? streak.current + 1 : 1
+      streak.lastStudyDay = today
+      streak.longest = Math.max(streak.longest, streak.current)
+    }
+    this.commit({ ...this.snapshot, cards, streak })
+  }
+
   setSettings(patch: Partial<Settings>): void {
     this.commit({ ...this.snapshot, settings: { ...this.snapshot.settings, ...patch } })
   }

@@ -58,6 +58,9 @@ export interface ProgressRepository {
   subscribe(listener: () => void): () => void
   /** Registra una respuesta: actualiza la carta (SRS), la racha y el calendario. */
   recordAnswer(jp: string, correct: boolean): void
+  /** Registra varias respuestas con UN solo guardado (p.ej. al entregar el
+   *  simulacro): evita N escrituras síncronas de todo el snapshot. */
+  recordAnswers(answers: { jp: string; correct: boolean }[]): void
   setSettings(patch: Partial<Settings>): void
   exportJSON(): string
   importJSON(json: string): boolean

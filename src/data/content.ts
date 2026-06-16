@@ -49,12 +49,6 @@ function dataUrl(path: string): string {
   return import.meta.env.BASE_URL + path
 }
 
-async function fetchBlock(path: string): Promise<RawItem[]> {
-  const res = await fetch(dataUrl(path))
-  if (!res.ok) throw new Error(`${path}: HTTP ${res.status}`)
-  return res.json() as Promise<RawItem[]>
-}
-
 function normKanji(it: RawItem, block: string): Card {
   return {
     jp: it.jp,
@@ -86,45 +80,53 @@ let cache: Content | null = null
 export async function loadContent(): Promise<Content> {
   if (cache) return cache
 
+  // Un bloque que falla por RED (fetch lanza / 5xx) marca la carga como parcial:
+  // se devuelve lo que haya pero NO se cachea, para que un reintento posterior la
+  // complete. Un 404 (bloque genuinamente ausente) NO cuenta como fallo. Antes
+  // cualquier fallo parcial se cacheaba para siempre y faltaban bloques sin salida.
+  let partial = false
+  const loadBlock = async (path: string, norm: (it: RawItem, b: string) => Card, b: string) => {
+    let res: Response
+    try {
+      res = await fetch(dataUrl(path))
+    } catch {
+      partial = true // fallo de RED real → reintentable (no cachear)
+      return [] as Card[]
+    }
+    if (res.status === 404) return [] as Card[] // ausente definitivo
+    if (!res.ok) {
+      partial = true // 5xx u otro → transitorio
+      return [] as Card[]
+    }
+    try {
+      return ((await res.json()) as RawItem[]).map((it) => norm(it, b))
+    } catch {
+      // 200 con cuerpo no-JSON (p.ej. index.html del fallback SPA del dev server
+      // o de algún host): el bloque está ausente, NO es un fallo de red.
+      return [] as Card[]
+    }
+  }
+
   // Promise.all preserva el orden del array → mantiene el orden de bloques y
   // el orden dentro de cada bloque (a diferencia de un push en carrera).
   const [kanjiArrs, vocabArrs] = await Promise.all([
-    Promise.all(
-      KANJI_BLOCKS.map(async (b) => {
-        try {
-          return (await fetchBlock(`data/kanji/${b}.json`)).map((it) =>
-            normKanji(it, b),
-          )
-        } catch {
-          return [] as Card[] // bloque ausente: se ignora
-        }
-      }),
-    ),
-    Promise.all(
-      VOCAB_BLOCKS.map(async (b) => {
-        try {
-          return (await fetchBlock(`data/vocab/${b}.json`)).map((it) =>
-            normVocab(it, b),
-          )
-        } catch {
-          return [] as Card[]
-        }
-      }),
-    ),
+    Promise.all(KANJI_BLOCKS.map((b) => loadBlock(`data/kanji/${b}.json`, normKanji, b))),
+    Promise.all(VOCAB_BLOCKS.map((b) => loadBlock(`data/vocab/${b}.json`, normVocab, b))),
   ])
 
   const kanji = kanjiArrs.flat()
   const vocab = vocabArrs.flat()
-  // Si NO se cargó NADA (p. ej. red caída en la primera visita), no cachear y
-  // fallar: así useContent expone el error y la UI ofrece "Reintentar". Antes se
-  // cacheaba el contenido vacío en silencio y la app quedaba vacía sin salida.
+  // Si NO se cargó NADA (p. ej. red caída en la primera visita), fallar: así
+  // useContent expone el error y la UI ofrece "Reintentar". Antes se cacheaba
+  // el contenido vacío en silencio y la app quedaba vacía sin salida.
   if (kanji.length === 0 && vocab.length === 0) {
     throw new Error('No se pudo cargar el contenido')
   }
   const writable = kanji.filter((k) => [...k.jp].length === 1)
 
-  cache = { kanji, vocab, all: kanji.concat(vocab), writable }
-  return cache
+  const content: Content = { kanji, vocab, all: kanji.concat(vocab), writable }
+  if (!partial) cache = content // solo se cachea una carga COMPLETA
+  return content
 }
 
 /** Nº de cartas por bloque. */

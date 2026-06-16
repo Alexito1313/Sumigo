@@ -76,6 +76,10 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
       // salida: si no, la respuesta se contaba dos veces y podía saltar carta.
       if (!total || advancing.current) return
       advancing.current = true
+      // Si se avanza por teclado a mitad de un arrastre, limpia el estado de
+      // arrastre: sin esto la carta siguiente nacía desplazada y "pegada" al ratón.
+      setDragging(false)
+      setDx(0)
       setFeedback(correct ? 'good' : 'bad')
       setExiting(correct ? 'right' : 'left')
       setStats((s) => (correct ? { ...s, right: s.right + 1 } : { ...s, wrong: s.wrong + 1 }))

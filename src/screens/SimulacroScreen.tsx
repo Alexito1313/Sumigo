@@ -39,10 +39,13 @@ export function SimulacroScreen() {
   const submit = useCallback(() => {
     if (submittedRef.current) return
     submittedRef.current = true
-    // las respuestas del examen cuentan para el progreso/racha
+    // Las respuestas cuentan para el progreso/racha, en UN solo guardado (antes
+    // eran 10 escrituras síncronas de todo el snapshot al entregar).
+    const batch: { jp: string; correct: boolean }[] = []
     questions.forEach((q, i) => {
-      if (answers[i] !== null) repo.recordAnswer(q.jp, answers[i] === q.correct)
+      if (answers[i] !== null) batch.push({ jp: q.jp, correct: answers[i] === q.correct })
     })
+    repo.recordAnswers(batch)
     setPhase('results')
   }, [questions, answers, repo])
 

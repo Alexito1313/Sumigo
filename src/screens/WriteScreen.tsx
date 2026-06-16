@@ -23,6 +23,9 @@ export function WriteScreen() {
   const total = deck.length
 
   const [index, setIndex] = useState(0)
+  // Estado de la guía elevado: AutoStage se remonta por carta (key), así que su
+  // toggle interno se reseteaba; aquí persiste durante toda la sesión.
+  const [guide, setGuide] = useState(false)
   const [stats, setStats] = useState({ right: 0, wrong: 0 })
   const [answered, setAnswered] = useState<Answer[]>([])
   const [finished, setFinished] = useState(false)
@@ -103,8 +106,16 @@ export function WriteScreen() {
           <div className="write-prompt-read">{card.read}</div>
         </div>
 
-        {/* Guía desactivada por defecto; el usuario la activa con el botón "Guía". */}
-        <AutoStage key={'auto-' + card.jp + variant} card={card} variant={variant} guideHint={false} onGrade={grade} />
+        {/* Guía desactivada por defecto; el usuario la activa con el botón "Guía"
+            (su elección persiste entre cartas vía `guide`). */}
+        <AutoStage
+          key={'auto-' + card.jp + variant}
+          card={card}
+          variant={variant}
+          guideHint={guide}
+          onGuideChange={setGuide}
+          onGrade={grade}
+        />
       </div>
     </div>
   )

@@ -24,12 +24,16 @@ export function AutoStage({
   card,
   variant,
   guideHint,
+  onGuideChange,
   onGrade,
   nextLabel = 'Siguiente',
 }: {
   card: Card
   variant: Variant
   guideHint: boolean
+  /** Notifica al padre el toggle de la guía para que PERSISTA entre cartas
+   *  (AutoStage se remonta por carta vía `key`, lo que reseteaba el toggle). */
+  onGuideChange?: (on: boolean) => void
   onGrade: (correct: boolean) => void
   /** Etiqueta del botón al completar (por defecto "Siguiente"). */
   nextLabel?: string
@@ -345,7 +349,12 @@ export function AutoStage({
           <button
             className={'write-tool' + (guideOn ? ' on' : '')}
             aria-pressed={guideOn}
-            onClick={() => setGuideOn((g) => !g)}
+            onClick={() =>
+              setGuideOn((g) => {
+                onGuideChange?.(!g)
+                return !g
+              })
+            }
           >
             <span className="wt-ico">薄</span>Guía
           </button>
