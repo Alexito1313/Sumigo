@@ -214,3 +214,13 @@
   background: linear-gradient(90deg, transparent 0%, var(--border) 50%, transparent 100%);
   max-width: 80px;
 }
+
+/* ============================================================
+   Créditos y licencias (clases extraídas de estilos inline del JSX).
+   ============================================================ */
+.set-credits { padding: 4px 16px; }
+.set-credit { padding: 11px 0; border-bottom: 1px solid var(--border); }
+.set-credit:last-child { border-bottom: none; }
+.set-credit .sc-title { font-size: 13px; font-weight: 600; color: var(--ink); }
+.set-credit .sc-desc { font-size: 12px; color: var(--ink-3); line-height: 1.5; margin-top: 3px; }
+.set-credit .sc-link { color: var(--accent); text-decoration: none; }

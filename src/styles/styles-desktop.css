@@ -43,6 +43,18 @@
   .dk-host .ki-grid {
     grid-template-columns: repeat(6, 1fr);
   }
+  /* Silabarios: la rejilla gojūon es de 5 columnas; en escritorio NO debe
+     estirarse a ~175px/celda. Se acota el CONTENEDOR (no cada rejilla) para que
+     los títulos de sección compartan el borde izquierdo con la rejilla. */
+  .dk-host .kana-tables {
+    max-width: 520px;
+    margin-inline: auto;
+  }
+  /* Bottom-sheet de nivel: el marco fixed inset:0 se centraba sobre TODA la
+     ventana, ignorando la sidebar → descentrado. Se desplaza tras la sidebar. */
+  .lvl-sheet-root {
+    left: var(--dk-side-w);
+  }
 
   /* ---------- Sidebar ---------- */
   .desktop-nav {

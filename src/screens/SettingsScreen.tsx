@@ -225,38 +225,38 @@ export function SettingsScreen() {
         Créditos y licencias
         <span className="jp-side">謝辞</span>
       </h3>
-      <div className="settings-card" style={{ padding: '4px 16px' }}>
-        <div style={{ padding: '11px 0', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>Trazos de kanji y kana</div>
-          <div style={{ fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.5, marginTop: 3 }}>
+      <div className="settings-card set-credits">
+        <div className="set-credit">
+          <div className="sc-title">Trazos de kanji y kana</div>
+          <div className="sc-desc">
             KanjiVG © Ulrich Apel —{' '}
             <a
+              className="sc-link"
               href="https://creativecommons.org/licenses/by-sa/3.0/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: 'var(--accent)', textDecoration: 'none' }}
             >
               CC BY-SA 3.0
             </a>
           </div>
         </div>
-        <div style={{ padding: '11px 0', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>Tipografías</div>
-          <div style={{ fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.5, marginTop: 3 }}>
+        <div className="set-credit">
+          <div className="sc-title">Tipografías</div>
+          <div className="sc-desc">
             Noto Sans JP, Noto Serif JP, Shippori Mincho e Inter —{' '}
             <a
+              className="sc-link"
               href="https://openfontlicense.org/"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: 'var(--accent)', textDecoration: 'none' }}
             >
               SIL Open Font License
             </a>
           </div>
         </div>
-        <div style={{ padding: '11px 0' }}>
-          <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>Tecnología</div>
-          <div style={{ fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.5, marginTop: 3 }}>
+        <div className="set-credit">
+          <div className="sc-title">Tecnología</div>
+          <div className="sc-desc">
             Construido con React, Vite y otras librerías de código abierto.
           </div>
         </div>

@@ -71,6 +71,12 @@
   min-width: 34px; text-align: center;
 }
 .reading-row .r-label.kun { background: var(--accent); }
+/* En oscuro --ink-3 se aclara (#8A8170) y el blanco encima caía a 3.9:1: se
+   oscurece el fondo de las pills de lectura SIN .kun (la 'On' de kanji y la
+   '読み' de vocabulario); la 'Kun' ya usa --accent y se deja intacta. */
+.vb .reading-row .r-label:not(.kun) {
+  background: color-mix(in oklab, var(--ink-3) 55%, #000);
+}
 .reading-row .r-val {
   font-size: 14px; color: var(--ink-2);
   letter-spacing: 0.08em;
