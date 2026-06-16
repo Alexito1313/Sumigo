@@ -342,6 +342,84 @@ function ModeTiles({
   )
 }
 
+/** Cabecera de saludo + racha semanal + kanji del día. Compartida por los
+    layouts móvil y escritorio (antes estaba duplicada en ambas ramas). */
+function GreetHeader({
+  greet,
+  week,
+  completedWeek,
+  streakNow,
+  daily,
+  onCalendar,
+  onDaily,
+}: {
+  greet: { text: string; meta: string }
+  week: number[]
+  completedWeek: number
+  streakNow: number
+  daily: Card | null
+  onCalendar: () => void
+  onDaily: (jp: string) => void
+}) {
+  return (
+    <div className="chome-headrow">
+      <div className="chome-headl">
+        <div className="greet-eyebrow">
+          <span className="dot"></span>
+          <span className="meta">{greet.meta}</span>
+        </div>
+        <h1 className="greet-title chome-h1">{greet.text}</h1>
+        <button className="chome-week" onClick={onCalendar} aria-label="Ver calendario">
+          <span className="cw-dots">
+            {week.map((d, i) => (
+              <span key={i} className={'cwd ' + (d === 1 ? 'done' : d === 2 ? 'today' : '')}></span>
+            ))}
+          </span>
+          <span className="cw-lbl">
+            <b>{streakNow}</b> días de racha · {completedWeek}/7 semana
+          </span>
+        </button>
+      </div>
+      {daily && (
+        <button className="chome-daily" onClick={() => onDaily(daily.jp)} aria-label="Kanji del día">
+          <span className="cd-eyebrow">今日</span>
+          <span className="cd-kanji">{daily.jp}</span>
+          <span className="cd-mean">{daily.mean.split(/[,，]/)[0].trim()}</span>
+        </button>
+      )}
+    </div>
+  )
+}
+
+/** Tarjeta "Continuar". Compartida por móvil y escritorio (className extra
+    'hd-continuar' en escritorio para el estilo rojo lleno). */
+function ContinuarCard({
+  cont,
+  className,
+  onClick,
+}: {
+  cont: ContInfo
+  className?: string
+  onClick: () => void
+}) {
+  return (
+    <button className={'continuar' + (className ? ' ' + className : '')} onClick={onClick}>
+      <span className="cont-k">{cont.glyph}</span>
+      <span className="cont-body">
+        <span className="cont-eyebrow">CONTINUAR · 続き</span>
+        <span className="cont-title">{cont.title}</span>
+        <span className="cont-sub">{cont.sub}</span>
+        {cont.pct !== null && (
+          <span className="cont-prog">
+            <span className="cont-prog-bar" style={{ width: cont.pct + '%' }}></span>
+          </span>
+        )}
+      </span>
+      <span className="cont-go">→</span>
+    </button>
+  )
+}
+
 /* ---------- pantalla principal ---------- */
 
 export function HomeScreen() {
@@ -506,43 +584,15 @@ export function HomeScreen() {
       <div className="home-frame hd-frame home-main">
         <Backdrop variant={variant} />
         <div className="home-content hd-content">
-          <div className="chome-headrow">
-            <div className="chome-headl">
-              <div className="greet-eyebrow">
-                <span className="dot"></span>
-                <span className="meta">{greet.meta}</span>
-              </div>
-              <h1 className="greet-title chome-h1">{greet.text}</h1>
-              <button
-                className="chome-week"
-                onClick={() => go('/calendar')}
-                aria-label="Ver calendario"
-              >
-                <span className="cw-dots">
-                  {week.map((d, i) => (
-                    <span
-                      key={i}
-                      className={'cwd ' + (d === 1 ? 'done' : d === 2 ? 'today' : '')}
-                    ></span>
-                  ))}
-                </span>
-                <span className="cw-lbl">
-                  <b>{streakNow}</b> días de racha · {completedWeek}/7 semana
-                </span>
-              </button>
-            </div>
-            {daily && (
-              <button
-                className="chome-daily"
-                onClick={() => go(`/detail/${encodeURIComponent(daily.jp)}`)}
-                aria-label="Kanji del día"
-              >
-                <span className="cd-eyebrow">今日</span>
-                <span className="cd-kanji">{daily.jp}</span>
-                <span className="cd-mean">{daily.mean.split(/[,，]/)[0].trim()}</span>
-              </button>
-            )}
-          </div>
+          <GreetHeader
+            greet={greet}
+            week={week}
+            completedWeek={completedWeek}
+            streakNow={streakNow}
+            daily={daily}
+            onCalendar={() => go('/calendar')}
+            onDaily={(jp) => go(`/detail/${encodeURIComponent(jp)}`)}
+          />
 
           <div className="hd-grid">
             <div className="hd-main">
@@ -597,23 +647,11 @@ export function HomeScreen() {
 
             <div className="hd-side">
               {cont && (
-                <button
-                  className="continuar hd-continuar"
+                <ContinuarCard
+                  cont={cont}
+                  className="hd-continuar"
                   onClick={() => navigate(cont.path, { state: { selection: cont.selection } })}
-                >
-                  <span className="cont-k">{cont.glyph}</span>
-                  <span className="cont-body">
-                    <span className="cont-eyebrow">CONTINUAR · 続き</span>
-                    <span className="cont-title">{cont.title}</span>
-                    <span className="cont-sub">{cont.sub}</span>
-                    {cont.pct !== null && (
-                      <span className="cont-prog">
-                        <span className="cont-prog-bar" style={{ width: cont.pct + '%' }}></span>
-                      </span>
-                    )}
-                  </span>
-                  <span className="cont-go">→</span>
-                </button>
+                />
               )}
 
               <div className="hd-ministats">
@@ -669,40 +707,15 @@ export function HomeScreen() {
           </button>
         </div>
 
-        <div className="chome-headrow">
-          <div className="chome-headl">
-            <div className="greet-eyebrow">
-              <span className="dot"></span>
-              <span className="meta">{greet.meta}</span>
-            </div>
-            <h1 className="greet-title chome-h1">{greet.text}</h1>
-            <button
-              className="chome-week"
-              onClick={() => go('/calendar')}
-              aria-label="Ver calendario"
-            >
-              <span className="cw-dots">
-                {week.map((d, i) => (
-                  <span key={i} className={'cwd ' + (d === 1 ? 'done' : d === 2 ? 'today' : '')}></span>
-                ))}
-              </span>
-              <span className="cw-lbl">
-                <b>{streakNow}</b> días de racha · {completedWeek}/7 semana
-              </span>
-            </button>
-          </div>
-          {daily && (
-            <button
-              className="chome-daily"
-              onClick={() => go(`/detail/${encodeURIComponent(daily.jp)}`)}
-              aria-label="Kanji del día"
-            >
-              <span className="cd-eyebrow">今日</span>
-              <span className="cd-kanji">{daily.jp}</span>
-              <span className="cd-mean">{daily.mean.split(/[,，]/)[0].trim()}</span>
-            </button>
-          )}
-        </div>
+        <GreetHeader
+          greet={greet}
+          week={week}
+          completedWeek={completedWeek}
+          streakNow={streakNow}
+          daily={daily}
+          onCalendar={() => go('/calendar')}
+          onDaily={(jp) => go(`/detail/${encodeURIComponent(jp)}`)}
+        />
 
         <SectionTitle title="Contenido" jp="教材" />
         <ContentChips active={contentSel} onSelect={changeContent} />
@@ -755,23 +768,10 @@ export function HomeScreen() {
         )}
 
         {cont && (
-          <button
-            className="continuar"
+          <ContinuarCard
+            cont={cont}
             onClick={() => navigate(cont.path, { state: { selection: cont.selection } })}
-          >
-            <span className="cont-k">{cont.glyph}</span>
-            <span className="cont-body">
-              <span className="cont-eyebrow">CONTINUAR · 続き</span>
-              <span className="cont-title">{cont.title}</span>
-              <span className="cont-sub">{cont.sub}</span>
-              {cont.pct !== null && (
-                <span className="cont-prog">
-                  <span className="cont-prog-bar" style={{ width: cont.pct + '%' }}></span>
-                </span>
-              )}
-            </span>
-            <span className="cont-go">→</span>
-          </button>
+          />
         )}
       </div>
     </div>

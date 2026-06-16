@@ -3,70 +3,60 @@
     "jp": "低",
     "read": "テイ／ひく（い）",
     "mean": "bajo",
-    "type": "kanji",
     "extra": "せが低い(せがひくい) — bajo de estatura · さい低(さいてい) — lo peor · さい低気おん(さいていきおん) — temperatura mínima"
   },
   {
     "jp": "広",
     "read": "コウ／ひろ（い）",
     "mean": "amplio",
-    "type": "kanji",
     "extra": "広い家(ひろいえ) — casa amplia · 広こく(こうこく) — publicidad · 広ば(ひろば) — plaza"
   },
   {
     "jp": "短",
     "read": "タン／みじか（い）",
     "mean": "corto",
-    "type": "kanji",
     "extra": "短いかみ(みじかいかみ) — pelo corto · 短気(たんき) — sin paciencia · 短時間(たんじかん) — poco tiempo"
   },
   {
     "jp": "良",
     "read": "リョウ／よ（い）",
     "mean": "bien, bueno",
-    "type": "kanji",
     "extra": "良心(りょうしん) — buen corazón · 不良(ふりょう) — chicos malos"
   },
   {
     "jp": "悪",
     "read": "アク／わる（い）",
     "mean": "mal, malo",
-    "type": "kanji",
     "extra": "つごうが悪い(つごうがわるい) — me viene mal · 悪魔(あくま) — demonio · 悪人(あくにん) — persona mala · さい悪(さいあく) — terrible"
   },
   {
     "jp": "正",
     "read": "セイ／ショウ／ただ（しい）",
     "mean": "correcto",
-    "type": "kanji",
     "extra": "お正月(おしょうがつ) — Año Nuevo · 正もん(せいもん) — puerta principal · 正じき(しょうじき) — honesto"
   },
   {
     "jp": "変",
     "read": "ヘン／か（わる）／か（える）",
     "mean": "cambiar, extraño",
-    "type": "kanji",
     "extra": "変なひと(へんなひと) — persona rara · 大変(たいへん) — duro, difícil · 変たい(へんたい) — pervertido"
   },
   {
     "jp": "赤",
     "read": "セキ／あか（い）",
     "mean": "rojo",
-    "type": "kanji",
     "extra": "赤ちゃん(あかちゃん) — bebé · 赤字(あかじ) — déficit · 赤道(せきどう) — Ecuador"
   },
   {
     "jp": "青",
     "read": "セイ／あお（い）",
     "mean": "azul",
-    "type": "kanji",
     "extra": "青春(せいしゅん) — juventud · 青年(せいねん) — chico joven"
   },
   {
     "jp": "黒",
     "read": "コク／くろ（い）",
     "mean": "negro",
-    "type": "kanji",
     "extra": "黒ばん(こくばん) — pizarra · 黒人(こくじん) — persona negra"
   }
 ]

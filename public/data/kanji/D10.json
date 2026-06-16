@@ -3,70 +3,60 @@
     "jp": "朝",
     "read": "チョウ／あさ",
     "mean": "mañana",
-    "type": "kanji",
     "extra": "毎朝(まいあさ) — cada mañana · 朝食(ちょうしょく) — desayuno · 今朝(けさ) — esta mañana"
   },
   {
     "jp": "昼",
     "read": "チュウ／ひる",
     "mean": "tarde, mediodía",
-    "type": "kanji",
     "extra": "昼休み(ひるやすみ) — descanso del mediodía · 昼食(ちゅうしょく) — almuerzo · 昼ね(ひるね) — siesta"
   },
   {
     "jp": "夜",
     "read": "ヤ／よる／よ",
     "mean": "noche",
-    "type": "kanji",
     "extra": "夜ごはん(よるごはん) — cena · 夜中(よなか) — medianoche · 夜行バス(やこうバス) — bus nocturno · 今夜(こんや) — esta noche"
   },
   {
     "jp": "夕",
     "read": "ゆう",
     "mean": "atardecer",
-    "type": "kanji",
     "extra": "夕日(ゆうひ) — atardecer · 夕食(ゆうしょく) — cena · 夕方(ゆうがた) — atardecer"
   },
   {
     "jp": "方",
     "read": "ホウ／かた／がた",
     "mean": "forma de, dirección",
-    "type": "kanji",
     "extra": "書き方(かきかた) — forma de escribir · あの方(あのかた) — aquella persona · 働き方(はたらきかた) — forma de trabajar · 方ほう(ほうほう) — método"
   },
   {
     "jp": "晩",
     "read": "バン",
     "mean": "noche",
-    "type": "kanji",
     "extra": "今晩(こんばん) — esta noche · 毎晩(まいばん) — cada noche"
   },
   {
     "jp": "計",
     "read": "ケイ／はか（る）",
     "mean": "medir",
-    "type": "kanji",
     "extra": "時間を計る(じかんをはかる) — medir tiempo · 時計(とけい) — reloj · 計画する(けいかくする) — planificar"
   },
   {
     "jp": "曜",
     "read": "ヨウ",
     "mean": "día de la semana",
-    "type": "kanji",
     "extra": "月曜日(げつようび) — lunes · 火曜日(かようび) — martes · 水曜日(すいようび) — miércoles · 木曜日(もくようび) — jueves · 金曜日(きんようび) — viernes · 土曜日(どようび) — sábado · 日曜日(にちようび) — domingo"
   },
   {
     "jp": "以",
     "read": "イ",
     "mean": "a partir de",
-    "type": "kanji",
     "extra": "以外(いがい) — excepto · 以上(いじょう) — más que · 以下(いか) — menos que · 以内(いない) — dentro de"
   },
   {
     "jp": "度",
     "read": "ド",
     "mean": "grado",
-    "type": "kanji",
     "extra": "一度(いちど) — 1 vez, 1 grado · 何度も(なんども) — muchas veces · 今度(こんど) — próxima vez · おん度(おんど) — temperatura · おん度計(おんどけい) — termómetro"
   }
 ]

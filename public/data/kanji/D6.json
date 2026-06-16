@@ -3,70 +3,60 @@
     "jp": "仕",
     "read": "シ／つか（える）",
     "mean": "servicio, servir",
-    "type": "kanji",
     "extra": "仕方がない(しかたがない) — no hay nada que hacer · 仕事(しごと) — trabajo"
   },
   {
     "jp": "事",
     "read": "ジ／こと",
     "mean": "asunto, cosa",
-    "type": "kanji",
     "extra": "仕事(しごと) — trabajo · 事む所(じむしょ) — oficina · か事(かじ) — incendio · よう事(ようじ) — recado, asunto"
   },
   {
     "jp": "銀",
     "read": "ギン",
     "mean": "plata",
-    "type": "kanji",
     "extra": "銀行(ぎんこう) — banco · 銀メダル(ぎんメダル) — medalla de plata"
   },
   {
     "jp": "員",
     "read": "イン",
     "mean": "empleado, miembro",
-    "type": "kanji",
     "extra": "会社員(かいしゃいん) — empleado · 店員(てんいん) — dependiente · 銀行員(ぎんこういん) — banquero"
   },
   {
     "jp": "医",
     "read": "イ",
     "mean": "medicina, médico",
-    "type": "kanji",
     "extra": "医学(いがく) — estudios de medicina · 医者(いしゃ) — médico"
   },
   {
     "jp": "者",
     "read": "シャ／もの",
     "mean": "persona",
-    "type": "kanji",
     "extra": "医者(いしゃ) — médico · 読者(どくしゃ) — lector"
   },
   {
     "jp": "働",
     "read": "ドウ／はたら（く）",
     "mean": "trabajar",
-    "type": "kanji",
     "extra": "働きます(はたらきます) — trabajar · ろう働時間(ろうどうじかん) — hora de trabajo"
   },
   {
     "jp": "屋",
     "read": "オク／や",
     "mean": "tienda",
-    "type": "kanji",
     "extra": "本屋(ほんや) — librería · 花屋(はなや) — florería · 魚屋(さかなや) — pescadería · 屋上(おくじょう) — azotea"
   },
   {
     "jp": "産",
     "read": "サン／う（む）",
     "mean": "nacimiento, producir",
-    "type": "kanji",
     "extra": "子どもが産まれます(こどもがうまれます) — nacimiento de niño · 中国産(ちゅうごくさん) — hecho en China · お土産(おみやげ) — souvenir"
   },
   {
     "jp": "業",
     "read": "ギョウ",
     "mean": "negocio, industria",
-    "type": "kanji",
     "extra": "産業(さんぎょう) — industria · じゅ業(じゅぎょう) — clase · ざん業(ざんぎょう) — trabajar horas extra"
   }
 ]

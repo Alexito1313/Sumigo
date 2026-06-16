@@ -1,5 +1,11 @@
 import { useEffect } from 'react'
-import { Outlet, ScrollRestoration, useLocation, useNavigate } from 'react-router-dom'
+import {
+  Outlet,
+  ScrollRestoration,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from 'react-router-dom'
 import { ONBOARDED_KEY } from './screens/OnboardingScreen'
 import { TabBar } from './components/TabBar'
 import { DesktopNav } from './components/DesktopNav'
@@ -13,6 +19,9 @@ const SECTION_PATHS = ['/', '/tablas', '/calendar', '/settings']
 export function AppShell() {
   const navigate = useNavigate()
   const location = useLocation()
+  // 'loading' mientras se resuelve la ruta (incl. la descarga del chunk de una
+  // ruta lazy): muestra una barra fina para que el click no parezca sin respuesta.
+  const navigation = useNavigation()
 
   // Primera visita → onboarding (salvo que ya haya progreso guardado).
   useEffect(() => {
@@ -43,6 +52,7 @@ export function AppShell() {
       }
     >
       <SaveErrorBanner />
+      {navigation.state === 'loading' && <div className="route-loading" aria-hidden="true" />}
       {showDesktopNav && <DesktopNav />}
       <Outlet />
       {showTabBar && <TabBar />}

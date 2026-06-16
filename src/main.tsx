@@ -24,7 +24,10 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ThemeProvider>
       <ProgressProvider>
-        <RouterProvider router={router} />
+        <RouterProvider
+          router={router}
+          fallbackElement={<div className="home-loading">読み込み中… · cargando</div>}
+        />
       </ProgressProvider>
     </ThemeProvider>
   </StrictMode>,

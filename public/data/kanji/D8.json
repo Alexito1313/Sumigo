@@ -3,70 +3,60 @@
     "jp": "季",
     "read": "キ",
     "mean": "estación (del año)",
-    "type": "kanji",
     "extra": "四季(しき) — las cuatro estaciones · 季節(きせつ) — estación"
   },
   {
     "jp": "節",
     "read": "セツ／ふし",
     "mean": "época, sección",
-    "type": "kanji",
     "extra": "かつお節(かつおぶし) — katsuobushi · 季節(きせつ) — estación del año"
   },
   {
     "jp": "春",
     "read": "シュン／はる",
     "mean": "primavera",
-    "type": "kanji",
     "extra": "春休み(はるやすみ) — vacaciones de primavera · 青春(せいしゅん) — juventud"
   },
   {
     "jp": "夏",
     "read": "カ／なつ",
     "mean": "verano",
-    "type": "kanji",
     "extra": "夏休み(なつやすみ) — vacaciones de verano · 夏ふく(なつふく) — ropa de verano"
   },
   {
     "jp": "秋",
     "read": "シュウ／あき",
     "mean": "otoño",
-    "type": "kanji",
     "extra": "秋田県(あきたけん) — Akita · 秋分の日(しゅうぶんのひ) — equinoccio de otoño"
   },
   {
     "jp": "冬",
     "read": "トウ／ふゆ",
     "mean": "invierno",
-    "type": "kanji",
     "extra": "冬休み(ふゆやすみ) — vacaciones de invierno · 冬ふく(ふゆふく) — ropa de invierno · 冬みん(とうみん) — hibernar · 春夏秋冬(しゅんかしゅうとう) — las 4 estaciones"
   },
   {
     "jp": "暑",
     "read": "ショ／あつ（い）",
     "mean": "caluroso",
-    "type": "kanji",
     "extra": "夏暑い(なつあつい) — verano caluroso · もう暑い(もうあつい) — hace calor ya"
   },
   {
     "jp": "寒",
     "read": "カン／さむ（い）",
     "mean": "frío",
-    "type": "kanji",
     "extra": "冬は寒い(ふゆはさむい) — el invierno es frío · ごう寒(ごうかん) — frío severo"
   },
   {
     "jp": "暖",
     "read": "ダン／あたた（かい）",
     "mean": "cálido",
-    "type": "kanji",
     "extra": "暖かくなりました(あたたかくなりました) — se ha vuelto cálido · 暖ぼう(だんぼう) — calefacción"
   },
   {
     "jp": "涼",
     "read": "リョウ／すず（しい）",
     "mean": "fresco",
-    "type": "kanji",
     "extra": "涼しい風(すずしいかぜ) — viento fresco · せい涼飲りょう水(せいりょういんりょうすい) — bebida refrescante"
   }
 ]

@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "fetch:kvg": "node scripts/fetch-kanjivg.mjs",
     "fetch:kana": "node scripts/fetch-kana.mjs",
-    "gen:icons": "node scripts/gen-icons.mjs"
+    "gen:icons": "node scripts/gen-icons.mjs",
+    "gen:cap-assets": "node scripts/gen-cap-assets.mjs"
   },
   "dependencies": {
     "@capacitor/android": "^8.3.4",

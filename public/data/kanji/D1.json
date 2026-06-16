@@ -3,70 +3,60 @@
     "jp": "住",
     "read": "ジュウ／す（む）",
     "mean": "vivir, residir, habitar",
-    "type": "kanji",
     "extra": "中国に住みます(ちゅうごくにすみます) — vivir en China · 住民(じゅうみん) — habitante · 住所(じゅうしょ) — dirección"
   },
   {
     "jp": "所",
     "read": "ショ／ジョ／ところ／どころ",
     "mean": "lugar, sitio",
-    "type": "kanji",
     "extra": "住所(じゅうしょ) — dirección · ば所(ばしょ) — lugar · 台所(だいどころ) — cocina · 元の所(もとのところ) — lugar de origen · 近所(きんじょ) — vecindario"
   },
   {
     "jp": "京",
     "read": "キョウ／ケイ",
     "mean": "capital (antigua)",
-    "type": "kanji",
     "extra": "京と(きょうと) — Kioto · 東京(とうきょう) — Tokio · 上京(じょうきょう) — ir a la capital"
   },
   {
     "jp": "都",
     "read": "ト／ツ／みやこ",
     "mean": "capital, metrópolis",
-    "type": "kanji",
     "extra": "京都(きょうと) — Kioto · 東京都(とうきょうと) — Metrópolis de Tokio · 都合がわるい(つごうがわるい) — no me viene bien · 都市(とし) — ciudad grande"
   },
   {
     "jp": "府",
     "read": "フ",
     "mean": "autonomía, comunidad autónoma, administración",
-    "type": "kanji",
     "extra": "京都府(きょうとふ) — Prefectura de Kioto · 大さか府(おおさかふ) — Prefectura de Osaka · せい府(せいふ) — gobierno"
   },
   {
     "jp": "県",
     "read": "ケン",
     "mean": "prefectura (43 en Japón)",
-    "type": "kanji",
     "extra": "千ば県(ちばけん) — Prefectura de Chiba · 県立(けんりつ) — prefectural"
   },
   {
     "jp": "市",
     "read": "シ／いち",
     "mean": "ciudad, mercado",
-    "type": "kanji",
     "extra": "市ば(いちば) — mercado · 市やく所(しやくしょ) — ayuntamiento · 市長(しちょう) — alcalde"
   },
   {
     "jp": "区",
     "read": "ク",
     "mean": "barrio, distrito",
-    "type": "kanji",
     "extra": "北区(きたく) — barrio norte · 地区(ちく) — zona, distrito"
   },
   {
     "jp": "町",
     "read": "チョウ／まち",
     "mean": "pueblo, ciudad pequeña",
-    "type": "kanji",
     "extra": "町長(ちょうちょう) — alcalde del pueblo · 下町(したまち) — barrio popular"
   },
   {
     "jp": "村",
     "read": "ソン／むら",
     "mean": "villa, aldea",
-    "type": "kanji",
     "extra": "村長(そんちょう) — presidente de la villa · 漁村(ぎょそん) — aldea de pescadores"
   }
 ]

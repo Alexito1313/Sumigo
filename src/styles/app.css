@@ -1561,3 +1561,29 @@ body {
     min-height: 320px;
   }
 }
+
+/* Barra fina de carga al navegar a una ruta lazy (descarga del chunk). Solo
+   aparece si hay espera real; con los chunks ya precacheados es instantáneo. */
+.route-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 250;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  animation: route-loading-slide 0.9s ease-in-out infinite;
+}
+@keyframes route-loading-slide {
+  0% { background-position: -50% 0; }
+  100% { background-position: 150% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .route-loading {
+    animation: none;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+}

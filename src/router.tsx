@@ -3,25 +3,18 @@ import { AppShell } from './AppShell'
 import { HomeScreen } from './screens/HomeScreen'
 import { FlashcardScreen } from './screens/FlashcardScreen'
 import { TestScreen } from './screens/TestScreen'
-import { SettingsScreen } from './screens/SettingsScreen'
-import { OnboardingScreen } from './screens/OnboardingScreen'
-import { StatsScreen } from './screens/StatsScreen'
-import { DetailScreen } from './screens/DetailScreen'
-import { CalendarScreen } from './screens/CalendarScreen'
-import { TablasScreen } from './screens/TablasScreen'
-import { TraceScreen } from './screens/TraceScreen'
-import { CuentaScreen } from './screens/CuentaScreen'
-import { WriteScreen } from './screens/WriteScreen'
-import { SimulacroScreen } from './screens/SimulacroScreen'
-import { Placeholder } from './screens/Placeholder'
 
 /**
- * Router de la app. Las pantallas son placeholders en la Fase 0; se irán
- * sustituyendo por las reales en fases posteriores.
+ * Router de la app.
  *
  * El basename sale de import.meta.env.BASE_URL (que Vite fija según `base`):
  * '/' en desarrollo y '/Sumigo/' en producción. Así las rutas funcionan bajo
  * la subruta de GitHub Pages sin tocar nada.
+ *
+ * Rutas eager (Home/Flashcard/Test): el flujo de estudio principal, siempre en
+ * el bundle inicial. El resto se cargan con `lazy` (chunks aparte) para aligerar
+ * la carga inicial; el service worker precachea esos chunks, así que offline
+ * siguen disponibles.
  */
 const basename = import.meta.env.BASE_URL.replace(/\/+$/, '') || '/'
 
@@ -40,16 +33,50 @@ export const router = createBrowserRouter(
         { path: 'flash', element: <FlashcardScreen /> },
         { path: 'test', element: <TestScreen /> },
         { path: 'repaso', element: <FlashcardScreen mode="review" /> },
-        { path: 'escritura', element: <WriteScreen /> },
-        { path: 'simulacro', element: <SimulacroScreen /> },
-        { path: 'stats', element: <StatsScreen /> },
-        { path: 'settings', element: <SettingsScreen /> },
-        { path: 'onboarding', element: <OnboardingScreen /> },
-        { path: 'calendar', element: <CalendarScreen /> },
-        { path: 'tablas', element: <TablasScreen /> },
-        { path: 'trazar/:char', element: <TraceScreen /> },
-        { path: 'cuenta', element: <CuentaScreen /> },
-        { path: 'detail/:id', element: <DetailScreen /> },
+        {
+          path: 'escritura',
+          lazy: () => import('./screens/WriteScreen').then((m) => ({ Component: m.WriteScreen })),
+        },
+        {
+          path: 'simulacro',
+          lazy: () =>
+            import('./screens/SimulacroScreen').then((m) => ({ Component: m.SimulacroScreen })),
+        },
+        {
+          path: 'stats',
+          lazy: () => import('./screens/StatsScreen').then((m) => ({ Component: m.StatsScreen })),
+        },
+        {
+          path: 'settings',
+          lazy: () =>
+            import('./screens/SettingsScreen').then((m) => ({ Component: m.SettingsScreen })),
+        },
+        {
+          path: 'onboarding',
+          lazy: () =>
+            import('./screens/OnboardingScreen').then((m) => ({ Component: m.OnboardingScreen })),
+        },
+        {
+          path: 'calendar',
+          lazy: () =>
+            import('./screens/CalendarScreen').then((m) => ({ Component: m.CalendarScreen })),
+        },
+        {
+          path: 'tablas',
+          lazy: () => import('./screens/TablasScreen').then((m) => ({ Component: m.TablasScreen })),
+        },
+        {
+          path: 'trazar/:char',
+          lazy: () => import('./screens/TraceScreen').then((m) => ({ Component: m.TraceScreen })),
+        },
+        {
+          path: 'cuenta',
+          lazy: () => import('./screens/CuentaScreen').then((m) => ({ Component: m.CuentaScreen })),
+        },
+        {
+          path: 'detail/:id',
+          lazy: () => import('./screens/DetailScreen').then((m) => ({ Component: m.DetailScreen })),
+        },
         { path: '*', element: <Navigate to="/" replace /> },
       ],
     },
