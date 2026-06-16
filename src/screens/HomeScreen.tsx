@@ -84,9 +84,10 @@ const MODE_LABEL: Record<string, string> = {
 interface ContInfo {
   title: string
   glyph: string
-  modeLabel: string
-  pending: number
-  pct: number
+  /** línea inferior ya formateada (varía según el modo de la última sesión). */
+  sub: string
+  /** % de progreso para la barra; null = sin barra (repaso/simulacro). */
+  pct: number | null
   path: string
   selection: Selection
 }
@@ -96,16 +97,15 @@ interface ContInfo {
 function continuarInfo(content: Content, snapshot: ProgressSnapshot): ContInfo | null {
   const last = snapshot.settings.lastSession
   let path = '/flash'
-  let contentKind: 'kanji' | 'vocab' | 'both' = 'kanji'
-  let block = ''
-  let types: string[] | undefined
+  let sel: Selection
 
   if (last && last.blocks.length) {
+    // Retoma la selección COMPLETA de la última sesión (antes solo el 1er bloque).
     path = last.path || '/flash'
-    contentKind = last.content
-    block = last.blocks[0]
-    types = last.types
+    sel = { content: last.content, blocks: last.blocks, types: last.types }
   } else {
+    // Sin sesión guardada: primer bloque de kanji en curso (o sin empezar).
+    let block = ''
     for (const b of KANJI_BLOCKS) {
       const cs = content.kanji.filter((c) => c.block === b)
       if (!cs.length) continue
@@ -117,28 +117,69 @@ function continuarInfo(content: Content, snapshot: ProgressSnapshot): ContInfo |
       if (done === 0 && !block) block = b
     }
     if (!block) block = KANJI_BLOCKS[0]
+    sel = { content: 'kanji', blocks: [block], types: undefined }
   }
 
-  const cards = content.all.filter((c) => c.block === block)
-  if (!cards.length) return null
-  const done = cards.filter((c) => (snapshot.cards[c.jp]?.views ?? 0) > 0).length
-  const pending = cards.length - done
-  const pct = cards.length ? Math.round((done / cards.length) * 100) : 0
-  // Glifo decorativo: SOLO el primer carácter. Con vocab, jp es una palabra
-  // entera ("見ます／診ます") y a 34-60px reventaba el layout de la tarjeta.
-  const glyph = [...(cards.find((c) => (snapshot.cards[c.jp]?.views ?? 0) === 0) ?? cards[0]).jp][0]
-  const title =
-    block === 'MIOS' ? 'Míos' : block.startsWith('L') ? `Lección ${block}` : `Bloque ${block}`
+  const b0 = sel.blocks[0]
+  const blockTitle =
+    sel.blocks.length > 1
+      ? `${sel.blocks.length} bloques`
+      : b0 === 'MIOS'
+        ? 'Míos'
+        : b0.startsWith('L')
+          ? `Lección ${b0}`
+          : `Bloque ${b0}`
 
-  return {
-    title,
-    glyph,
-    modeLabel: MODE_LABEL[path] ?? 'Flashcards',
-    pending,
-    pct,
-    path,
-    selection: { content: contentKind, blocks: [block], types },
+  // El simulacro IGNORA la selección (examen global de 10 preguntas): copy fijo.
+  if (path === '/simulacro') {
+    return { title: 'Examen N4', glyph: '検', sub: 'Simulacro · 10 preguntas', pct: null, path, selection: sel }
   }
+
+  // Pool = el mazo que el modo abrirá DE VERDAD (sin barajar), para que el
+  // conteo, el glifo y la barra coincidan con lo que verás al pulsar.
+  let pool: Card[]
+  if (path === '/repaso') {
+    // reviewDeck: kanji con fallos (ignora bloques/tipo).
+    pool = content.kanji.filter((c) => (snapshot.cards[c.jp]?.wrong ?? 0) > 0)
+  } else if (path === '/escritura') {
+    // writeDeck: kanji escribibles de los bloques de kanji elegidos.
+    pool = content.writable.filter((c) => sel.content !== 'vocab' && sel.blocks.includes(c.block))
+  } else {
+    // buildDeck (flash/test): contenido + bloques + filtro de tipo.
+    pool = []
+    if (sel.content !== 'vocab') pool.push(...content.kanji)
+    if (sel.content !== 'kanji') pool.push(...content.vocab)
+    pool = pool.filter((c) => sel.blocks.includes(c.block))
+    if (sel.types && sel.types.length) pool = pool.filter((c) => sel.types!.includes(c.type))
+  }
+  if (!pool.length) return null
+
+  // Glifo: primer carácter de una carta no vista (o la primera). Solo el 1er
+  // char porque con vocab el jp es una palabra entera que reventaba la tarjeta.
+  const glyph = [...(pool.find((c) => (snapshot.cards[c.jp]?.views ?? 0) === 0) ?? pool[0]).jp][0]
+
+  // Repaso: todas las falladas están "para repasar" (sin barra de progreso).
+  if (path === '/repaso') {
+    return {
+      title: 'Repaso',
+      glyph,
+      sub: `Repaso · ${pool.length} ${pool.length === 1 ? 'carta para repasar' : 'cartas para repasar'}`,
+      pct: null,
+      path,
+      selection: sel,
+    }
+  }
+
+  const done = pool.filter((c) => (snapshot.cards[c.jp]?.views ?? 0) > 0).length
+  const pending = pool.length - done
+  const pct = pool.length ? Math.round((done / pool.length) * 100) : 0
+  const modeLabel = MODE_LABEL[path] ?? 'Flashcards'
+  const sub =
+    pending > 0
+      ? `${modeLabel} · ${pending} ${pending === 1 ? 'carta pendiente' : 'cartas pendientes'}`
+      : `${modeLabel} · repasar bloque`
+
+  return { title: blockTitle, glyph, sub, pct, path, selection: sel }
 }
 
 function ContentChips({
@@ -564,17 +605,12 @@ export function HomeScreen() {
                   <span className="cont-body">
                     <span className="cont-eyebrow">CONTINUAR · 続き</span>
                     <span className="cont-title">{cont.title}</span>
-                    <span className="cont-sub">
-                      {cont.modeLabel} ·{' '}
-                      {cont.pending > 0
-                        ? `${cont.pending} ${
-                            cont.pending === 1 ? 'carta pendiente' : 'cartas pendientes'
-                          }`
-                        : 'repasar bloque'}
-                    </span>
-                    <span className="cont-prog">
-                      <span className="cont-prog-bar" style={{ width: cont.pct + '%' }}></span>
-                    </span>
+                    <span className="cont-sub">{cont.sub}</span>
+                    {cont.pct !== null && (
+                      <span className="cont-prog">
+                        <span className="cont-prog-bar" style={{ width: cont.pct + '%' }}></span>
+                      </span>
+                    )}
                   </span>
                   <span className="cont-go">→</span>
                 </button>
@@ -727,15 +763,12 @@ export function HomeScreen() {
             <span className="cont-body">
               <span className="cont-eyebrow">CONTINUAR · 続き</span>
               <span className="cont-title">{cont.title}</span>
-              <span className="cont-sub">
-                {cont.modeLabel} ·{' '}
-                {cont.pending > 0
-                  ? `${cont.pending} ${cont.pending === 1 ? 'carta pendiente' : 'cartas pendientes'}`
-                  : 'repasar bloque'}
-              </span>
-              <span className="cont-prog">
-                <span className="cont-prog-bar" style={{ width: cont.pct + '%' }}></span>
-              </span>
+              <span className="cont-sub">{cont.sub}</span>
+              {cont.pct !== null && (
+                <span className="cont-prog">
+                  <span className="cont-prog-bar" style={{ width: cont.pct + '%' }}></span>
+                </span>
+              )}
             </span>
             <span className="cont-go">→</span>
           </button>

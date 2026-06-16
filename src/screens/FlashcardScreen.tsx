@@ -200,7 +200,7 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
         subtitle={mode === 'review' ? '復習 · repaso' : '札 · tarjetas'}
         message={
           mode === 'review'
-            ? 'No hay nada que repasar todavía. Estudia algunas cartas primero.'
+            ? 'Aún no tienes cartas falladas. Aquí repasarás las que peor lleves.'
             : 'No hay cartas para esta selección.'
         }
       />

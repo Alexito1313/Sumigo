@@ -32,6 +32,10 @@ export function currentStreak(s: StreakState, now = Date.now()): number {
  * SM-2 simplificado. Devuelve los campos SRS actualizados según el acierto.
  * - Acierto: sube reps e intervalo (1d → 3d → interval*ease) y la facilidad.
  * - Fallo: reinicia reps/intervalo (repasar pronto) y baja la facilidad.
+ * - Acierto de una carta YA programada que aún NO vence (p.ej. rehacer el mazo
+ *   el mismo día): NO avanza la programación. En SM-2 una repetición solo
+ *   cuenta en/tras la fecha prevista; sin esto, repasar hoy disparaba el
+ *   "próximo repaso" a meses (interval 1→3→8→20…).
  */
 export function nextSRS(
   prev: CardProgress | undefined,
@@ -43,6 +47,10 @@ export function nextSRS(
   let interval = prev?.intervalDays ?? 0
 
   if (correct) {
+    if (prev && prev.reps > 0 && now < prev.due) {
+      // carta no vencida → se congela la programación (no se infla el intervalo)
+      return { reps: prev.reps, intervalDays: prev.intervalDays, ease: prev.ease, due: prev.due }
+    }
     reps += 1
     if (reps === 1) interval = 1
     else if (reps === 2) interval = 3

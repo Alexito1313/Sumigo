@@ -42,19 +42,21 @@ export function buildDeck(content: Content, selection?: Selection): Card[] {
 
 /**
  * Mazo de repaso: kanji peor llevados primero (más fallos, desempate por
- * próximo repaso SRS). Si aún no hay datos de progreso, cae a los primeros n.
+ * próximo repaso SRS). Si NO hay cartas falladas, devuelve [] (la pantalla
+ * muestra el estado vacío honesto): antes caía a los 12 primeros del temario
+ * y los etiquetaba como "tus peor llevados", lo cual era falso.
  */
 export function reviewDeck(
   content: Content,
   progress: Record<string, CardProgress>,
   n = 12,
 ): Card[] {
-  const failed = content.kanji
+  return content.kanji
     .map((c) => ({ c, p: progress[c.jp] }))
     .filter((x) => x.p && x.p.wrong > 0)
     .sort((a, b) => b.p!.wrong - a.p!.wrong || a.p!.due - b.p!.due)
     .map((x) => x.c)
-  return failed.length ? failed.slice(0, n) : content.kanji.slice(0, n)
+    .slice(0, n)
 }
 
 /** Mazo de escritura: solo kanji de 1 carácter (KanjiVG), filtrado por la selección. */
