@@ -42,11 +42,12 @@
   }
 
   /* ============================================================
-     MODOS NÚCLEO ESCRITORIO — DOS PANELES (carta | respuesta).
-     En móvil son una columna a pantalla completa; aquí el marco se ensancha
-     y el cuerpo se reparte en dos columnas, para que NO parezca un móvil
-     estirado. Cada modo se distingue por contenido único con :has(), así no
-     se tocan Simulacro/Resumen/Detalle/Trazar/Cuenta.
+     MODOS NÚCLEO ESCRITORIO. El marco se ensancha en los tres (para que la
+     escena del Fuji + torii ocupe todo el ancho, no un trozo estrecho). El
+     reparto del cuerpo cambia por modo: Test va a DOS PANELES (carta | opciones);
+     Flashcards/Repaso y Escritura mantienen su columna estrecha centrada sobre
+     el fondo ancho. Cada modo se distingue por contenido único con :has(), así
+     no se tocan Simulacro/Resumen/Detalle/Trazar/Cuenta.
      ============================================================ */
   .dk-host .mode-frame:has(.test-card-area),
   .dk-host .mode-frame:has(.proto-stage),
@@ -107,93 +108,15 @@
     margin: 0 auto;
   }
 
-  /* ---------- FLASHCARDS / REPASO: carta a la izquierda, acciones a la derecha ---------- */
-  .dk-host .mode-frame:has(.proto-stage) .mode-inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    grid-template-rows: auto auto auto 1fr;
-    grid-template-areas:
-      "header header"
-      "banner banner"
-      "meta   meta"
-      "stage  actions";
-    column-gap: 48px;
-    max-width: 940px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  .dk-host .mode-frame:has(.proto-stage) .study-header {
-    grid-area: header;
-  }
-  .dk-host .mode-frame:has(.proto-stage) .review-banner {
-    grid-area: banner;
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .dk-host .mode-frame:has(.proto-stage) .proto-meta-row {
-    grid-area: meta;
-  }
-  .dk-host .mode-frame:has(.proto-stage) .proto-stage {
-    grid-area: stage;
-    align-self: center;
-  }
-  .dk-host .mode-frame:has(.proto-stage) .proto-bottom {
-    grid-area: actions;
-    align-self: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-  /* Acciones apiladas y cómodas en el panel derecho (no a lo ancho). */
-  .dk-host .mode-frame:has(.proto-stage) .proto-actions {
-    grid-template-columns: 1fr;
-    gap: 12px;
-    max-width: 340px;
-    width: 100%;
-    margin: 0 auto;
-  }
-  .dk-host .mode-frame:has(.proto-stage) .proto-btn,
-  .dk-host .mode-frame:has(.proto-stage) .proto-btn-ghost {
-    padding: 18px 16px;
-    font-size: 16px;
-  }
-
-  /* ---------- ESCRITURA: lienzo a la izquierda, consigna + feedback a la derecha ---------- */
+  /* ---------- FLASHCARDS / REPASO y ESCRITURA ----------
+     Se quedan como en móvil: columna estrecha centrada (NO dos paneles). Pero
+     el MARCO sigue ancho (regla de arriba), así que la escena del Monte Fuji +
+     torii ocupa TODO el ancho como en los demás modos; solo se reestrecha el
+     CONTENIDO (.mode-inner) sobre ese fondo ancho. */
+  .dk-host .mode-frame:has(.proto-stage) .mode-inner,
   .dk-host .mode-frame:has(.write-banner) .mode-inner {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
-    grid-template-rows: auto auto auto auto 1fr;
-    grid-template-areas:
-      "header header"
-      "banner banner"
-      "meta   meta"
-      "stage  prompt"
-      "stage  bottom";
-    column-gap: 48px;
-    max-width: 940px;
-    width: 100%;
+    max-width: 460px;
     margin: 0 auto;
-  }
-  .dk-host .mode-frame:has(.write-banner) .study-header {
-    grid-area: header;
-  }
-  .dk-host .mode-frame:has(.write-banner) .write-banner {
-    grid-area: banner;
-  }
-  .dk-host .mode-frame:has(.write-banner) .proto-meta-row {
-    grid-area: meta;
-  }
-  .dk-host .mode-frame:has(.write-banner) .write-prompt {
-    grid-area: prompt;
-    align-self: end;
-  }
-  .dk-host .mode-frame:has(.write-banner) .write-stage {
-    grid-area: stage;
-    align-self: center;
-  }
-  .dk-host .mode-frame:has(.write-banner) .proto-bottom {
-    grid-area: bottom;
-    align-self: start;
   }
   /* Índice de kanji: más columnas en pantalla grande. */
   .dk-host .ki-grid {
