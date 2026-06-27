@@ -17,7 +17,7 @@ import { ContentStatus } from '../components/ContentStatus'
 
 export function WriteScreen() {
   const { variant } = useTheme()
-  const { deck, loading, error, retry } = useDeck('write')
+  const { deck, loading, error, retry, reshuffle } = useDeck('write')
   const repo = useProgressRepo()
   const navigate = useNavigate()
   const total = deck.length
@@ -51,7 +51,9 @@ export function WriteScreen() {
     setStats({ right: 0, wrong: 0 })
     setAnswered([])
     setFinished(false)
-  }, [])
+    // "Repetir" rebaraja el mazo de escritura (otros kanji / otro orden).
+    reshuffle()
+  }, [reshuffle])
 
   if (loading || error) {
     // El error de carga muestra "Reintentar" (antes: spinner infinito sin salida).

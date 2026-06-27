@@ -48,7 +48,7 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
   const { variant } = useTheme()
   const navigate = useNavigate()
   const repo = useProgressRepo()
-  const { deck, loading, error, retry } = useDeck(mode)
+  const { deck, loading, error, retry, reshuffle } = useDeck(mode)
   const total = deck.length
 
   const [index, setIndex] = useState(0)
@@ -132,7 +132,12 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
     setFeedback(null)
     setAnswered([])
     setFinished(false)
-  }, [])
+    // "Repetir": en estudio rebaraja (nuevo orden y nuevas cartas si la sesión
+    // es más corta que el bloque) en vez de repetir la tanda idéntica. En repaso
+    // reviewDeck NO baraja a propósito (mantiene "las peor llevadas, primero"):
+    // aquí solo refresca el conjunto según el progreso actual.
+    reshuffle()
+  }, [reshuffle])
 
   /* Pointer / swipe */
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {

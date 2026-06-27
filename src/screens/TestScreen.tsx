@@ -63,7 +63,7 @@ export function TestScreen() {
   const { variant } = useTheme()
   const navigate = useNavigate()
   const repo = useProgressRepo()
-  const { deck, loading, error, retry } = useDeck('study')
+  const { deck, loading, error, retry, reshuffle, epoch } = useDeck('study')
   const { content } = useContent()
   const total = deck.length
 
@@ -90,9 +90,14 @@ export function TestScreen() {
     return card && card.type === 'kanji' ? content.kanji : content.vocab
   }, [content, card])
 
+  // El seed lleva `epoch` (sube al "Repetir") para que, además del nuevo orden
+  // del mazo, cambien los distractores y la posición A/B/C/D de la correcta;
+  // dentro de una sesión epoch es constante, así las opciones no se rebarajan
+  // al re-renderizar (responder, racha…). epoch se acota con % para que el seed
+  // se mantenga en rango uint32 aunque se pulse "Repetir" muchísimas veces.
   const options = useMemo(
-    () => (card ? buildOptions(card, deck, fallbackPool, index * 1009 + 7) : []),
-    [card, deck, fallbackPool, index],
+    () => (card ? buildOptions(card, deck, fallbackPool, index * 1009 + 7 + (epoch % 4093) * 100003) : []),
+    [card, deck, fallbackPool, index, epoch],
   )
   const correctIdx = useMemo(() => options.findIndex((o) => o.correct), [options])
 
@@ -155,7 +160,10 @@ export function TestScreen() {
     setStats({ right: 0, wrong: 0 })
     setAnswered([])
     setFinished(false)
-  }, [])
+    // "Repetir" rebaraja el mazo (y, vía epoch, renueva las opciones): antes
+    // salían las mismas preguntas, en el mismo orden y con las mismas opciones.
+    reshuffle()
+  }, [reshuffle])
 
   /* Teclado: 1-4/A-D elige, espacio/→ avanza */
   useEffect(() => {
