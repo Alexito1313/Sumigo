@@ -319,6 +319,12 @@ export function FlashcardScreen({ mode = 'study' }: { mode?: 'study' | 'review' 
                       <div className="fcard-jp-big" style={{ fontSize: jpFont(card.jp, 'front') }}>
                         {card.jp}
                       </div>
+                      {/* En vocab el objetivo es la palabra, no descifrar el kanji:
+                          se muestra la lectura (furigana) en el anverso, como en el
+                          Test. En kanji se OCULTA para practicar justo esa lectura. */}
+                      {card.type !== 'kanji' && card.read && (
+                        <div className="fcard-front-reading">{card.read}</div>
+                      )}
                     </div>
                     <div className="fcard-hint">
                       <span>toca para girar · desliza para responder</span>

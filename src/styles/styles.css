@@ -345,6 +345,12 @@
   color: var(--ink-2); letter-spacing: 0.12em;
   margin: 6px 0 14px;
 }
+/* Lectura en el ANVERSO (solo vocab): furigana bajo la palabra, como en el Test. */
+.fcard-front-reading {
+  font-family: var(--jp); font-size: 16px;
+  color: var(--ink-2); letter-spacing: 0.12em;
+  margin-top: 16px;
+}
 .fcard-meaning {
   font-family: var(--serif); font-weight: 700;
   font-size: 20px; line-height: 1.3; color: var(--ink);
