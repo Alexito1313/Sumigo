@@ -210,14 +210,6 @@ export function SettingsScreen() {
     </div>
   )
 
-  const footer = (
-    <div className="settings-footer">
-      <span className="brushstroke"></span>
-      Sumigo 墨語
-      <span className="brushstroke"></span>
-    </div>
-  )
-
   const secCredits = (
     <div className="settings-section">
       <h3 className="settings-section-h">
@@ -283,8 +275,6 @@ export function SettingsScreen() {
               {secCredits}
             </div>
           </div>
-
-          {footer}
         </div>
       </div>
     )
@@ -301,7 +291,6 @@ export function SettingsScreen() {
           {secProgress}
           {secAbout}
           {secCredits}
-          {footer}
         </div>
       </div>
     </div>

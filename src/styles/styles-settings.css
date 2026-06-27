@@ -197,24 +197,6 @@
   border-color: var(--accent);
 }
 
-/* ========================== Footer ========================== */
-.settings-footer {
-  margin-top: 30px;
-  display: flex; align-items: center; justify-content: center;
-  gap: 12px;
-  font-family: var(--serif);
-  font-size: 12px;
-  color: var(--ink-3);
-  letter-spacing: 0.16em;
-  opacity: 0.6;
-}
-.settings-footer .brushstroke {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--border) 50%, transparent 100%);
-  max-width: 80px;
-}
-
 /* ============================================================
    Créditos y licencias (clases extraídas de estilos inline del JSX).
    ============================================================ */
