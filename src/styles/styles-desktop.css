@@ -118,6 +118,12 @@
     max-width: 460px;
     margin: 0 auto;
   }
+  /* El botón ("Girar" / "Lo sabía"…) justo DEBAJO de la carta, no pegado al
+     fondo: la carta deja de estirarse (flex:none), así la botonera la sigue de
+     inmediato y el hueco libre cae abajo, dejando ver la escena del Fuji entera. */
+  .dk-host .mode-frame:has(.proto-stage) .proto-stage {
+    flex: none;
+  }
   /* Índice de kanji: más columnas en pantalla grande. */
   .dk-host .ki-grid {
     grid-template-columns: repeat(6, 1fr);
