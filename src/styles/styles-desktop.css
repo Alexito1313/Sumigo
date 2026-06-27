@@ -34,10 +34,166 @@
   .dk-host .home-frame {
     max-width: 940px;
   }
-  /* Modos de estudio (Flashcards/Test/Escritura/Repaso/Simulacro):
-     NO se estiran; columna estrecha tipo teléfono, centrada. */
+  /* Modos de estudio: por defecto columna estrecha centrada (Simulacro,
+     Resumen, vistas empujadas). Los modos núcleo (Flashcards/Test/Escritura)
+     reciben más abajo un layout de DOS PANELES a lo ancho. */
   .dk-host .mode-frame {
     max-width: 460px;
+  }
+
+  /* ============================================================
+     MODOS NÚCLEO ESCRITORIO — DOS PANELES (carta | respuesta).
+     En móvil son una columna a pantalla completa; aquí el marco se ensancha
+     y el cuerpo se reparte en dos columnas, para que NO parezca un móvil
+     estirado. Cada modo se distingue por contenido único con :has(), así no
+     se tocan Simulacro/Resumen/Detalle/Trazar/Cuenta.
+     ============================================================ */
+  .dk-host .mode-frame:has(.test-card-area),
+  .dk-host .mode-frame:has(.proto-stage),
+  .dk-host .mode-frame:has(.write-banner) {
+    max-width: 1040px;
+  }
+
+  /* ---------- TEST: kanji a la izquierda, opciones a la derecha ---------- */
+  .dk-host .test-card-area {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "card  label"
+      "card  options";
+    align-content: center;
+    column-gap: 48px;
+    row-gap: 14px;
+    max-width: 920px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px 12px;
+  }
+  .dk-host .test-card-mini {
+    grid-area: card;
+    align-self: center;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .dk-host .test-card-mini .test-jp {
+    font-size: 132px;
+  }
+  .dk-host .test-card-mini .test-reading {
+    font-size: 16px;
+  }
+  .dk-host .test-card-area .test-q-label {
+    grid-area: label;
+    align-self: end;
+    margin: 0;
+  }
+  .dk-host .test-card-area .test-options {
+    grid-area: options;
+    align-self: start;
+    gap: 10px;
+  }
+  .dk-host .proto-test-option {
+    font-size: 16px;
+    padding: 16px 18px;
+    min-height: 58px;
+    border-radius: 14px;
+  }
+  /* Barra de feedback (al responder) acotada y centrada como el cuerpo. */
+  .dk-host .mode-frame:has(.test-card-area) .proto-bottom {
+    max-width: 920px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ---------- FLASHCARDS / REPASO: carta a la izquierda, acciones a la derecha ---------- */
+  .dk-host .mode-frame:has(.proto-stage) .mode-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas:
+      "header header"
+      "banner banner"
+      "meta   meta"
+      "stage  actions";
+    column-gap: 48px;
+    max-width: 940px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .dk-host .mode-frame:has(.proto-stage) .study-header {
+    grid-area: header;
+  }
+  .dk-host .mode-frame:has(.proto-stage) .review-banner {
+    grid-area: banner;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .dk-host .mode-frame:has(.proto-stage) .proto-meta-row {
+    grid-area: meta;
+  }
+  .dk-host .mode-frame:has(.proto-stage) .proto-stage {
+    grid-area: stage;
+    align-self: center;
+  }
+  .dk-host .mode-frame:has(.proto-stage) .proto-bottom {
+    grid-area: actions;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  /* Acciones apiladas y cómodas en el panel derecho (no a lo ancho). */
+  .dk-host .mode-frame:has(.proto-stage) .proto-actions {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    max-width: 340px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .dk-host .mode-frame:has(.proto-stage) .proto-btn,
+  .dk-host .mode-frame:has(.proto-stage) .proto-btn-ghost {
+    padding: 18px 16px;
+    font-size: 16px;
+  }
+
+  /* ---------- ESCRITURA: lienzo a la izquierda, consigna + feedback a la derecha ---------- */
+  .dk-host .mode-frame:has(.write-banner) .mode-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    grid-template-rows: auto auto auto auto 1fr;
+    grid-template-areas:
+      "header header"
+      "banner banner"
+      "meta   meta"
+      "stage  prompt"
+      "stage  bottom";
+    column-gap: 48px;
+    max-width: 940px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .dk-host .mode-frame:has(.write-banner) .study-header {
+    grid-area: header;
+  }
+  .dk-host .mode-frame:has(.write-banner) .write-banner {
+    grid-area: banner;
+  }
+  .dk-host .mode-frame:has(.write-banner) .proto-meta-row {
+    grid-area: meta;
+  }
+  .dk-host .mode-frame:has(.write-banner) .write-prompt {
+    grid-area: prompt;
+    align-self: end;
+  }
+  .dk-host .mode-frame:has(.write-banner) .write-stage {
+    grid-area: stage;
+    align-self: center;
+  }
+  .dk-host .mode-frame:has(.write-banner) .proto-bottom {
+    grid-area: bottom;
+    align-self: start;
   }
   /* Índice de kanji: más columnas en pantalla grande. */
   .dk-host .ki-grid {
